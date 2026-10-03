@@ -271,6 +271,10 @@
             cursor: pointer;
             transition: background 0.2s;
             margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-action:hover { background: var(--accent-pink-hover); }
@@ -403,18 +407,18 @@
         <!-- SLIDE 3: BIODATA VISITOR (OPSIONAL) -->
         <div id="slide-3" class="slide">
             <h2>Tentang Lo 🫵</h2>
-            <p style="font-size: 0.85rem;">Isi aja kalo mau kenalan, skip juga santai kok gapapa!</p>
+            <p style="font-size: 0.85rem;">Isi aja kalo mau kenalan, nanti pesennya langsung terkirim ke WA gua!</p>
             
             <form onsubmit="submitVisitor(event)">
                 <div class="form-group">
                     <label>Nama lo Siapa? (Opsional)</label>
-                    <input type="text" class="input-custom" placeholder="Boleh nama panggilan aja...">
+                    <input type="text" id="visitorName" class="input-custom" placeholder="Boleh nama panggilan aja...">
                 </div>
                 <div class="form-group">
                     <label>Instagram / Sosmed (Opsional)</label>
-                    <input type="text" class="input-custom" placeholder="@username">
+                    <input type="text" id="visitorSosmed" class="input-custom" placeholder="@username">
                 </div>
-                <button type="submit" class="btn-action">Kirim ✨</button>
+                <button type="submit" class="btn-action"><i class="fab fa-whatsapp"></i> Kirim ke WA ✨</button>
             </form>
 
             <button class="btn-action btn-secondary" style="margin-top: 10px;" onclick="goToSlide(2)">⬅️ Balik ke Fakta</button>
@@ -429,10 +433,10 @@
 
         <!-- Pilihan Mood Emot -->
         <div class="mood-container">
-            <button class="mood-btn" onclick="selectMood('seneng', 8, 'Enchanted')">😄</button>
-            <button class="mood-btn" onclick="selectMood('sedih', 2, 'Heather')">😢</button>
-            <button class="mood-btn" onclick="selectMood('kesel', 5, 'Into It')">😡</button>
-            <button class="mood-btn" onclick="selectMood('chill', 4, 'Cinnamon Girl')">😌</button>
+            <button class="mood-btn" onclick="selectMood('Seneng 😄', 8, 'Enchanted')">😄</button>
+            <button class="mood-btn" onclick="selectMood('Sedih 😢', 2, 'Heather')">😢</button>
+            <button class="mood-btn" onclick="selectMood('Kesel 😡', 5, 'Into It')">😡</button>
+            <button class="mood-btn" onclick="selectMood('Chill 😌', 4, 'Cinnamon Girl')">😌</button>
         </div>
 
         <!-- Pop-up Rekomendasi Lagu -->
@@ -448,14 +452,17 @@
         <form onsubmit="submitCurhat(event)">
             <div class="form-group">
                 <label>Tumpahin aja apa yang lagi lo rasain di sini:</label>
-                <textarea class="textarea-custom" placeholder="Hari ini ada kejadian seru, sedih, atau ada uneg-uneg? Ceritain aja..."></textarea>
+                <textarea id="curhatText" class="textarea-custom" placeholder="Hari ini ada kejadian seru, sedih, atau ada uneg-uneg? Ceritain aja..." required></textarea>
             </div>
-            <button type="submit" class="btn-action">Kirim Cerita 💌</button>
+            <button type="submit" class="btn-action"><i class="fab fa-whatsapp"></i> Kirim Cerita ke WA 💌</button>
         </form>
     </div>
 
     <!-- 🛠️ JAVASCRIPT LOGIC -->
     <script>
+        // ⚠️ MASUKIN NOMOR WHATSAPP LO DI SINI (Pake format 62, jangan 08)
+        const noWhatsApp = "6285188314347"; 
+
         // === LOGIKA MUSIC PLAYER ===
         const audio = document.getElementById('audioPlayer');
         const songSelect = document.getElementById('songSelect');
@@ -465,6 +472,7 @@
         let isPlaying = false;
         let playMode = 0; // 0: Urut, 1: Acak, 2: Repeat 1 Lagu
         let tempRecommendedIndex = null;
+        let selectedMoodText = "Nggak milih emot";
 
         audio.src = songSelect.value;
 
@@ -543,6 +551,7 @@
 
         // === LOGIKA MOOD & REKOMENDASI LAGU ===
         function selectMood(moodType, songIndex, songTitle) {
+            selectedMoodText = moodType;
             const buttons = document.querySelectorAll('.mood-btn');
             buttons.forEach(btn => btn.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
@@ -568,18 +577,22 @@
             document.getElementById('recomBox').style.display = 'none';
         }
 
-        // === FORM SUBMIT HANDLERS ===
+        // === LOGIKA KIRIM PAKE WHATSAPP ===
         function submitVisitor(e) {
             e.preventDefault();
-            alert("Sip, makasih udah mau mampir dan kenalan! ✨");
-            goToSlide(1);
+            const nama = document.getElementById('visitorName').value || 'Anonim';
+            const sosmed = document.getElementById('visitorSosmed').value || '-';
+
+            const pesanWA = `Halo Cello! Gua baru mampir dari web lo nih 😁%0A%0A👤 *Nama:* ${nama}%0A📱 *Sosmed:* ${sosmed}`;
+            window.open(`https://wa.me/${noWhatsApp}?text=${pesanWA}`, '_blank');
         }
 
         function submitCurhat(e) {
             e.preventDefault();
-            alert("Makasih udah cerita ke gua. Tetep semangat ya! 🚀");
-            e.target.reset();
-            closeRecom();
+            const cerita = document.getElementById('curhatText').value;
+
+            const pesanWA = `Halo Cello! Gua mau cerita/curhat nih 💭%0A%0A🎭 *Mood Gua Hari Ini:* ${selectedMoodText}%0A%0A📝 *Cerita Gua:*%0A${cerita}`;
+            window.open(`https://wa.me/${noWhatsApp}?text=${pesanWA}`, '_blank');
         }
     </script>
 </body>
