@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* === UPGRADE DESAIN: MOVING GRADIENT & GLASSMORPHISM === */
+        /* === DESAIN GLASSMORPHISM & GRADIENT === */
         :root {
             --primary: #ff758c;
             --secondary: #ff7eb3;
@@ -27,7 +27,6 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px 15px;
-            /* Animated Background */
             background: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #fdcbf1, #e6dee9);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
@@ -39,7 +38,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Styling Kartu Utama Kaca (Glassmorphism) */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -56,52 +54,24 @@
         }
 
         /* 🎵 MUSIC PLAYER */
-        .music-player h3 {
-            font-family: 'Fredoka', cursive;
-            color: #d80032;
-            margin-bottom: 15px;
-        }
-
+        .music-player h3 { font-family: 'Fredoka', cursive; color: #d80032; margin-bottom: 15px; }
         .song-select {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 15px;
-            border: none;
-            background: rgba(255,255,255,0.8);
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            outline: none;
-            margin-bottom: 15px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            width: 100%; padding: 12px 15px; border-radius: 15px; border: none;
+            background: rgba(255,255,255,0.8); font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem; color: var(--text-dark); outline: none; margin-bottom: 15px;
         }
-
         .controls { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-
         .btn-icon {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.1rem;
-            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+            border: none; color: white; width: 50px; height: 50px; border-radius: 50%;
+            cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
             transition: all 0.3s ease;
         }
-
         .btn-icon:hover { transform: translateY(-5px) scale(1.05); }
-
         .btn-mode {
-            background: rgba(255,255,255,0.9);
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9); border: 2px solid var(--primary);
+            color: var(--primary); padding: 8px 20px; border-radius: 20px;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 15px;
         }
         .btn-mode:hover { background: var(--primary); color: white; }
 
@@ -116,28 +86,21 @@
         .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4); }
 
         /* KONTEN SLIDE */
-        .content-section { display: none; animation: slideUp 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+        .content-section { display: none; animation: slideUp 0.5s ease; }
         .content-section.active { display: block; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
         .slide { display: none; }
         .slide.active { display: block; }
 
         /* FOTO PROFILE */
-        .img-wrapper {
-            position: relative; width: 190px; height: 190px; margin: 0 auto 20px;
-        }
+        .img-wrapper { position: relative; width: 190px; height: 190px; margin: 0 auto 20px; }
         .img-wrapper::before {
             content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
-            background: linear-gradient(135deg, var(--primary), #a2d2ff);
-            border-radius: 50%; z-index: -1; animation: spin 5s linear infinite;
+            background: linear-gradient(135deg, var(--primary), #a2d2ff); border-radius: 50%;
+            z-index: -1; animation: spin 5s linear infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        
-        .profile-img {
-            width: 190px; height: 190px; object-fit: cover; border-radius: 50%;
-            border: 4px solid white;
-        }
+        .profile-img { width: 190px; height: 190px; object-fit: cover; border-radius: 50%; border: 4px solid white; }
 
         h2 { font-family: 'Fredoka', cursive; color: #d80032; font-size: 1.6rem; margin-bottom: 10px; }
         p { font-size: 0.95rem; margin-bottom: 15px; color: #444; }
@@ -150,11 +113,10 @@
         .fact-item { margin-bottom: 12px; font-size: 0.9rem; }
 
         /* FORM & BUTTONS */
-        .form-group { text-align: left; margin-bottom: 15px; }
-        .form-group label { font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; display: block; }
+        .form-group { text-align: left; margin-bottom: 10px; }
         .input-custom {
-            width: 100%; padding: 14px; border-radius: 15px; border: none;
-            background: rgba(255,255,255,0.9); font-family: 'Poppins'; outline: none;
+            width: 100%; padding: 12px; border-radius: 12px; border: none;
+            background: rgba(255,255,255,0.9); font-family: 'Poppins'; outline: none; font-size: 0.85rem;
         }
         textarea.input-custom { height: 110px; resize: none; }
 
@@ -162,25 +124,27 @@
             width: 100%; padding: 14px; border-radius: 15px; border: none;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white; font-family: 'Fredoka', cursive; font-size: 1.1rem;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
-            transition: 0.3s;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4); transition: 0.3s; margin-top: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
         .btn-action:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 117, 140, 0.6); }
         .btn-secondary { background: rgba(255,255,255,0.8); color: #333; box-shadow: none; }
         .btn-secondary:hover { background: white; color: var(--primary); }
-        .btn-flex { display: flex; gap: 10px; }
+        .btn-flex { display: flex; gap: 10px; margin-top: 10px; }
 
-        /* MOOD EMOTICON (BARU) */
+        /* MOOD EMOTICON */
         .mood-container { display: flex; justify-content: space-around; margin: 20px 0; }
         .mood-box { text-align: center; }
         .mood-btn {
             font-size: 2rem; background: rgba(255,255,255,0.6); border: 2px solid transparent;
             width: 60px; height: 60px; border-radius: 50%; cursor: pointer; transition: 0.3s;
         }
-        .mood-btn:hover, .mood-btn.selected {
-            background: white; border-color: var(--primary); transform: scale(1.1);
-        }
+        .mood-btn:hover, .mood-btn.selected { background: white; border-color: var(--primary); transform: scale(1.1); }
         .mood-text { display: block; font-size: 0.75rem; font-weight: 600; margin-top: 5px; color: #555; }
+        
+        .scroll-box { max-height: 50vh; overflow-y: auto; padding-right: 5px; }
+        .scroll-box::-webkit-scrollbar { width: 5px; }
+        .scroll-box::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -208,7 +172,7 @@
             <button class="btn-icon" onclick="togglePlay()" id="playBtn"><i class="fas fa-play"></i></button>
             <button class="btn-icon" onclick="nextSong()"><i class="fas fa-forward"></i></button>
         </div>
-        <button class="btn-mode" style="margin-top:15px;" onclick="toggleMode()" id="modeBtn">Mode: Urut ➡️</button>
+        <button class="btn-mode" onclick="toggleMode()" id="modeBtn">Mode: Urut ➡️</button>
     </div>
 
     <!-- 📌 NAVIGASI -->
@@ -223,7 +187,7 @@
         <!-- Slide 1 -->
         <div id="slide-1" class="slide active">
             <div class="img-wrapper">
-                <img src="foto-cello.jpg" alt="Foto Cello" class="profile-img" onerror="this.src='https://via.placeholder.com/190?text=Foto+Belum+Di-upload'">
+                <img src="foto-cello.jpg" alt="Foto Cello" class="profile-img" onerror="this.src='https://via.placeholder.com/190?text=Foto+Cello'">
             </div>
             <h2>Hai, nama gua Cello ✨</h2>
             <p>Welcome to my space! Santai dulu aja sambil dengerin lagu.</p>
@@ -234,10 +198,10 @@
         <div id="slide-2" class="slide">
             <h2>Fakta Random 🚀</h2>
             <div class="fact-box">
-                <div class="fact-item">🍲 <b>Makanan:</b> Nasi Pecel & Bakso (Simpel, tapi rasanya ngga ada lawan!).</div>
-                <div class="fact-item">🎨 <b>Warna Kesukaan:</b> Biru Laut & Hitam.</div>
-                <div class="fact-item">🎣 <b>Hobi:</b> Memancing & Panahan.</div>
-                <div class="fact-item">✈️ <b>Cita-cita:</b> Kerja di sektor Avionic.</div>
+                <div class="fact-item">🍲 <b>Makanan:</b> Nasi Pecel & Bakso.</div>
+                <div class="fact-item">🎨 <b>Warna Kesukaan:</b> Biru Laut & Hitam (Biar kalem tapi tetep elegan).</div>
+                <div class="fact-item">🎣 <b>Hobi:</b> Memancing & Panahan (Buat ngelatih fokus dan cari ketenangan).</div>
+                <div class="fact-item">✈️ <b>Cita-cita:</b> Kerja di sektor Avionic (Biar bisa ngurusin sistem pesawat).</div>
                 <div class="fact-item">🎂 <b>Lahir:</b> Ngawi, 05 Maret 2009.</div>
             </div>
             <div class="btn-flex">
@@ -246,20 +210,25 @@
             </div>
         </div>
 
-        <!-- Slide 3 -->
+        <!-- Slide 3 (Form User Opsional) -->
         <div id="slide-3" class="slide">
-            <h2>Salken Ya! 🫵</h2>
-            <p>Isi aja form ini (opsional kok santai). Nanti bakal masuk ke Telegram gua.</p>
-            <form onsubmit="kirimTelegram(event, 'biodata')">
-                <div class="form-group">
-                    <input type="text" id="vName" class="input-custom" placeholder="Nama Panggilan Lo...">
-                </div>
-                <div class="form-group">
-                    <input type="text" id="vIg" class="input-custom" placeholder="Instagram Lo (@...)">
-                </div>
-                <button type="submit" class="btn-action"><i class="fab fa-telegram-plane"></i> Kirim ke Tele</button>
-            </form>
-            <button class="btn-action btn-secondary" style="margin-top:10px;" onclick="goToSlide(2)">⬅️ Back</button>
+            <h2>Tentang Lo 🫵</h2>
+            <p style="font-size:0.8rem;">Isi form ini buat kenalan (opsional semua, skip juga gapapa!).</p>
+            
+            <div class="scroll-box">
+                <form id="formBio" onsubmit="kirimBio(event)">
+                    <div class="form-group"><input type="text" id="vName" class="input-custom" placeholder="Nama / Panggilan Lo"></div>
+                    <div class="form-group"><input type="text" id="vIg" class="input-custom" placeholder="Instagram (@...)"></div>
+                    <div class="form-group"><input type="text" id="vColor" class="input-custom" placeholder="Warna Kesukaan"></div>
+                    <div class="form-group"><input type="text" id="vFood" class="input-custom" placeholder="Makanan Favorit"></div>
+                    <div class="form-group"><input type="text" id="vHobby" class="input-custom" placeholder="Hobi Lo"></div>
+                    <div class="form-group"><input type="text" id="vDream" class="input-custom" placeholder="Cita-cita"></div>
+                    <div class="form-group"><input type="text" id="vTtl" class="input-custom" placeholder="Tempat, Tanggal Lahir"></div>
+                    
+                    <button type="submit" class="btn-action"><i class="fas fa-paper-plane"></i> Kirim</button>
+                </form>
+            </div>
+            <button class="btn-action btn-secondary" onclick="goToSlide(2)">⬅️ Back</button>
         </div>
     </div>
 
@@ -267,7 +236,6 @@
     <div id="sec-curhat" class="glass-card content-section">
         <h2>How is your day? ☁️</h2>
         
-        <!-- Emot dengan teks di bawahnya -->
         <div class="mood-container">
             <div class="mood-box">
                 <button class="mood-btn" onclick="pilihMood('Seneng 😄', 8, 'Enchanted')">😄</button>
@@ -287,53 +255,76 @@
             </div>
         </div>
 
-        <!-- Pop up lagu -->
         <div id="recomBox" style="display:none; background:rgba(255,255,255,0.8); padding:10px; border-radius:15px; margin-bottom:15px;">
-            <p id="recomText" style="font-size:0.8rem; font-weight:bold;"></p>
+            <p id="recomText" style="font-size:0.8rem; font-weight:bold; color:var(--text-dark);"></p>
             <div class="btn-flex">
                 <button class="btn-action" style="font-size:0.8rem; padding:8px;" onclick="putarLaguRecom()">Putar Lagu</button>
             </div>
         </div>
 
-        <form onsubmit="kirimTelegram(event, 'curhat')">
+        <form id="formCurhat" onsubmit="kirimCurhat(event)">
             <div class="form-group">
                 <textarea id="curhatText" class="input-custom" placeholder="Ketik curhatan lo di sini..." required></textarea>
             </div>
-            <button type="submit" class="btn-action"><i class="fab fa-telegram-plane"></i> Kirim Curhatan</button>
+            <button type="submit" class="btn-action"><i class="fas fa-paper-plane"></i> Kirim</button>
         </form>
     </div>
 
+    <!-- 🛠️ JAVASCRIPT -->
     <script>
         // ==========================================
-        // ⚠️ PENTING: ISI TOKEN & CHAT ID TELEGRAM LO DI SINI!
+        // ⚠️ PENTING: GANTI TOKEN DAN ID LO DI BAWAH INI
+        // PASTIKAN TANDA KUTIP (" ") NYA JANGAN KEHAPUS!
         // ==========================================
         const BOT_TOKEN = "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM"; 
         const CHAT_ID = "8645664337";
         // ==========================================
 
-        // --- MUSIC PLAYER LOGIC ---
+        // --- MUSIC PLAYER ---
         const audio = document.getElementById('audioPlayer');
         const songSelect = document.getElementById('songSelect');
         const playBtn = document.getElementById('playBtn');
         let isPlaying = false, playMode = 0, tempRecom = null, moodDipilih = "Nggak milih emot";
+        
         audio.src = songSelect.value;
+
+        // PENDETEKSI ERROR LAGU
+        audio.onerror = function() {
+            console.error("Lagu Error/Tidak Ditemukan: " + songSelect.value);
+            alert(`Peringatan: File "${songSelect.value}" nggak ketemu! Pastikan lo udah upload file MP3 dengan nama persis seperti itu ke GitHub.`);
+        };
 
         function togglePlay() {
             if(isPlaying){ audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; }
-            else{ audio.play(); playBtn.innerHTML = '<i class="fas fa-pause"></i>'; }
+            else{ 
+                let playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => { playBtn.innerHTML = '<i class="fas fa-pause"></i>'; })
+                    .catch(error => { alert("Klik layar dulu atau izinkan suara di browser lo."); });
+                }
+            }
             isPlaying = !isPlaying;
         }
-        function changeSong() { audio.src = songSelect.value; if(isPlaying) audio.play(); }
+
+        function changeSong() { 
+            audio.src = songSelect.value; 
+            if(isPlaying) {
+                audio.play().catch(e => console.log(e)); 
+            }
+        }
+        
         function nextSong() {
             let i = songSelect.selectedIndex;
             if(playMode === 1) i = Math.floor(Math.random() * songSelect.options.length);
             else if(playMode === 0) i = (i + 1) % songSelect.options.length;
             songSelect.selectedIndex = i; changeSong();
         }
+
         function prevSong() {
             songSelect.selectedIndex = (songSelect.selectedIndex - 1 + songSelect.options.length) % songSelect.options.length;
             changeSong();
         }
+
         function toggleMode() {
             playMode = (playMode + 1) % 3;
             const btn = document.getElementById('modeBtn');
@@ -343,7 +334,7 @@
         }
         audio.onended = () => { if(playMode===2) audio.play(); else nextSong(); };
 
-        // --- NAVIGASI & MENU ---
+        // --- NAVIGASI SLIDE ---
         function switchMenu(menu) {
             document.getElementById('sec-about').classList.remove('active');
             document.getElementById('sec-curhat').classList.remove('active');
@@ -352,50 +343,71 @@
             document.getElementById('sec-'+menu).classList.add('active');
             document.getElementById('nav-'+menu).classList.add('active');
         }
+        
         function goToSlide(n) {
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
             document.getElementById('slide-'+n).classList.add('active');
         }
 
-        // --- MOOD ---
+        // --- MOOD REKOMENDASI ---
         function pilihMood(nama, laguIdx, judulLagu) {
             moodDipilih = nama; tempRecom = laguIdx;
             document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
             event.target.classList.add('selected');
-            document.getElementById('recomText').innerHTML = `Coba dengerin <b>${judulLagu}</b>!`;
+            document.getElementById('recomText').innerHTML = `Lagi ngerasa ${nama.split(' ')[0]} ya? Coba dengerin <b>${judulLagu}</b> deh!`;
             document.getElementById('recomBox').style.display = 'block';
         }
+        
         function putarLaguRecom() {
-            if(tempRecom !== null) { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); }
+            if(tempRecom !== null) { 
+                songSelect.selectedIndex = tempRecom; 
+                changeSong(); 
+                if(!isPlaying) togglePlay(); 
+            }
         }
 
-        // --- KIRIM KE TELEGRAM BOT ---
-        function kirimTelegram(e, tipe) {
-            e.preventDefault();
-            let pesan = "";
-            
-            if(tipe === 'biodata') {
-                const n = document.getElementById('vName').value || 'Anonim';
-                const i = document.getElementById('vIg').value || '-';
-                pesan = `🌟 *ADA YANG KENALAN NIH!*\n\n👤 Nama: ${n}\n📱 IG: ${i}`;
-            } else {
-                const c = document.getElementById('curhatText').value;
-                pesan = `💭 *ADA CURHATAN BARU!*\n\n🎭 Mood: ${moodDipilih}\n📝 Isi Cerita:\n${c}`;
+        // --- FUNGSI KIRIM TELEGRAM ---
+        function prosesKirimPesan(pesan, formId, isBio) {
+            if (BOT_TOKEN === "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM" || BOT_TOKEN === "") {
+                alert("Error: Lo belum masukin Bot Token Telegram di kodingan!");
+                return;
             }
 
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
 
             fetch(url)
-            .then(response => {
-                if(response.ok) {
-                    alert("Sukses Terkirim! 🚀");
-                    e.target.reset();
-                    if(tipe === 'biodata') goToSlide(1);
+            .then(res => res.json())
+            .then(data => {
+                if(data.ok) {
+                    alert("Pesan sukses meluncur ke Telegram! 🚀");
+                    document.getElementById(formId).reset();
+                    if(isBio) goToSlide(1);
                 } else {
-                    alert("Gagal kirim, coba cek koneksi atau settingan bot Tele nya.");
+                    alert("Gagal ngirim! Pastiin lo udah klik START di bot Telegram lo.");
                 }
             })
-            .catch(err => alert("Error koneksi!"));
+            .catch(err => alert("Gagal koneksi ke Telegram. Cek internet lo."));
+        }
+
+        function kirimBio(e) {
+            e.preventDefault();
+            const n = document.getElementById('vName').value || '-';
+            const i = document.getElementById('vIg').value || '-';
+            const cl = document.getElementById('vColor').value || '-';
+            const f = document.getElementById('vFood').value || '-';
+            const h = document.getElementById('vHobby').value || '-';
+            const d = document.getElementById('vDream').value || '-';
+            const b = document.getElementById('vTtl').value || '-';
+
+            const pesan = `🌟 *BIODATA BARU MASUK!*\n\n👤 Nama: ${n}\n📱 IG: ${i}\n🎨 Warna: ${cl}\n🍲 Makanan: ${f}\n🎣 Hobi: ${h}\n✈️ Cita-cita: ${d}\n🎂 TTL: ${b}`;
+            prosesKirimPesan(pesan, 'formBio', true);
+        }
+
+        function kirimCurhat(e) {
+            e.preventDefault();
+            const curhat = document.getElementById('curhatText').value;
+            const pesan = `💭 *CURHATAN MASUK!*\n\n🎭 Mood: ${moodDipilih}\n📝 Cerita:\n${curhat}`;
+            prosesKirimPesan(pesan, 'formCurhat', false);
         }
     </script>
 </body>
