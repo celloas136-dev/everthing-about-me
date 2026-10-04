@@ -46,7 +46,6 @@
             transition: all 0.5s ease;
         }
 
-        /* Background Grid Avionic pas Dark Mode */
         body.dark-mode::before {
             content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
@@ -59,7 +58,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* TOMBOL TEMA (POJOK ATAS) */
         .theme-btn {
             position: absolute; top: 15px; right: 15px;
             background: var(--glass-bg); border: 2px solid var(--glass-border);
@@ -78,14 +76,13 @@
             margin-bottom: 20px; transition: all 0.5s ease;
         }
 
-        /* 🎵 MUSIC PLAYER */
         .music-player h3 { font-family: 'Fredoka', cursive; color: var(--text-highlight); margin-bottom: 15px; transition: 0.3s;}
         .song-select {
             width: 100%; padding: 12px 15px; border-radius: 15px; border: none;
             background: rgba(255,255,255,0.2); font-family: 'Poppins', sans-serif;
             font-size: 0.9rem; color: var(--text-dark); outline: none; margin-bottom: 15px;
         }
-        .dark-mode .song-select option { color: #000; } /* Fix warna opsi di HP */
+        .dark-mode .song-select option { color: #000; }
         
         .controls { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .btn-icon {
@@ -104,7 +101,6 @@
         .btn-mode:hover { background: var(--primary); color: white; }
         .dark-mode .btn-mode:hover { color: #0f172a; box-shadow: 0 0 10px var(--primary); }
 
-        /* 📌 NAV MENU */
         .nav-menu { display: flex; gap: 8px; width: 100%; max-width: 500px; margin-bottom: 20px; }
         .nav-btn {
             flex: 1; padding: 10px; border: 1px solid var(--glass-border); border-radius: 15px;
@@ -115,14 +111,12 @@
         .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .dark-mode .nav-btn.active { color: #0f172a; box-shadow: 0 0 15px var(--primary); }
 
-        /* KONTEN SLIDE */
         .content-section { display: none; animation: slideUp 0.5s ease; }
         .content-section.active { display: block; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .slide { display: none; }
         .slide.active { display: block; }
 
-        /* FOTO PROFILE */
         .img-wrapper { position: relative; width: 170px; height: 170px; margin: 0 auto 20px; }
         .img-wrapper::before {
             content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
@@ -135,14 +129,12 @@
         h2 { font-family: 'Fredoka', cursive; color: var(--text-highlight); font-size: 1.5rem; margin-bottom: 10px; transition: 0.3s;}
         p { font-size: 0.9rem; margin-bottom: 15px; }
 
-        /* FACTS BOX */
         .fact-box {
             background: rgba(255,255,255,0.2); padding: 20px; border-radius: 20px;
             text-align: left; border-left: 6px solid var(--primary); margin-bottom: 20px;
         }
         .fact-item { margin-bottom: 10px; font-size: 0.85rem; }
 
-        /* FORM & BUTTONS */
         .form-group { text-align: left; margin-bottom: 10px; }
         .input-custom {
             width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border);
@@ -164,7 +156,6 @@
         .btn-secondary:hover { background: var(--primary); color: white; }
         .btn-flex { display: flex; gap: 10px; margin-top: 10px; }
 
-        /* MOOD EMOTICON */
         .mood-container { display: flex; justify-content: space-around; margin: 20px 0; }
         .mood-box { text-align: center; }
         .mood-btn {
@@ -178,7 +169,6 @@
         .scroll-box::-webkit-scrollbar { width: 5px; }
         .scroll-box::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
 
-        /* 📸 GALERI POLAROID */
         .gallery-grid {
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px;
         }
@@ -192,13 +182,11 @@
         .polaroid img { width: 100%; height: 120px; object-fit: cover; border-radius: 2px; }
         .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
 
-        /* 🔒 FOOTER & EASTER EGG */
         .footer { margin-top: auto; padding: 20px 0; font-size: 0.85rem; text-align: center; }
         .footer a { color: var(--primary); text-decoration: none; font-weight: bold; }
         .secret-icon { cursor: pointer; transition: 0.3s; display: inline-block; }
         .secret-icon:hover { transform: scale(1.3) translateY(-3px); }
 
-        /* SECRET MODAL */
         #secretModal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); z-index: 999; justify-content: center; align-items: center;
@@ -215,10 +203,8 @@
 </head>
 <body>
 
-    <!-- 🌓 TOMBOL TEMA -->
     <button class="theme-btn" onclick="toggleTheme()" id="themeIcon"><i class="fas fa-moon"></i></button>
 
-    <!-- 🎵 MUSIC PLAYER -->
     <div class="glass-card music-player">
         <h3><i class="fas fa-headphones"></i> pilih lagu yang lo suka</h3>
         <audio id="audioPlayer"></audio>
@@ -244,16 +230,13 @@
         <button class="btn-mode" onclick="toggleMode()" id="modeBtn">Mode: Urut ➡️</button>
     </div>
 
-    <!-- 📌 NAVIGASI -->
     <div class="nav-menu">
         <button class="nav-btn active" id="nav-about" onclick="switchMenu('about')">🙋‍♂️ About</button>
         <button class="nav-btn" id="nav-curhat" onclick="switchMenu('curhat')">💭 Cerita</button>
         <button class="nav-btn" id="nav-gallery" onclick="switchMenu('gallery')">📸 Galeri</button>
     </div>
 
-    <!-- 🙋‍♂️ MENU 1: ABOUT ME -->
     <div id="sec-about" class="glass-card content-section active">
-        <!-- Slide 1 -->
         <div id="slide-1" class="slide active">
             <div class="img-wrapper">
                 <img src="foto-cello.jpg" alt="Foto Cello" class="profile-img" onerror="this.src='https://via.placeholder.com/170?text=Foto+Cello'">
@@ -263,7 +246,6 @@
             <button class="btn-action" onclick="goToSlide(2)">Liat Fakta Gua ➡️</button>
         </div>
 
-        <!-- Slide 2 -->
         <div id="slide-2" class="slide">
             <h2>Fakta Random 🚀</h2>
             <div class="fact-box">
@@ -279,7 +261,6 @@
             </div>
         </div>
 
-        <!-- Slide 3 -->
         <div id="slide-3" class="slide">
             <h2>Tentang Lo 🫵</h2>
             <p style="font-size:0.8rem;">Isi form ini buat kenalan (opsional, skip gapapa!).</p>
@@ -299,7 +280,6 @@
         </div>
     </div>
 
-    <!-- 💭 MENU 2: CURHAT -->
     <div id="sec-curhat" class="glass-card content-section">
         <h2>How is your day? ☁️</h2>
         <div class="mood-container">
@@ -320,36 +300,33 @@
         </form>
     </div>
 
-    <!-- 📸 MENU 3: GALERI POLAROID -->
+    <!-- 📸 MENU 3: GALERI POLAROID (SUDAH DIPAKAI .JPEG) -->
     <div id="sec-gallery" class="glass-card content-section">
         <h2>Aesthetic Gallery 📸</h2>
         <p>A few moments of my life.</p>
         
         <div class="scroll-box">
             <div class="gallery-grid">
-                <!-- Nanti lo tinggal upload foto bernama galeri1.jpg, galeri2.jpg, dst ke GitHub -->
                 <div class="polaroid">
-                    <img src="galeri1.jpg" onerror="this.src='https://via.placeholder.com/300x300?text=Upload+galeri1.jpg'">
+                    <img src="galeri1.jpeg" onerror="this.src='https://via.placeholder.com/300x300?text=galeri1.jpeg'">
                 </div>
                 <div class="polaroid">
-                    <img src="galeri2.jpg" onerror="this.src='https://via.placeholder.com/300x300?text=Upload+galeri2.jpg'">
+                    <img src="galeri2.jpeg" onerror="this.src='https://via.placeholder.com/300x300?text=galeri2.jpeg'">
                 </div>
                 <div class="polaroid">
-                    <img src="galeri3.jpg" onerror="this.src='https://via.placeholder.com/300x300?text=Upload+galeri3.jpg'">
+                    <img src="galeri3.jpeg" onerror="this.src='https://via.placeholder.com/300x300?text=galeri3.jpeg'">
                 </div>
                 <div class="polaroid">
-                    <img src="galeri4.jpg" onerror="this.src='https://via.placeholder.com/300x300?text=Upload+galeri4.jpg'">
+                    <img src="galeri4.jpeg" onerror="this.src='https://via.placeholder.com/300x300?text=galeri4.jpeg'">
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 🔒 FOOTER & EASTER EGG -->
     <div class="footer">
         <p>follow ig gua ya di <a href="https://instagram.com/angn_smrn" target="_blank">@angn_smrn</a> <span class="secret-icon" onclick="cekPassword()">✈️</span></p>
     </div>
 
-    <!-- SECRET MODAL (AVIONIC MISSION) -->
     <div id="secretModal">
         <div class="secret-box">
             <i class="fas fa-plane-departure" style="font-size: 3rem; margin-bottom: 15px;"></i>
@@ -361,14 +338,9 @@
 
     <!-- 🛠️ JAVASCRIPT -->
     <script>
-        // ==========================================
-        // DATA TELEGRAM CELLO
-        // ==========================================
         const BOT_TOKEN = "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM"; 
         const CHAT_ID = "7133977857";
-        // ==========================================
 
-        // --- MUSIC PLAYER ---
         const audio = document.getElementById('audioPlayer');
         const songSelect = document.getElementById('songSelect');
         const playBtn = document.getElementById('playBtn');
@@ -407,7 +379,6 @@
         }
         audio.onended = () => { if(playMode===2) audio.play(); else nextSong(); };
 
-        // --- THEME SWITCHER (DARK MODE) ---
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const icon = document.getElementById('themeIcon');
@@ -418,14 +389,11 @@
             }
         }
 
-        // --- NAVIGASI MULTI-MENU ---
         function switchMenu(menu) {
-            // Sembunyikan semua
             ['about', 'curhat', 'gallery'].forEach(m => {
                 document.getElementById('sec-'+m).classList.remove('active');
                 document.getElementById('nav-'+m).classList.remove('active');
             });
-            // Tampilkan yang dipilih
             document.getElementById('sec-'+menu).classList.add('active');
             document.getElementById('nav-'+menu).classList.add('active');
         }
@@ -435,7 +403,6 @@
             document.getElementById('slide-'+n).classList.add('active');
         }
 
-        // --- MOOD & TELEGRAM ---
         function pilihMood(nama, laguIdx, judulLagu) {
             moodDipilih = nama; tempRecom = laguIdx;
             document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
@@ -479,10 +446,9 @@
             kirimPesanKeTele(pesan, 'formCurhat', false);
         }
 
-        // --- EASTER EGG (PASSWORD) ---
         function cekPassword() {
             let pwd = prompt("Terminal Radar Terkunci.\nMasukkan kode akses Avionic:");
-            if(pwd === "avionic") { // <--- GANTI PASSWORD RAHASIANYA DI SINI
+            if(pwd === "avionic") {
                 document.getElementById('secretModal').style.display = 'flex';
             } else if(pwd !== null) {
                 alert("Akses Ditolak! Kode salah.");
