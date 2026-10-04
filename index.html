@@ -271,144 +271,124 @@
     </div>
 
     <!-- 🛠️ JAVASCRIPT -->
-    <script>
-        // ==========================================
-        // ⚠️ PENTING: GANTI TOKEN DAN ID LO DI BAWAH INI
-        // PASTIKAN TANDA KUTIP (" ") NYA JANGAN KEHAPUS!
-        // ==========================================
-        const BOT_TOKEN = "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM"; 
-        const CHAT_ID = "8645664337";
-        // ==========================================
+   <script>
+    // ==========================================
+    // ⚠️ PENTING: ISI DATA LO DI SINI
+    // ==========================================
+    const BOT_TOKEN = "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM"; 
+    const CHAT_ID = "7133977857"; // <-- GANTI PAKE ID PRIBADI LO
+    // ==========================================
 
-        // --- MUSIC PLAYER ---
-        const audio = document.getElementById('audioPlayer');
-        const songSelect = document.getElementById('songSelect');
-        const playBtn = document.getElementById('playBtn');
-        let isPlaying = false, playMode = 0, tempRecom = null, moodDipilih = "Nggak milih emot";
+    // --- MUSIC PLAYER ---
+    const audio = document.getElementById('audioPlayer');
+    const songSelect = document.getElementById('songSelect');
+    const playBtn = document.getElementById('playBtn');
+    let isPlaying = false, playMode = 0, tempRecom = null, moodDipilih = "Nggak milih emot";
+    
+    if (songSelect) { audio.src = songSelect.value; }
+
+    audio.onerror = function() {
+        console.error("Lagu ngga ketemu: " + songSelect.value);
+    };
+
+    function togglePlay() {
+        if(isPlaying){ audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; }
+        else{ 
+            audio.play().then(_ => { playBtn.innerHTML = '<i class="fas fa-pause"></i>'; })
+            .catch(e => { alert("Klik layar dulu baru pencet Play!"); });
+        }
+        isPlaying = !isPlaying;
+    }
+
+    function changeSong() { audio.src = songSelect.value; if(isPlaying) audio.play(); }
+    
+    function nextSong() {
+        let i = songSelect.selectedIndex;
+        i = (i + 1) % songSelect.options.length;
+        songSelect.selectedIndex = i; changeSong();
+    }
+
+    function prevSong() {
+        songSelect.selectedIndex = (songSelect.selectedIndex - 1 + songSelect.options.length) % songSelect.options.length;
+        changeSong();
+    }
+
+    function toggleMode() {
+        playMode = (playMode + 1) % 3;
+        const btn = document.getElementById('modeBtn');
+        if(playMode===0) btn.innerHTML = "Mode: Urut ➡️";
+        else if(playMode===1) btn.innerHTML = "Mode: Acak 🔀";
+        else btn.innerHTML = "Mode: 1 Lagu 🔁";
+    }
+    audio.onended = () => { if(playMode===2) audio.play(); else nextSong(); };
+
+    // --- NAVIGASI SLIDE ---
+    function switchMenu(menu) {
+        document.getElementById('sec-about').classList.add('active');
+        document.getElementById('sec-curhat').classList.add('active');
+        document.getElementById('nav-about').classList.remove('active');
+        document.getElementById('nav-curhat').classList.remove('active');
         
-        audio.src = songSelect.value;
-
-        // PENDETEKSI ERROR LAGU
-        audio.onerror = function() {
-            console.error("Lagu Error/Tidak Ditemukan: " + songSelect.value);
-            alert(`Peringatan: File "${songSelect.value}" nggak ketemu! Pastikan lo udah upload file MP3 dengan nama persis seperti itu ke GitHub.`);
-        };
-
-        function togglePlay() {
-            if(isPlaying){ audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; }
-            else{ 
-                let playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => { playBtn.innerHTML = '<i class="fas fa-pause"></i>'; })
-                    .catch(error => { alert("Klik layar dulu atau izinkan suara di browser lo."); });
-                }
-            }
-            isPlaying = !isPlaying;
-        }
-
-        function changeSong() { 
-            audio.src = songSelect.value; 
-            if(isPlaying) {
-                audio.play().catch(e => console.log(e)); 
-            }
-        }
-        
-        function nextSong() {
-            let i = songSelect.selectedIndex;
-            if(playMode === 1) i = Math.floor(Math.random() * songSelect.options.length);
-            else if(playMode === 0) i = (i + 1) % songSelect.options.length;
-            songSelect.selectedIndex = i; changeSong();
-        }
-
-        function prevSong() {
-            songSelect.selectedIndex = (songSelect.selectedIndex - 1 + songSelect.options.length) % songSelect.options.length;
-            changeSong();
-        }
-
-        function toggleMode() {
-            playMode = (playMode + 1) % 3;
-            const btn = document.getElementById('modeBtn');
-            if(playMode===0) btn.innerHTML = "Mode: Urut ➡️";
-            else if(playMode===1) btn.innerHTML = "Mode: Acak 🔀";
-            else btn.innerHTML = "Mode: 1 Lagu 🔁";
-        }
-        audio.onended = () => { if(playMode===2) audio.play(); else nextSong(); };
-
-        // --- NAVIGASI SLIDE ---
-        function switchMenu(menu) {
-            document.getElementById('sec-about').classList.remove('active');
+        if(menu === 'about') {
             document.getElementById('sec-curhat').classList.remove('active');
-            document.getElementById('nav-about').classList.remove('active');
-            document.getElementById('nav-curhat').classList.remove('active');
-            document.getElementById('sec-'+menu).classList.add('active');
-            document.getElementById('nav-'+menu).classList.add('active');
+            document.getElementById('nav-about').classList.add('active');
+        } else {
+            document.getElementById('sec-about').classList.remove('active');
+            document.getElementById('nav-curhat').classList.add('active');
         }
+    }
+    
+    function goToSlide(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('slide-'+n).classList.add('active');
+    }
+
+    // --- MOOD ---
+    function pilihMood(nama, laguIdx, judulLagu) {
+        moodDipilih = nama; tempRecom = laguIdx;
+        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+        event.currentTarget.classList.add('selected');
+        document.getElementById('recomText').innerHTML = `Lagi ngerasa ${nama.split(' ')[0]} ya? Coba dengerin <b>${judulLagu}</b> deh!`;
+        document.getElementById('recomBox').style.display = 'block';
+    }
+    
+    function putarLaguRecom() {
+        if(tempRecom !== null) { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); }
+    }
+
+    // --- FUNGSI KIRIM (Tembak Langsung) ---
+    function kirimBio(e) {
+        e.preventDefault();
+        const n = document.getElementById('vName').value || '-';
+        const i = document.getElementById('vIg').value || '-';
+        const cl = document.getElementById('vColor').value || '-';
+        const f = document.getElementById('vFood').value || '-';
+        const h = document.getElementById('vHobby').value || '-';
+        const d = document.getElementById('vDream').value || '-';
+        const b = document.getElementById('vTtl').value || '-';
+
+        const pesan = `🌟 *BIODATA BARU!*\n\n👤 Nama: ${n}\n📱 IG: ${i}\n🎨 Warna: ${cl}\n🍲 Makanan: ${f}\n🎣 Hobi: ${h}\n✈️ Cita-cita: ${d}\n🎂 TTL: ${b}`;
         
-        function goToSlide(n) {
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-            document.getElementById('slide-'+n).classList.add('active');
-        }
-
-        // --- MOOD REKOMENDASI ---
-        function pilihMood(nama, laguIdx, judulLagu) {
-            moodDipilih = nama; tempRecom = laguIdx;
-            document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-            event.target.classList.add('selected');
-            document.getElementById('recomText').innerHTML = `Lagi ngerasa ${nama.split(' ')[0]} ya? Coba dengerin <b>${judulLagu}</b> deh!`;
-            document.getElementById('recomBox').style.display = 'block';
-        }
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
         
-        function putarLaguRecom() {
-            if(tempRecom !== null) { 
-                songSelect.selectedIndex = tempRecom; 
-                changeSong(); 
-                if(!isPlaying) togglePlay(); 
-            }
-        }
+        fetch(url).then(res => res.json()).then(data => {
+            if(data.ok) { alert("Terkirim! 🚀"); document.getElementById('formBio').reset(); goToSlide(1); }
+            else { alert("Gagal! Cek apakah lo udah klik START di bot lo."); }
+        });
+    }
 
-        // --- FUNGSI KIRIM TELEGRAM ---
-        function prosesKirimPesan(pesan, formId, isBio) {
-            if (BOT_TOKEN === "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM" || BOT_TOKEN === "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM") {
-                alert("Error: Lo belum masukin Bot Token Telegram di kodingan!");
-                return;
-            }
-
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
-
-            fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                if(data.ok) {
-                    alert("Pesan sukses meluncur ke Telegram! 🚀");
-                    document.getElementById(formId).reset();
-                    if(isBio) goToSlide(1);
-                } else {
-                    alert("Gagal ngirim! Pastiin lo udah klik START di bot Telegram lo.");
-                }
-            })
-            .catch(err => alert("Gagal koneksi ke Telegram. Cek internet lo."));
-        }
-
-        function kirimBio(e) {
-            e.preventDefault();
-            const n = document.getElementById('vName').value || '-';
-            const i = document.getElementById('vIg').value || '-';
-            const cl = document.getElementById('vColor').value || '-';
-            const f = document.getElementById('vFood').value || '-';
-            const h = document.getElementById('vHobby').value || '-';
-            const d = document.getElementById('vDream').value || '-';
-            const b = document.getElementById('vTtl').value || '-';
-
-            const pesan = `🌟 *BIODATA BARU MASUK!*\n\n👤 Nama: ${n}\n📱 IG: ${i}\n🎨 Warna: ${cl}\n🍲 Makanan: ${f}\n🎣 Hobi: ${h}\n✈️ Cita-cita: ${d}\n🎂 TTL: ${b}`;
-            prosesKirimPesan(pesan, 'formBio', true);
-        }
-
-        function kirimCurhat(e) {
-            e.preventDefault();
-            const curhat = document.getElementById('curhatText').value;
-            const pesan = `💭 *CURHATAN MASUK!*\n\n🎭 Mood: ${moodDipilih}\n📝 Cerita:\n${curhat}`;
-            prosesKirimPesan(pesan, 'formCurhat', false);
-        }
-    </script>
+    function kirimCurhat(e) {
+        e.preventDefault();
+        const curhat = document.getElementById('curhatText').value;
+        const pesan = `💭 *CURHATAN BARU!*\n\n🎭 Mood: ${moodDipilih}\n📝 Cerita: ${curhat}`;
+        
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
+        
+        fetch(url).then(res => res.json()).then(data => {
+            if(data.ok) { alert("Terkirim! 🚀"); document.getElementById('formCurhat').reset(); }
+            else { alert("Gagal! Cek apakah lo udah klik START di bot lo."); }
+        });
+    }
+</script>
 </body>
 </html>
