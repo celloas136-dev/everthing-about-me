@@ -18,11 +18,10 @@
             --text-highlight: #d80032;
         }
 
-        /* AVIONIC DARK MODE */
         .dark-mode {
             --primary: #00f3ff;
             --secondary: #0055ff;
-            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-bg: rgba(15, 23, 42, 0.78);
             --glass-border: rgba(0, 243, 255, 0.35);
             --text-dark: #e2e8f0;
             --bg-body: linear-gradient(-45deg, #020617, #0f172a, #1e1b4b, #020617);
@@ -47,7 +46,6 @@
             overflow-x: hidden;
         }
 
-        /* BINTANG-BINTANG (DARK MODE ONLY) */
         body.dark-mode::before {
             content: '';
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -79,11 +77,7 @@
             animation: twinkle 8s ease-in-out infinite alternate;
         }
 
-        @keyframes twinkle {
-            0% { opacity: 0.6; }
-            100% { opacity: 1; }
-        }
-
+        @keyframes twinkle { 0% { opacity: 0.6; } 100% { opacity: 1; } }
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -202,10 +196,7 @@
         .scroll-box::-webkit-scrollbar { width: 5px; }
         .scroll-box::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
 
-        /* GALERI POLAROID INTERAKTIF */
-        .gallery-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 10px;
-        }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 10px; }
         .polaroid {
             background: #fff; padding: 10px 10px 25px 10px; border-radius: 6px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: 0.4s ease;
@@ -213,10 +204,7 @@
         }
         .polaroid:nth-child(even) { transform: rotate(3.5deg); }
         .polaroid:hover { transform: scale(1.08) rotate(0deg); z-index: 10; box-shadow: 0 14px 28px rgba(0,0,0,0.28); }
-        .polaroid img {
-            width: 100%; height: 135px; object-fit: cover; border-radius: 4px;
-            background: #e5e7eb; display: block;
-        }
+        .polaroid img { width: 100%; height: 135px; object-fit: cover; border-radius: 4px; background: #e5e7eb; display: block; }
         .polaroid::after {
             content: '🔍 Tap buat Zoom'; position: absolute; bottom: 6px; left: 0; width: 100%;
             font-size: 0.65rem; color: #777; font-weight: 600; text-align: center;
@@ -224,7 +212,7 @@
         .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 12px rgba(0, 243, 255, 0.22); }
         .dark-mode .polaroid::after { color: #94a3b8; }
 
-        /* 🔎 POPUP ZOOM FOTO (ZOOM MODAL) */
+        /* ZOOM MODAL */
         #zoomModal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(10px);
@@ -239,12 +227,8 @@
             text-align: center;
         }
         .dark-mode .zoom-box { background: #0f172a; border: 2px solid var(--primary); box-shadow: 0 0 30px rgba(0, 243, 255, 0.4); }
-        .zoom-box img {
-            max-width: 100%; max-height: 72vh; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;
-        }
-        .zoom-caption {
-            margin-top: 10px; font-family: 'Fredoka', cursive; font-size: 0.95rem; color: var(--text-dark);
-        }
+        .zoom-box img { max-width: 100%; max-height: 72vh; object-fit: contain; border-radius: 6px; display: block; margin: 0 auto; }
+        .zoom-caption { margin-top: 10px; font-family: 'Fredoka', cursive; font-size: 0.95rem; color: var(--text-dark); }
         .dark-mode .zoom-caption { color: var(--primary); }
         .close-zoom {
             position: absolute; top: -18px; right: -18px; background: var(--primary);
@@ -254,23 +238,199 @@
         }
         .close-zoom:hover { transform: scale(1.15) rotate(90deg); }
         @keyframes popZoom { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .footer { margin-top: auto; padding: 18px 0; font-size: 0.85rem; text-align: center; }
         .footer a { color: var(--primary); text-decoration: none; font-weight: bold; }
         .secret-icon { cursor: pointer; transition: 0.3s; display: inline-block; }
         .secret-icon:hover { transform: scale(1.35) translateY(-3px); }
 
-        #secretModal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 999; justify-content: center; align-items: center;
-            animation: fadeIn 0.3s;
+        /* ========== ACCESS TERMINAL (ESTETIK) ========== */
+        #accessModal {
+            display: none; position: fixed; inset: 0; z-index: 1100;
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(12px);
+            justify-content: center; align-items: center; padding: 20px;
+            animation: fadeIn 0.3s ease;
         }
-        .secret-box {
-            background: #0b1220; border: 2px dashed #00f3ff; border-radius: 20px; padding: 28px;
-            text-align: center; color: #00f3ff; width: 90%; max-width: 400px;
-            box-shadow: 0 0 32px rgba(0, 243, 255, 0.45);
+        .access-panel {
+            width: 100%; max-width: 380px;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 28px 24px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .dark-mode .access-panel {
+            background: rgba(8, 15, 30, 0.92);
+            border-color: rgba(0, 243, 255, 0.45);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.25);
+        }
+        .access-panel::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+        .access-icon {
+            width: 64px; height: 64px; margin: 0 auto 14px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .dark-mode .access-icon { color: #0f172a; box-shadow: 0 0 20px rgba(0,243,255,0.5); }
+        .access-title {
+            font-family: 'Fredoka', cursive; font-size: 1.35rem;
+            color: var(--text-highlight); margin-bottom: 6px;
+        }
+        .access-sub {
+            font-size: 0.8rem; opacity: 0.8; margin-bottom: 18px; line-height: 1.4;
+        }
+        .access-input {
+            width: 100%; padding: 14px 16px; border-radius: 14px;
+            border: 2px solid var(--glass-border);
+            background: rgba(255,255,255,0.25);
+            font-family: 'Poppins'; font-size: 0.95rem; color: var(--text-dark);
+            outline: none; text-align: center; letter-spacing: 2px;
+            transition: 0.25s;
+        }
+        .dark-mode .access-input {
+            background: rgba(0,0,0,0.35);
+            border-color: rgba(0,243,255,0.3);
+            color: #e2e8f0;
+        }
+        .access-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255,117,140,0.2);
+        }
+        .dark-mode .access-input:focus {
+            box-shadow: 0 0 0 3px rgba(0,243,255,0.2);
+        }
+        .access-error {
+            display: none; margin-top: 10px; font-size: 0.8rem;
+            color: #ff4d6d; font-weight: 600;
+        }
+        .dark-mode .access-error { color: #ff8fab; }
+        .access-actions { display: flex; gap: 10px; margin-top: 16px; }
+        .access-actions button { flex: 1; }
+        .shake { animation: shake 0.4s ease; }
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+
+        /* ========== SECRET SPACE (FOTO DIGANTUNG DI ANGKASA) ========== */
+        #secretSpace {
+            display: none; position: fixed; inset: 0; z-index: 1200;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow: hidden;
+        }
+        #secretSpace.active { display: block; }
+
+        .space-stars {
+            position: absolute; inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 10% 20%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 30% 40%, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 50% 10%, #fff, transparent),
+                radial-gradient(2px 2px at 70% 30%, rgba(0,243,255,0.8), transparent),
+                radial-gradient(1px 1px at 85% 60%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 20% 70%, rgba(255,255,255,0.85), transparent),
+                radial-gradient(1px 1px at 60% 80%, #fff, transparent),
+                radial-gradient(2px 2px at 40% 55%, rgba(0,243,255,0.7), transparent),
+                radial-gradient(1px 1px at 90% 15%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 5% 50%, rgba(255,255,255,0.9), transparent);
+            background-size: 100% 100%;
+            animation: twinkle 6s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        .space-header {
+            position: relative; z-index: 5;
+            text-align: center; padding: 20px 16px 10px;
+            color: #00f3ff;
+        }
+        .space-header h2 {
+            font-family: 'Fredoka', cursive; font-size: 1.4rem;
+            text-shadow: 0 0 20px rgba(0,243,255,0.6); color: #00f3ff; margin-bottom: 4px;
+        }
+        .space-header p { font-size: 0.8rem; opacity: 0.85; color: #a5f3fc; }
+
+        .hanging-area {
+            position: relative; height: calc(100vh - 140px);
+            width: 100%; max-width: 900px; margin: 0 auto;
+            overflow: hidden;
+        }
+
+        /* FOTO GANTUNG */
+        .hang-item {
+            position: absolute;
+            width: 120px;
+            cursor: pointer;
+            animation: floatY 5s ease-in-out infinite;
+        }
+        .hang-item:nth-child(1) { left: 8%; top: 8%; animation-delay: 0s; transform: rotate(-6deg); }
+        .hang-item:nth-child(2) { left: 38%; top: 4%; animation-delay: 0.6s; transform: rotate(4deg); width: 130px; }
+        .hang-item:nth-child(3) { left: 68%; top: 12%; animation-delay: 1.1s; transform: rotate(-3deg); }
+        .hang-item:nth-child(4) { left: 18%; top: 42%; animation-delay: 0.3s; transform: rotate(5deg); width: 125px; }
+        .hang-item:nth-child(5) { left: 52%; top: 38%; animation-delay: 1.4s; transform: rotate(-5deg); }
+        .hang-item:nth-child(6) { left: 78%; top: 48%; animation-delay: 0.8s; transform: rotate(3deg); width: 115px; }
+        .hang-item:nth-child(7) { left: 5%; top: 68%; animation-delay: 1.7s; transform: rotate(-4deg); }
+        .hang-item:nth-child(8) { left: 42%; top: 70%; animation-delay: 0.4s; transform: rotate(6deg); width: 128px; }
+
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0) rotate(var(--rot, -4deg)); }
+            50% { transform: translateY(-12px) rotate(var(--rot, -4deg)); }
+        }
+        .hang-item:nth-child(1) { --rot: -6deg; }
+        .hang-item:nth-child(2) { --rot: 4deg; }
+        .hang-item:nth-child(3) { --rot: -3deg; }
+        .hang-item:nth-child(4) { --rot: 5deg; }
+        .hang-item:nth-child(5) { --rot: -5deg; }
+        .hang-item:nth-child(6) { --rot: 3deg; }
+        .hang-item:nth-child(7) { --rot: -4deg; }
+        .hang-item:nth-child(8) { --rot: 6deg; }
+
+        .hang-string {
+            width: 2px; height: 40px; margin: 0 auto;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,243,255,0.6));
+            border-radius: 2px;
+        }
+        .hang-photo {
+            background: #fff;
+            padding: 8px 8px 22px 8px;
+            border-radius: 4px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.45), 0 0 20px rgba(0,243,255,0.15);
+            transition: 0.35s ease;
+        }
+        .hang-photo:hover {
+            transform: scale(1.08);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.55), 0 0 30px rgba(0,243,255,0.35);
+        }
+        .hang-photo img {
+            width: 100%; height: 100px; object-fit: cover; border-radius: 2px; display: block; background: #334155;
+        }
+
+        .space-close {
+            position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+            z-index: 10; min-width: 180px;
+            background: linear-gradient(135deg, #00f3ff, #0055ff);
+            color: #0f172a; border: none; border-radius: 16px;
+            padding: 12px 22px; font-family: 'Fredoka', cursive; font-size: 1rem;
+            cursor: pointer; box-shadow: 0 0 25px rgba(0,243,255,0.45);
+        }
+        .space-close:hover { transform: translateX(-50%) translateY(-3px); }
+
+        @media (max-width: 480px) {
+            .hang-item { width: 95px !important; }
+            .hang-photo img { height: 80px; }
+            .hang-item:nth-child(2), .hang-item:nth-child(4), .hang-item:nth-child(8) { width: 100px !important; }
+        }
     </style>
 </head>
 <body>
@@ -280,7 +440,6 @@
     <div class="glass-card music-player">
         <h3><i class="fas fa-headphones"></i> pilih lagu yang lo suka</h3>
         <audio id="audioPlayer"></audio>
-        
         <select id="songSelect" class="song-select" onchange="changeSong()">
             <option value="./song1.mp3">1. The One That Got Away</option>
             <option value="./song2.mp3">2. Secret Love Song</option>
@@ -293,7 +452,6 @@
             <option value="./song9.mp3">9. Enchanted</option>
             <option value="./song10.mp3">10. Angels Like You</option>
         </select>
-
         <div class="controls">
             <button class="btn-icon" onclick="prevSong()"><i class="fas fa-backward"></i></button>
             <button class="btn-icon" onclick="togglePlay()" id="playBtn"><i class="fas fa-play"></i></button>
@@ -361,23 +519,19 @@
             <div class="mood-box"><button class="mood-btn" onclick="pilihMood('Kesel 😡', 5, 'Into It')">😡</button><span class="mood-text">Kesel</span></div>
             <div class="mood-box"><button class="mood-btn" onclick="pilihMood('Chill 😌', 4, 'Cinnamon Girl')">😌</button><span class="mood-text">Chill</span></div>
         </div>
-
         <div id="recomBox" style="display:none; background:rgba(255,255,255,0.2); padding:10px; border-radius:15px; margin-bottom:15px; border: 1px solid var(--glass-border);">
             <p id="recomText" style="font-size:0.8rem; font-weight:bold;"></p>
             <div class="btn-flex"><button class="btn-action" style="font-size:0.8rem; padding:8px;" onclick="putarLaguRecom()">Putar Lagu</button></div>
         </div>
-
         <form id="formCurhat" onsubmit="kirimCurhat(event)">
             <div class="form-group"><textarea id="curhatText" class="input-custom" placeholder="Ketik curhatan lo di sini..." required></textarea></div>
             <button type="submit" class="btn-action"><i class="fas fa-paper-plane"></i> Kirim</button>
         </form>
     </div>
 
-    <!-- 📸 GALERI POLAROID WITH ZOOM INTERACTIVE -->
     <div id="sec-gallery" class="glass-card content-section">
         <h2>Aesthetic Gallery 📸</h2>
         <p>Tap foto mana saja buat liat ukuran gede ✨</p>
-        
         <div class="scroll-box">
             <div class="gallery-grid">
                 <div class="polaroid" onclick="openZoom(this)">
@@ -397,10 +551,10 @@
     </div>
 
     <div class="footer">
-        <p>follow ig gua ya di <a href="https://instagram.com/angn_smrn" target="_blank">@angn_smrn</a> <span class="secret-icon" onclick="cekPassword()">✈️</span></p>
+        <p>follow ig gua ya di <a href="https://instagram.com/angn_smrn" target="_blank">@angn_smrn</a> <span class="secret-icon" onclick="openAccess()" title="???">✈️</span></p>
     </div>
 
-    <!-- 🔎 POPUP ZOOM FOTO MODAL -->
+    <!-- ZOOM -->
     <div id="zoomModal" onclick="closeZoom()">
         <div class="zoom-box" onclick="event.stopPropagation()">
             <span class="close-zoom" onclick="closeZoom()">&times;</span>
@@ -409,19 +563,72 @@
         </div>
     </div>
 
-    <!-- 🔒 SECRET MODAL -->
-    <div id="secretModal">
-        <div class="secret-box">
-            <i class="fas fa-plane-departure" style="font-size: 3rem; margin-bottom: 15px;"></i>
-            <h2 style="color:#00f3ff; font-family:'Poppins';">ACCESS GRANTED</h2>
-            <p style="color:#e2e8f0; font-size: 0.9rem;">Selamat datang di Avionic Secret Base, Cell! 🎯<br><br>Sektor penerbangan menunggumu. Keep focusing on your target: Panahan, Memancing, dan Avionic Engineer.</p>
-            <button class="btn-action" style="margin-top:20px;" onclick="tutupSecret()">Tutup Radar 📡</button>
+    <!-- ACCESS TERMINAL ESTETIK -->
+    <div id="accessModal" onclick="closeAccess(event)">
+        <div class="access-panel" id="accessPanel" onclick="event.stopPropagation()">
+            <div class="access-icon"><i class="fas fa-satellite"></i></div>
+            <div class="access-title">Radar Terminal</div>
+            <div class="access-sub">Sektor terbatas. Masukkan kode akses untuk membuka base rahasia.</div>
+            <input type="password" id="accessInput" class="access-input" placeholder="••••••••" autocomplete="off">
+            <div class="access-error" id="accessError">Akses ditolak. Coba lagi.</div>
+            <div class="access-actions">
+                <button class="btn-action btn-secondary" onclick="closeAccess(true)">Batal</button>
+                <button class="btn-action" onclick="submitAccess()"><i class="fas fa-unlock"></i> Buka</button>
+            </div>
         </div>
+    </div>
+
+    <!-- SECRET SPACE: FOTO DIGANTUNG DI ANGKASA -->
+    <div id="secretSpace">
+        <div class="space-stars"></div>
+        <div class="space-header">
+            <h2>✦ Avionic Secret Base ✦</h2>
+            <p>Foto-foto yang digantung di angkasa. Tap buat zoom.</p>
+        </div>
+        <div class="hanging-area">
+            <!-- Pakai galeri yang ada + bisa ditambah secret1-4 nanti -->
+            <div class="hang-item" onclick="openZoomFromSrc(this)">
+                <div class="hang-string"></div>
+                <div class="hang-photo"><img src="./galeri1.jpeg" onerror="this.src='./galeri1.jpg'"></div>
+            </div>
+            <div class="hang-item" onclick="openZoomFromSrc(this)">
+                <div class="hang-string"></div>
+                <div class="hang-photo"><img src="./galeri2.jpeg" onerror="this.src='./galeri2.jpg'"></div>
+            </div>
+            <div class="hang-item" onclick="openZoomFromSrc(this)">
+                <div class="hang-string"></div>
+                <div class="hang-photo"><img src="./galeri3.jpeg" onerror="this.src='./galeri3.jpg'"></div>
+            </div>
+            <div class="hang-item" onclick="openZoomFromSrc(this)">
+                <div class="hang-string"></div>
+                <div class="hang-photo"><img src="./galeri4.jpeg" onerror="this.src='./galeri4.jpg'"></div>
+            </div>
+            <div class="hang-item" onclick="openZoomFromSrc(this)">
+                <div class="hang-string"></div>
+                <div class="hang-photo"><img src="./foto-cello.jpg" onerror="this.src='./foto-cello.jpeg'"></div>
+            </div>
+            <div class="hang-item" onclick="openZoomFromSrc(this)">
+                <div class="hang-string"></div>
+                <div class="hang-photo"><img src="./galeri1.jpeg" onerror="this.src='./galeri1.jpg'"></div>
+            </div>
+            <div class="hang-item" onclick="openZoomFromSrc(this)">
+                <div class="hang-string"></div>
+                <div class="hang-photo"><img src="./galeri2.jpeg" onerror="this.src='./galeri2.jpg'"></div>
+            </div>
+            <div class="hang-item" onclick="openZoomFromSrc(this)">
+                <div class="hang-string"></div>
+                <div class="hang-photo"><img src="./galeri3.jpeg" onerror="this.src='./galeri3.jpg'"></div>
+            </div>
+        </div>
+        <button class="space-close" onclick="closeSecretSpace()">Tutup Base 📡</button>
     </div>
 
     <script>
         const BOT_TOKEN = "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM"; 
         const CHAT_ID = "7133977857";
+
+        // Kunci akses — ganti sendiri di sini (jangan sebar)
+        const ACCESS_KEY = "avionic";
 
         const audio = document.getElementById('audioPlayer');
         const songSelect = document.getElementById('songSelect');
@@ -429,7 +636,6 @@
         let isPlaying = false, playMode = 0, tempRecom = null, moodDipilih = "Nggak milih emot";
         
         audio.src = songSelect.value;
-        audio.onerror = function() { console.error("Lagu Error/Tidak Ditemukan: " + songSelect.value); };
 
         function togglePlay() {
             if(isPlaying){ 
@@ -440,7 +646,6 @@
             }
             isPlaying = !isPlaying;
         }
-
         function changeSong() { audio.src = songSelect.value; if(isPlaying) audio.play(); }
         function nextSong() {
             let i = songSelect.selectedIndex;
@@ -483,17 +688,20 @@
             document.getElementById('slide-'+n).classList.add('active');
         }
 
-        /* FUNGSI ZOOM FOTO GALERI */
         function openZoom(element) {
             const img = element.querySelector('img');
-            const modal = document.getElementById('zoomModal');
-            const modalImg = document.getElementById('modalImg');
             if(img && img.src) {
-                modalImg.src = img.src;
-                modal.style.display = 'flex';
+                document.getElementById('modalImg').src = img.src;
+                document.getElementById('zoomModal').style.display = 'flex';
             }
         }
-
+        function openZoomFromSrc(el) {
+            const img = el.querySelector('img');
+            if(img) {
+                document.getElementById('modalImg').src = img.src;
+                document.getElementById('zoomModal').style.display = 'flex';
+            }
+        }
         function closeZoom() {
             document.getElementById('zoomModal').style.display = 'none';
         }
@@ -505,7 +713,6 @@
             document.getElementById('recomText').innerHTML = `Lagi ngerasa ${nama.split(' ')[0]} ya? Coba dengerin <b>${judulLagu}</b> deh!`;
             document.getElementById('recomBox').style.display = 'block';
         }
-        
         function putarLaguRecom() {
             if(tempRecom !== null) { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); }
         }
@@ -520,7 +727,6 @@
                 } else { alert("Gagal ngirim! Pastiin lo udah pernah klik START di bot Telegram."); }
             }).catch(() => { alert("Gagal koneksi! Cek internet lo."); });
         }
-
         function kirimBio(e) {
             e.preventDefault();
             const n = document.getElementById('vName').value || '-';
@@ -533,7 +739,6 @@
             const pesan = `🌟 *BIODATA BARU MASUK!*\n\n👤 Nama: ${n}\n📱 IG: ${i}\n🎨 Warna: ${cl}\n🍲 Makanan: ${f}\n🎣 Hobi: ${h}\n✈️ Cita-cita: ${d}\n🎂 TTL: ${b}`;
             kirimPesanKeTele(pesan, 'formBio', true);
         }
-
         function kirimCurhat(e) {
             e.preventDefault();
             const curhat = document.getElementById('curhatText').value;
@@ -541,16 +746,40 @@
             kirimPesanKeTele(pesan, 'formCurhat', false);
         }
 
-        function cekPassword() {
-            let pwd = prompt("Terminal Radar Terkunci.\nMasukkan kode akses Avionic:");
-            if(pwd === "avionic") {
-                document.getElementById('secretModal').style.display = 'flex';
-            } else if(pwd !== null) {
-                alert("Akses Ditolak! Kode salah.");
+        /* ===== ACCESS + SECRET SPACE ===== */
+        function openAccess() {
+            document.getElementById('accessModal').style.display = 'flex';
+            document.getElementById('accessInput').value = '';
+            document.getElementById('accessError').style.display = 'none';
+            setTimeout(() => document.getElementById('accessInput').focus(), 200);
+        }
+        function closeAccess(e) {
+            if (e === true || (e && e.target === document.getElementById('accessModal'))) {
+                document.getElementById('accessModal').style.display = 'none';
             }
         }
-        function tutupSecret() {
-            document.getElementById('secretModal').style.display = 'none';
+        function submitAccess() {
+            const val = document.getElementById('accessInput').value.trim();
+            const panel = document.getElementById('accessPanel');
+            const err = document.getElementById('accessError');
+            if (val === ACCESS_KEY) {
+                err.style.display = 'none';
+                document.getElementById('accessModal').style.display = 'none';
+                document.getElementById('secretSpace').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                err.style.display = 'block';
+                panel.classList.remove('shake');
+                void panel.offsetWidth;
+                panel.classList.add('shake');
+            }
+        }
+        document.getElementById('accessInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') submitAccess();
+        });
+        function closeSecretSpace() {
+            document.getElementById('secretSpace').classList.remove('active');
+            document.body.style.overflow = '';
         }
     </script>
 </body>
