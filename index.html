@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* === VARIABEL WARNA (TERMASUK THEME SWITCHER) === */
         :root {
             --primary: #ff758c;
             --secondary: #ff7eb3;
@@ -19,14 +18,14 @@
             --text-highlight: #d80032;
         }
 
-        /* AVIONIC DARK MODE (KOKPIT THEME) */
+        /* AVIONIC DARK MODE */
         .dark-mode {
-            --primary: #00f3ff; /* Neon Cyan */
-            --secondary: #0055ff; /* Deep Blue */
-            --glass-bg: rgba(15, 23, 42, 0.7);
-            --glass-border: rgba(0, 243, 255, 0.3);
+            --primary: #00f3ff;
+            --secondary: #0055ff;
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(0, 243, 255, 0.35);
             --text-dark: #e2e8f0;
-            --bg-body: linear-gradient(-45deg, #0f172a, #1e293b, #020617);
+            --bg-body: linear-gradient(-45deg, #020617, #0f172a, #1e1b4b, #020617);
             --text-highlight: #00f3ff;
         }
 
@@ -42,14 +41,47 @@
             padding: 20px 15px;
             background: var(--bg-body);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: gradientBG 18s ease infinite;
             transition: all 0.5s ease;
+            position: relative;
+            overflow-x: hidden;
         }
 
+        /* EFEK BINTANG DI DARK MODE */
         body.dark-mode::before {
-            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px; z-index: -1; pointer-events: none;
+            content: '';
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1;
+            background-image:
+                radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 40px 70px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 130px 80px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 160px 120px, #fff, transparent),
+                radial-gradient(2px 2px at 200px 50px, rgba(0,243,255,0.9), transparent),
+                radial-gradient(1px 1px at 250px 160px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 300px 20px, rgba(255,255,255,0.85), transparent),
+                radial-gradient(1px 1px at 350px 90px, #fff, transparent),
+                radial-gradient(2px 2px at 400px 140px, rgba(0,243,255,0.7), transparent),
+                radial-gradient(1px 1px at 450px 60px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 500px 180px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 550px 30px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 600px 110px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 50px 200px, #fff, transparent),
+                radial-gradient(2px 2px at 120px 250px, rgba(0,243,255,0.8), transparent),
+                radial-gradient(1px 1px at 180px 300px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 240px 220px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 320px 280px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 380px 240px, rgba(255,255,255,0.75), transparent),
+                radial-gradient(1px 1px at 460px 320px, #fff, transparent),
+                radial-gradient(2px 2px at 520px 260px, rgba(0,243,255,0.85), transparent);
+            background-size: 600px 600px;
+            animation: twinkle 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
         }
 
         @keyframes gradientBG {
@@ -59,145 +91,149 @@
         }
 
         .theme-btn {
-            position: absolute; top: 15px; right: 15px;
+            position: fixed; top: 15px; right: 15px;
             background: var(--glass-bg); border: 2px solid var(--glass-border);
-            color: var(--primary); font-size: 1.5rem; width: 45px; height: 45px;
+            color: var(--primary); font-size: 1.4rem; width: 48px; height: 48px;
             border-radius: 50%; cursor: pointer; backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s; z-index: 100;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15); transition: 0.3s; z-index: 100;
         }
-        .theme-btn:hover { transform: rotate(30deg) scale(1.1); }
-        .dark-mode .theme-btn { box-shadow: 0 0 15px var(--primary); }
+        .theme-btn:hover { transform: rotate(25deg) scale(1.1); }
+        .dark-mode .theme-btn { box-shadow: 0 0 18px var(--primary); }
 
         .glass-card {
             background: var(--glass-bg); backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px); border: 2px solid var(--glass-border);
-            border-radius: 30px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            width: 100%; max-width: 500px; padding: 25px; text-align: center;
-            margin-bottom: 20px; transition: all 0.5s ease;
+            border-radius: 28px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            width: 100%; max-width: 500px; padding: 24px; text-align: center;
+            margin-bottom: 18px; transition: all 0.45s ease;
         }
 
-        .music-player h3 { font-family: 'Fredoka', cursive; color: var(--text-highlight); margin-bottom: 15px; transition: 0.3s;}
+        .music-player h3 { font-family: 'Fredoka', cursive; color: var(--text-highlight); margin-bottom: 14px; }
         .song-select {
-            width: 100%; padding: 12px 15px; border-radius: 15px; border: none;
-            background: rgba(255,255,255,0.2); font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem; color: var(--text-dark); outline: none; margin-bottom: 15px;
+            width: 100%; padding: 12px 14px; border-radius: 14px; border: none;
+            background: rgba(255,255,255,0.25); font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem; color: var(--text-dark); outline: none; margin-bottom: 14px;
         }
         .dark-mode .song-select option { color: #000; }
-        
-        .controls { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+
+        .controls { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
         .btn-icon {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none; color: white; width: 50px; height: 50px; border-radius: 50%;
-            cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: none; color: white; width: 48px; height: 48px; border-radius: 50%;
+            cursor: pointer; font-size: 1.05rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
         }
-        .dark-mode .btn-icon { box-shadow: 0 0 15px var(--primary); color: #0f172a; }
-        .btn-icon:hover { transform: translateY(-5px) scale(1.05); }
+        .dark-mode .btn-icon { box-shadow: 0 0 16px var(--primary); color: #0f172a; }
+        .btn-icon:hover { transform: translateY(-4px) scale(1.06); }
+
         .btn-mode {
             background: rgba(255,255,255,0.2); border: 2px solid var(--primary);
-            color: var(--primary); padding: 8px 20px; border-radius: 20px;
-            font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 15px;
+            color: var(--primary); padding: 8px 18px; border-radius: 20px;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 14px;
         }
         .btn-mode:hover { background: var(--primary); color: white; }
-        .dark-mode .btn-mode:hover { color: #0f172a; box-shadow: 0 0 10px var(--primary); }
+        .dark-mode .btn-mode:hover { color: #0f172a; box-shadow: 0 0 12px var(--primary); }
 
-        .nav-menu { display: flex; gap: 8px; width: 100%; max-width: 500px; margin-bottom: 20px; }
+        .nav-menu { display: flex; gap: 8px; width: 100%; max-width: 500px; margin-bottom: 18px; }
         .nav-btn {
-            flex: 1; padding: 10px; border: 1px solid var(--glass-border); border-radius: 15px;
+            flex: 1; padding: 11px 8px; border: 1px solid var(--glass-border); border-radius: 14px;
             background: var(--glass-bg); backdrop-filter: blur(10px);
-            font-family: 'Fredoka', cursive; font-size: 0.9rem; color: var(--text-dark);
+            font-family: 'Fredoka', cursive; font-size: 0.88rem; color: var(--text-dark);
             cursor: pointer; transition: 0.3s;
         }
         .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .dark-mode .nav-btn.active { color: #0f172a; box-shadow: 0 0 15px var(--primary); }
+        .dark-mode .nav-btn.active { color: #0f172a; box-shadow: 0 0 16px var(--primary); }
 
-        .content-section { display: none; animation: slideUp 0.5s ease; }
+        .content-section { display: none; animation: slideUp 0.45s ease; }
         .content-section.active { display: block; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         .slide { display: none; }
         .slide.active { display: block; }
 
-        .img-wrapper { position: relative; width: 170px; height: 170px; margin: 0 auto 20px; }
+        .img-wrapper { position: relative; width: 170px; height: 170px; margin: 0 auto 18px; }
         .img-wrapper::before {
             content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
             background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%;
             z-index: -1; animation: spin 5s linear infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        .profile-img { width: 170px; height: 170px; object-fit: cover; border-radius: 50%; border: 4px solid var(--glass-border); }
+        .profile-img { width: 170px; height: 170px; object-fit: cover; border-radius: 50%; border: 4px solid var(--glass-border); background: #eee; }
 
-        h2 { font-family: 'Fredoka', cursive; color: var(--text-highlight); font-size: 1.5rem; margin-bottom: 10px; transition: 0.3s;}
-        p { font-size: 0.9rem; margin-bottom: 15px; }
+        h2 { font-family: 'Fredoka', cursive; color: var(--text-highlight); font-size: 1.45rem; margin-bottom: 10px; }
+        p { font-size: 0.9rem; margin-bottom: 14px; }
 
         .fact-box {
-            background: rgba(255,255,255,0.2); padding: 20px; border-radius: 20px;
-            text-align: left; border-left: 6px solid var(--primary); margin-bottom: 20px;
+            background: rgba(255,255,255,0.2); padding: 18px; border-radius: 18px;
+            text-align: left; border-left: 6px solid var(--primary); margin-bottom: 18px;
         }
         .fact-item { margin-bottom: 10px; font-size: 0.85rem; }
 
         .form-group { text-align: left; margin-bottom: 10px; }
         .input-custom {
             width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.2); font-family: 'Poppins'; outline: none; font-size: 0.85rem; color: var(--text-dark);
+            background: rgba(255,255,255,0.22); font-family: 'Poppins'; outline: none; font-size: 0.85rem; color: var(--text-dark);
         }
         .dark-mode .input-custom::placeholder { color: #94a3b8; }
         textarea.input-custom { height: 100px; resize: none; }
 
         .btn-action {
-            width: 100%; padding: 14px; border-radius: 15px; border: none;
+            width: 100%; padding: 13px; border-radius: 14px; border: none;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white; font-family: 'Fredoka', cursive; font-size: 1rem;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s; margin-top: 10px;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.12); transition: 0.3s; margin-top: 10px;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .dark-mode .btn-action { color: #0f172a; box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); }
+        .dark-mode .btn-action { color: #0f172a; box-shadow: 0 0 16px rgba(0, 243, 255, 0.4); }
         .btn-action:hover { transform: translateY(-3px); }
         .btn-secondary { background: rgba(255,255,255,0.2); color: var(--text-dark); box-shadow: none; border: 1px solid var(--glass-border); }
         .btn-secondary:hover { background: var(--primary); color: white; }
         .btn-flex { display: flex; gap: 10px; margin-top: 10px; }
 
-        .mood-container { display: flex; justify-content: space-around; margin: 20px 0; }
+        .mood-container { display: flex; justify-content: space-around; margin: 18px 0; }
         .mood-box { text-align: center; }
         .mood-btn {
             font-size: 1.8rem; background: rgba(255,255,255,0.2); border: 2px solid transparent;
-            width: 55px; height: 55px; border-radius: 50%; cursor: pointer; transition: 0.3s;
+            width: 54px; height: 54px; border-radius: 50%; cursor: pointer; transition: 0.3s;
         }
-        .mood-btn:hover, .mood-btn.selected { background: rgba(255,255,255,0.5); border-color: var(--primary); transform: scale(1.1); box-shadow: 0 0 10px var(--primary);}
-        .mood-text { display: block; font-size: 0.7rem; font-weight: 600; margin-top: 5px; opacity: 0.8; }
-        
-        .scroll-box { max-height: 50vh; overflow-y: auto; padding-right: 5px; }
+        .mood-btn:hover, .mood-btn.selected { background: rgba(255,255,255,0.45); border-color: var(--primary); transform: scale(1.1); box-shadow: 0 0 12px var(--primary); }
+        .mood-text { display: block; font-size: 0.7rem; font-weight: 600; margin-top: 5px; opacity: 0.85; }
+
+        .scroll-box { max-height: 52vh; overflow-y: auto; padding-right: 4px; }
         .scroll-box::-webkit-scrollbar { width: 5px; }
         .scroll-box::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
 
+        /* GALERI POLAROID */
         .gallery-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 10px;
         }
         .polaroid {
-            background: white; padding: 8px 8px 25px 8px; border-radius: 5px;
+            background: #fff; padding: 8px 8px 22px 8px; border-radius: 4px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: 0.4s ease;
             transform: rotate(-3deg); cursor: pointer;
         }
-        .polaroid:nth-child(even) { transform: rotate(4deg); }
-        .polaroid:hover { transform: scale(1.1) rotate(0deg); z-index: 10; box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-        .polaroid img { width: 100%; height: 120px; object-fit: cover; border-radius: 2px; }
-        .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
+        .polaroid:nth-child(even) { transform: rotate(3.5deg); }
+        .polaroid:hover { transform: scale(1.08) rotate(0deg); z-index: 10; box-shadow: 0 14px 28px rgba(0,0,0,0.28); }
+        .polaroid img {
+            width: 100%; height: 120px; object-fit: cover; border-radius: 2px;
+            background: #e5e7eb; display: block;
+        }
+        .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 12px rgba(0, 243, 255, 0.22); }
 
-        .footer { margin-top: auto; padding: 20px 0; font-size: 0.85rem; text-align: center; }
+        .footer { margin-top: auto; padding: 18px 0; font-size: 0.85rem; text-align: center; }
         .footer a { color: var(--primary); text-decoration: none; font-weight: bold; }
         .secret-icon { cursor: pointer; transition: 0.3s; display: inline-block; }
-        .secret-icon:hover { transform: scale(1.3) translateY(-3px); }
+        .secret-icon:hover { transform: scale(1.35) translateY(-3px); }
 
         #secretModal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 999; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.85); z-index: 999; justify-content: center; align-items: center;
             animation: fadeIn 0.3s;
         }
         .secret-box {
-            background: #111; border: 2px dashed #00f3ff; border-radius: 20px; padding: 30px;
+            background: #0b1220; border: 2px dashed #00f3ff; border-radius: 20px; padding: 28px;
             text-align: center; color: #00f3ff; width: 90%; max-width: 400px;
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
+            box-shadow: 0 0 32px rgba(0, 243, 255, 0.45);
         }
-        .secret-box img { width: 100px; margin-bottom: 15px; animation: spin 4s linear infinite; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
@@ -239,7 +275,9 @@
     <div id="sec-about" class="glass-card content-section active">
         <div id="slide-1" class="slide active">
             <div class="img-wrapper">
-                <img src="foto-cello.jpg" alt="Foto Cello" class="profile-img" onerror="this.src='https://via.placeholder.com/170?text=Foto+Cello'">
+                <!-- PENDETEKSI GAMBAR OTOMATIS: Kalo .jpg gagal, pindah ke .jpeg -->
+                <img src="./foto-cello.jpg" alt="Foto Cello" class="profile-img"
+                     onerror="this.onerror=null; this.src='./foto-cello.jpeg';">
             </div>
             <h2>Hai, nama gua Cello ✨</h2>
             <p>Welcome to my space! Santai dulu aja sambil dengerin lagu.</p>
@@ -290,7 +328,7 @@
         </div>
 
         <div id="recomBox" style="display:none; background:rgba(255,255,255,0.2); padding:10px; border-radius:15px; margin-bottom:15px; border: 1px solid var(--glass-border);">
-            <p id="recomText" style="font-size:0.8rem; font-weight:bold; color:var(--text-dark);"></p>
+            <p id="recomText" style="font-size:0.8rem; font-weight:bold;"></p>
             <div class="btn-flex"><button class="btn-action" style="font-size:0.8rem; padding:8px;" onclick="putarLaguRecom()">Putar Lagu</button></div>
         </div>
 
@@ -300,7 +338,7 @@
         </form>
     </div>
 
-    <!-- 📸 MENU 3: GALERI POLAROID (SUDAH DIPAKAI .JPEG) -->
+    <!-- GALERI POLAROID DENGAN PENDETEKSI FALLBACK DETEKSI ECKL -->
     <div id="sec-gallery" class="glass-card content-section">
         <h2>Aesthetic Gallery 📸</h2>
         <p>A few moments of my life.</p>
@@ -308,16 +346,16 @@
         <div class="scroll-box">
             <div class="gallery-grid">
                 <div class="polaroid">
-                    <img src="galeri1.jpeg" onerror="this.src='https://via.placeholder.com/300x300?text=galeri1.jpeg'">
+                    <img src="./galeri1.jpeg" alt="Galeri 1" onerror="this.onerror=null; this.src='./galeri1.jpg';">
                 </div>
                 <div class="polaroid">
-                    <img src="galeri2.jpeg" onerror="this.src='https://via.placeholder.com/300x300?text=galeri2.jpeg'">
+                    <img src="./galeri2.jpeg" alt="Galeri 2" onerror="this.onerror=null; this.src='./galeri2.jpg';">
                 </div>
                 <div class="polaroid">
-                    <img src="galeri3.jpeg" onerror="this.src='https://via.placeholder.com/300x300?text=galeri3.jpeg'">
+                    <img src="./galeri3.jpeg" alt="Galeri 3" onerror="this.src='./galeri3.jpg';">
                 </div>
                 <div class="polaroid">
-                    <img src="galeri4.jpeg" onerror="this.src='https://via.placeholder.com/300x300?text=galeri4.jpeg'">
+                    <img src="./galeri4.jpeg" alt="Galeri 4" onerror="this.src='./galeri4.jpg';">
                 </div>
             </div>
         </div>
@@ -336,7 +374,6 @@
         </div>
     </div>
 
-    <!-- 🛠️ JAVASCRIPT -->
     <script>
         const BOT_TOKEN = "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM"; 
         const CHAT_ID = "7133977857";
@@ -354,7 +391,7 @@
                 audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; 
             } else { 
                 audio.play().then(_ => { playBtn.innerHTML = '<i class="fas fa-pause"></i>'; })
-                .catch(error => { alert("Klik layar dulu sekali, baru tekan Play!"); });
+                .catch(() => { alert("Klik layar dulu sekali, baru tekan Play!"); });
             }
             isPlaying = !isPlaying;
         }
@@ -382,11 +419,9 @@
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const icon = document.getElementById('themeIcon');
-            if(document.body.classList.contains('dark-mode')) {
-                icon.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                icon.innerHTML = '<i class="fas fa-moon"></i>';
-            }
+            icon.innerHTML = document.body.classList.contains('dark-mode')
+                ? '<i class="fas fa-sun"></i>'
+                : '<i class="fas fa-moon"></i>';
         }
 
         function switchMenu(menu) {
@@ -423,7 +458,7 @@
                     document.getElementById(formId).reset();
                     if(isBio) goToSlide(1);
                 } else { alert("Gagal ngirim! Pastiin lo udah pernah klik START di bot Telegram."); }
-            }).catch(err => { alert("Gagal koneksi! Cek kuota / internet lo."); });
+            }).catch(() => { alert("Gagal koneksi! Cek kuota / internet lo."); });
         }
 
         function kirimBio(e) {
