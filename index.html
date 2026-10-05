@@ -9,16 +9,15 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        /* === TEMA SIANG DREMY PASTEL (LIGHT MODE UPGRADED) === */
+        /* === TEMA SIANG SORE (LIGHT MODE) === */
         :root {
-            --primary: #ff5c8a;
-            --secondary: #ff9eaf;
-            --glass-bg: rgba(255, 255, 255, 0.68);
+            --primary: #e07a5f;
+            --secondary: #f2a07b;
+            --glass-bg: rgba(255, 255, 255, 0.72);
             --glass-border: rgba(255, 255, 255, 0.85);
-            --text-dark: #3a2e39; /* Warm Plum Dark */
-            --bg-body: linear-gradient(-45deg, #ffdde1, #ee9ca7, #f7d6e0, #ffe5ec);
-            --text-highlight: #ff2a5f;
-            --card-shadow: 0 20px 40px rgba(238, 156, 167, 0.2);
+            --text-dark: #3d2c40;
+            --text-highlight: #c0392b;
+            --card-shadow: 0 16px 40px rgba(80, 40, 60, 0.12);
         }
 
         /* === TEMA MALAM (DARK MODE AVIONIC) === */
@@ -28,7 +27,6 @@
             --glass-bg: rgba(15, 23, 42, 0.72);
             --glass-border: rgba(0, 243, 255, 0.3);
             --text-dark: #e2e8f0;
-            --bg-body: linear-gradient(to bottom, #020617 0%, #0f172a 50%, #1e1b4b 100%);
             --text-highlight: #00f3ff;
             --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
@@ -40,44 +38,81 @@
             color: var(--text-dark);
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; padding: 20px 15px 80px 15px;
-            background: var(--bg-body); background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            transition: background 0.6s ease; position: relative; overflow-x: hidden;
+        }
+
+        /* MODE SIANG: Background Sunset */
+        body:not(.dark-mode) {
+            background: linear-gradient(to bottom, #87ceeb 0%, #b8d4e8 18%, #f5c6aa 45%, #f7a072 70%, #e07a5f 100%);
             background-attachment: fixed;
-            transition: all 0.6s ease; position: relative; overflow-x: hidden;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* MODE MALAM: Background Gelap */
+        body.dark-mode {
+            background: linear-gradient(to bottom, #020617 0%, #0f172a 50%, #1e1b4b 100%);
+            background-attachment: fixed;
         }
 
-        /* === MATAHARI & SPARKLES SORE (LIGHT MODE) === */
-        body:not(.dark-mode)::after {
-            content: ''; position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            width: 450px; height: 450px; border-radius: 50%; z-index: -2; pointer-events: none;
-            background: radial-gradient(circle, rgba(255,230,200,0.85) 0%, rgba(255,180,200,0.4) 45%, transparent 70%);
-            filter: blur(35px); animation: floatSun 8s ease-in-out infinite alternate;
-        }
-        @keyframes floatSun { 0% { transform: translateX(-50%) translateY(0); } 100% { transform: translateX(-50%) translateY(20px); } }
+        /* ========== DEKORASI MODE SIANG ========== */
+        .day-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .dark-mode .day-decor { display: none !important; }
 
-        body:not(.dark-mode)::before {
-            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-            background-image:
-                radial-gradient(2px 2px at 15% 20%, rgba(255,255,255,0.9), transparent),
-                radial-gradient(3px 3px at 35% 15%, rgba(255,182,193,0.8), transparent),
-                radial-gradient(2px 2px at 75% 25%, rgba(255,255,255,0.9), transparent),
-                radial-gradient(3px 3px at 85% 65%, rgba(255,182,193,0.7), transparent),
-                radial-gradient(2px 2px at 25% 75%, rgba(255,255,255,0.9), transparent),
-                radial-gradient(3px 3px at 60% 85%, rgba(255,200,220,0.8), transparent);
-            background-size: 100% 100%; animation: floatSparkles 6s ease-in-out infinite alternate;
+        /* MATAHARI (Pojok Kanan Atas) */
+        .day-sun {
+            position: absolute; top: 28px; right: 28px;
+            width: 88px; height: 88px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fff7d6 0%, #ffe566 35%, #ffb347 70%, rgba(255, 140, 66, 0.3) 100%);
+            box-shadow: 0 0 40px 12px rgba(255, 200, 80, 0.75), 0 0 90px 30px rgba(255, 160, 60, 0.35), 0 0 140px 50px rgba(255, 120, 80, 0.2);
+            animation: sunPulse 5s ease-in-out infinite alternate;
         }
-        @keyframes floatSparkles { 0% { opacity: 0.5; } 100% { opacity: 0.9; } }
+        @keyframes sunPulse { 0% { transform: scale(1); filter: brightness(1); } 100% { transform: scale(1.06); filter: brightness(1.08); } }
 
-        /* === BULAN & BINTANG (DARK MODE - POJOK KANAN ATAS) === */
+        /* AWAN SORE */
+        .day-cloud {
+            position: absolute; background: rgba(255, 255, 255, 0.55);
+            border-radius: 50px; filter: blur(2px); opacity: 0.85;
+        }
+        .day-cloud::before, .day-cloud::after {
+            content: ''; position: absolute; background: inherit; border-radius: 50%;
+        }
+        .day-cloud.c1 { width: 140px; height: 42px; top: 18%; left: -20px; animation: cloudMove 48s linear infinite; }
+        .day-cloud.c1::before { width: 55px; height: 55px; top: -28px; left: 18px; }
+        .day-cloud.c1::after  { width: 70px; height: 70px; top: -35px; left: 50px; }
+        .day-cloud.c2 { width: 180px; height: 48px; top: 28%; right: -40px; animation: cloudMove 62s linear infinite reverse; opacity: 0.7; }
+        .day-cloud.c2::before { width: 70px; height: 70px; top: -32px; left: 25px; }
+        .day-cloud.c2::after  { width: 85px; height: 85px; top: -40px; left: 70px; }
+        .day-cloud.c3 { width: 120px; height: 36px; top: 42%; left: 15%; animation: cloudMove 55s linear infinite; opacity: 0.6; }
+        .day-cloud.c3::before { width: 48px; height: 48px; top: -24px; left: 15px; }
+        .day-cloud.c3::after  { width: 60px; height: 60px; top: -30px; left: 45px; }
+        .day-cloud.c4 { width: 160px; height: 44px; top: 55%; right: 10%; animation: cloudMove 70s linear infinite reverse; opacity: 0.5; }
+        .day-cloud.c4::before { width: 60px; height: 60px; top: -28px; left: 20px; }
+        .day-cloud.c4::after  { width: 75px; height: 75px; top: -36px; left: 60px; }
+        @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(40px); } }
+
+        /* SILUET GUNUNG */
+        .day-mountains {
+            position: absolute; left: 0; right: 0; bottom: 0;
+            height: 42vh; max-height: 380px; z-index: 0;
+            background: radial-gradient(ellipse 80% 60% at 15% 100%, #6b4f6b 0%, transparent 70%),
+                        radial-gradient(ellipse 90% 70% at 50% 100%, #5c4060 0%, transparent 72%),
+                        radial-gradient(ellipse 85% 65% at 85% 100%, #4a3555 0%, transparent 70%);
+            opacity: 0.55;
+        }
+        .day-mountains::before {
+            content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 100%;
+            background: #3d2c40; opacity: 0.45;
+            clip-path: polygon(0% 100%, 0% 62%, 8% 55%, 18% 68%, 28% 48%, 38% 58%, 48% 40%, 58% 52%, 68% 35%, 78% 50%, 88% 42%, 100% 55%, 100% 100%);
+        }
+        .day-mountains::after {
+            content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 70%;
+            background: #2a1f30; opacity: 0.5;
+            clip-path: polygon(0% 100%, 0% 75%, 12% 60%, 22% 72%, 35% 55%, 50% 65%, 62% 50%, 75% 62%, 88% 48%, 100% 58%, 100% 100%);
+        }
+
+        /* ========== BULAN & BINTANG (DARK MODE) ========== */
         body.dark-mode::after {
             content: ''; position: fixed; top: 25px; right: 25px;
-            width: 90px; height: 90px; border-radius: 50%; z-index: -2; pointer-events: none;
+            width: 90px; height: 90px; border-radius: 50%; z-index: 0; pointer-events: none;
             background: radial-gradient(circle at 35% 35%, #ffffff 15%, #cbd5e1 55%, #94a3b8 90%);
             box-shadow: 0 0 50px rgba(255,255,255,0.6), 0 0 100px rgba(0,243,255,0.3);
             animation: floatMoon 6s ease-in-out infinite alternate;
@@ -85,7 +120,7 @@
         @keyframes floatMoon { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
 
         body.dark-mode::before {
-            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
             background-image:
                 radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
                 radial-gradient(2px 2px at 150px 80px, rgba(255,255,255,0.9), transparent),
@@ -101,13 +136,17 @@
         }
         @keyframes twinkle { 0% { opacity: 0.4; } 100% { opacity: 1; } }
 
-        /* UTILS */
+        /* Z-INDEX LAYERING */
+        .theme-btn, .glass-card, .nav-menu, .footer, .cat-mascot, .cat-bubble { position: relative; z-index: 5; }
+        .theme-btn { z-index: 100; }
+        .cat-mascot, .cat-bubble { z-index: 99; }
+
         .theme-btn {
             position: fixed; top: 15px; right: 15px;
             background: var(--glass-bg); border: 2px solid var(--glass-border);
             color: var(--primary); font-size: 1.4rem; width: 48px; height: 48px;
             border-radius: 50%; cursor: pointer; backdrop-filter: blur(12px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.3s; z-index: 100;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.3s;
         }
         .theme-btn:hover { transform: rotate(25deg) scale(1.1); }
         .dark-mode .theme-btn { box-shadow: 0 0 18px var(--primary); }
@@ -133,7 +172,7 @@
         .btn-icon {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none; color: white; width: 48px; height: 48px; border-radius: 50%;
-            cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 16px rgba(255, 92, 138, 0.35); transition: 0.3s;
+            cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 16px rgba(224, 122, 95, 0.4); transition: 0.3s;
         }
         .dark-mode .btn-icon { box-shadow: 0 0 16px var(--primary); color: #0f172a; }
         .btn-icon:hover { transform: translateY(-4px) scale(1.06); }
@@ -153,7 +192,7 @@
             font-family: 'Fredoka', cursive; font-size: 0.85rem; color: var(--text-dark);
             cursor: pointer; transition: 0.3s;
         }
-        .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 6px 18px rgba(255, 92, 138, 0.35); }
+        .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 6px 18px rgba(224, 122, 95, 0.4); }
         .dark-mode .nav-btn.active { color: #0f172a; box-shadow: 0 0 16px var(--primary); }
 
         .content-section { display: none; animation: slideUp 0.45s ease; }
@@ -193,7 +232,7 @@
             width: 100%; padding: 13px; border-radius: 14px; border: none;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white; font-family: 'Fredoka', cursive; font-size: 1rem;
-            cursor: pointer; box-shadow: 0 6px 18px rgba(255, 92, 138, 0.35); transition: 0.3s; margin-top: 10px;
+            cursor: pointer; box-shadow: 0 6px 18px rgba(224, 122, 95, 0.35); transition: 0.3s; margin-top: 10px;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
         .dark-mode .btn-action { color: #0f172a; box-shadow: 0 0 16px rgba(0, 243, 255, 0.4); }
@@ -227,7 +266,7 @@
         .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 12px rgba(0, 243, 255, 0.22); }
         .dark-mode .polaroid::after { color: #94a3b8; }
 
-        /* === 🎮 FUN ZONE LOBBY & GAME CARDS === */
+        /* FUN ZONE */
         .fun-cards { display: grid; grid-template-columns: repeat(1, 1fr); gap: 14px; margin-top: 15px; }
         .fun-card {
             background: rgba(255,255,255,0.45); border: 1.5px solid var(--glass-border);
@@ -241,7 +280,6 @@
         .fun-card-info h4 { font-family: 'Fredoka', cursive; font-size: 1.1rem; color: var(--text-highlight); }
         .fun-card-info p { font-size: 0.78rem; margin: 0; opacity: 0.85; }
 
-        /* Fortune Cookie Style */
         .cookie-wrapper { text-align: center; padding: 20px 0; }
         .cookie-img { font-size: 5rem; cursor: pointer; display: inline-block; animation: bounce 2s infinite; transition: 0.3s; }
         .cookie-img:hover { transform: scale(1.15) rotate(10deg); }
@@ -252,7 +290,6 @@
             display: none; animation: popZoom 0.4s ease; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
 
-        /* Puzzle Game Board */
         .puzzle-board {
             display: grid; gap: 4px; margin: 15px auto; width: 280px; height: 280px;
             background: rgba(0,0,0,0.1); padding: 4px; border-radius: 12px; border: 2px solid var(--primary);
@@ -269,10 +306,24 @@
             cursor: pointer; white-space: nowrap; color: var(--text-dark);
         }
         .lvl-btn.active { background: var(--primary); color: white; }
+        .lvl-btn.locked { opacity: 0.4; cursor: not-allowed; filter: grayscale(0.5); }
+        .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
 
-        /* === 🐾 MASKOT KUCING IMUT === */
+        /* HINT */
+        .puzzle-tile.hint-from {
+            outline: 3px solid #ffcc00; outline-offset: -2px;
+            box-shadow: 0 0 12px rgba(255, 200, 0, 0.8); z-index: 2;
+        }
+        .puzzle-tile.hint-to {
+            outline: 3px dashed #00e676; outline-offset: -2px;
+            box-shadow: 0 0 12px rgba(0, 230, 118, 0.7);
+            animation: hintPulse 0.8s ease infinite alternate;
+        }
+        @keyframes hintPulse { from { opacity: 0.7; } to { opacity: 1; } }
+
+        /* MASKOT KUCING */
         .cat-mascot {
-            position: fixed; bottom: 20px; right: 20px; z-index: 99; cursor: pointer;
+            position: fixed; bottom: 20px; right: 20px; cursor: pointer;
             transition: transform 0.3s ease; animation: catFloat 4s ease-in-out infinite;
         }
         .cat-mascot:hover { transform: scale(1.15) rotate(5deg); }
@@ -280,7 +331,7 @@
         @keyframes catFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
         .cat-bubble {
-            position: fixed; bottom: 85px; right: 20px; z-index: 100; max-width: 250px;
+            position: fixed; bottom: 85px; right: 20px; max-width: 250px;
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
             border: 2px solid var(--primary); color: #2d3436; padding: 12px 16px;
             border-radius: 18px 18px 2px 18px; font-size: 0.82rem; font-weight: 500;
@@ -288,8 +339,7 @@
         }
         .dark-mode .cat-bubble { background: rgba(15,23,42,0.95); color: #e2e8f0; border-color: #00f3ff; }
 
-        /* FOOTER & SECRET MODAL */
-        .footer { margin-top: auto; padding: 18px 0; font-size: 0.85rem; text-align: center; z-index: 10;}
+        .footer { margin-top: auto; padding: 18px 0; font-size: 0.85rem; text-align: center; }
         .footer a { color: var(--primary); text-decoration: none; font-weight: bold; }
         .secret-icon { cursor: pointer; transition: 0.3s; display: inline-block; }
         .secret-icon:hover { transform: scale(1.35) translateY(-3px); }
@@ -307,7 +357,7 @@
         .access-icon {
             width: 70px; height: 70px; margin: 0 auto 20px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white;
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); box-shadow: 0 8px 20px rgba(255, 92, 138, 0.4);
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); box-shadow: 0 8px 20px rgba(224, 122, 95, 0.4);
         }
         .dark-mode .access-icon { color: #0f172a; box-shadow: 0 0 25px rgba(0,243,255,0.5); }
         .access-title { font-family: 'Fredoka', cursive; font-size: 1.5rem; color: var(--text-dark); margin-bottom: 8px; }
@@ -326,7 +376,7 @@
         .access-actions { display: flex; gap: 10px; margin-top: 20px; }
         .access-actions button { flex: 1; padding: 12px; font-size: 0.9rem; }
 
-        /* === SECRET SPACE (PLANET & DEEP SPACE) === */
+        /* SECRET SPACE */
         #secretSpace {
             display: none; position: fixed; inset: 0; z-index: 1200;
             background: radial-gradient(ellipse at center, #0b1021 0%, #000000 100%); overflow: hidden;
@@ -357,9 +407,7 @@
         .space-header h2 { font-family: 'Fredoka', cursive; font-size: 1.5rem; text-shadow: 0 0 20px rgba(0,243,255,0.8); margin-bottom: 5px; }
         .space-header p { font-size: 0.85rem; opacity: 0.9; color: #a5f3fc; }
 
-        .hanging-area {
-            position: relative; z-index: 10; height: calc(100vh - 220px); width: 100%; max-width: 900px; margin: 0 auto;
-        }
+        .hanging-area { position: relative; z-index: 10; height: calc(100vh - 220px); width: 100%; max-width: 900px; margin: 0 auto; }
         .hang-item { position: absolute; width: 110px; cursor: pointer; animation: floatY 5s ease-in-out infinite; }
         .hang-item:nth-child(1) { left: 8%; top: 4%; transform: rotate(-5deg); }
         .hang-item:nth-child(2) { left: 38%; top: 2%; transform: rotate(4deg); width: 120px; }
@@ -381,8 +429,8 @@
             display: flex; gap: 12px; width: 90%; max-width: 400px;
         }
 
-        /* Modal Gombalan Level Up */
-        #gombalModal {
+        /* Modal Gombalan */
+        #gombalModal, #puzzleWinModal {
             display: none; position: fixed; inset: 0; z-index: 10000;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);
             justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s;
@@ -417,6 +465,16 @@
     </style>
 </head>
 <body>
+
+    <!-- DEKORASI MODE SIANG -->
+    <div class="day-decor" aria-hidden="true">
+        <div class="day-sun"></div>
+        <div class="day-cloud c1"></div>
+        <div class="day-cloud c2"></div>
+        <div class="day-cloud c3"></div>
+        <div class="day-cloud c4"></div>
+        <div class="day-mountains"></div>
+    </div>
 
     <button class="theme-btn" onclick="toggleTheme()" id="themeIcon"><i class="fas fa-moon"></i></button>
 
@@ -586,7 +644,12 @@
         <div id="fun-puzzle" style="display:none;">
             <h2>Photo Puzzle 🧩</h2>
             <div class="level-select" id="funLvlBar"></div>
+            <p id="funLockInfo" style="font-size:0.78rem;opacity:0.85;margin-bottom:8px;"></p>
             <div id="funBoard" class="puzzle-board"></div>
+            <div class="btn-flex" style="max-width:280px;margin:10px auto 0;">
+                <button type="button" class="btn-action btn-secondary" onclick="giveHint()" style="font-size:0.85rem;">💡 Hint</button>
+            </div>
+            <p id="hintText" style="font-size:0.78rem;margin-top:8px;min-height:1.2em;opacity:0.9;"></p>
             <button class="btn-action btn-secondary" onclick="backToFunLobby()">⬅️ Kembali ke Fun Zone</button>
         </div>
     </div>
@@ -595,10 +658,8 @@
         <p>follow ig gua ya di <a href="https://instagram.com/angn_smrn" target="_blank">@angn_smrn</a> <span class="secret-icon" onclick="openAccess()">✈️</span></p>
     </div>
 
-    <!-- 🐾 MASKOT KUCING IMUT -->
-    <div class="cat-mascot" onclick="clickCatMascot()">
-        <div class="cat-icon">🐱</div>
-    </div>
+    <!-- 🐾 MASKOT KUCING -->
+    <div class="cat-mascot" onclick="clickCatMascot()"><div class="cat-icon">🐱</div></div>
     <div id="catBubble" class="cat-bubble"></div>
 
     <!-- POPUP ACCESS TERMINAL -->
@@ -619,7 +680,7 @@
         </div>
     </div>
 
-    <!-- SECRET SPACE: GALAKSI & CLASSIFIED PUZZLE -->
+    <!-- SECRET SPACE -->
     <div id="secretSpace">
         <div class="space-galaxy"></div>
         <div class="planet-1"></div>
@@ -629,7 +690,6 @@
             <h2>✦ Deep Space Base ✦</h2>
             <p>Tap foto untuk zoom.</p>
         </div>
-        
         <div class="hanging-area">
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret1.jpeg" onerror="this.onerror=null; this.src='./secret1.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret2.jpeg" onerror="this.onerror=null; this.src='./secret2.jpg';"></div></div>
@@ -640,7 +700,6 @@
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret7.jpeg" onerror="this.onerror=null; this.src='./secret7.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret8.jpeg" onerror="this.onerror=null; this.src='./secret8.jpg';"></div></div>
         </div>
-
         <div class="space-actions">
             <button class="btn-action" style="font-size:0.85rem;" onclick="openSecretPuzzleMode()"><i class="fas fa-puzzle-piece"></i> Classified Puzzle</button>
             <button class="btn-action btn-secondary" style="font-size:0.85rem;" onclick="closeSecretSpace()">mau mendarat? 🛬</button>
@@ -651,18 +710,31 @@
     <div id="secretPuzzleModal" style="display:none; position:fixed; inset:0; z-index:1500; background:rgba(2,6,23,0.95); backdrop-filter:blur(15px); padding:20px; text-align:center; overflow-y:auto;">
         <h2 style="color:#00f3ff; font-family:'Fredoka'; margin-top:10px;">Classified Puzzle 🧩</h2>
         <p style="color:#a5f3fc; font-size:0.8rem;">Selesaikan puzzle rahasia dari Level 1 - 10.</p>
-        
         <div class="level-select" id="secLvlBar" style="justify-content:center;"></div>
+        <p id="secLockInfo" style="color:#a5f3fc;font-size:0.78rem;margin-bottom:8px;"></p>
         <div id="secBoard" class="puzzle-board" style="border-color:#00f3ff;"></div>
+        <div class="btn-flex" style="max-width:280px;margin:10px auto 0;">
+            <button type="button" class="btn-action btn-secondary" onclick="giveHint()" style="font-size:0.85rem;">💡 Hint</button>
+        </div>
+        <p id="hintTextSecret" style="color:#a5f3fc;font-size:0.78rem;margin-top:8px;min-height:1.2em;"></p>
         <button class="btn-action btn-secondary" style="max-width:280px; margin:10px auto;" onclick="closeSecretPuzzleMode()">Kembali ke Secret Base 📡</button>
     </div>
 
-    <!-- MODAL GOMBALAN LEVEL CLEAR -->
+    <!-- MODAL PUZZLE WIN (EASY) -->
+    <div id="puzzleWinModal">
+        <div class="gombal-box" style="border-color:var(--primary);">
+            <h3 id="puzzleWinTitle" style="color:var(--primary);">Level Clear! ✨</h3>
+            <p id="puzzleWinText" style="font-size:0.9rem;line-height:1.5;margin-bottom:16px;"></p>
+            <button type="button" class="btn-action" onclick="closePuzzleWin(true)">Level berikutnya ➡️</button>
+            <button type="button" class="btn-action btn-secondary" style="margin-top:8px;" onclick="closePuzzleWin(false)">Tutup</button>
+        </div>
+    </div>
+
+    <!-- MODAL GOMBALAN LEVEL CLEAR (SECRET) -->
     <div id="gombalModal">
         <div class="gombal-box">
             <h3 id="gombalTitle">Level Clear! ✨</h3>
             <div class="gombal-text" id="gombalText"></div>
-            
             <form id="gombalReplyForm" onsubmit="kirimBalasanGombal(event)">
                 <div class="form-group">
                     <input type="text" id="gombalReplyInput" class="input-custom" placeholder="Bales di sini (opsional)..." style="background:rgba(255,255,255,0.1); color:#fff; border-color:#00f3ff;">
@@ -682,7 +754,7 @@
         </div>
     </div>
 
-    <!-- 🛠️ JAVASCRIPT MASTER LOGIC -->
+    <!-- 🛠️ JAVASCRIPT -->
     <script>
         const BOT_TOKEN = "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM"; 
         const CHAT_ID = "7133977857";
@@ -693,9 +765,7 @@
         const songSelect = document.getElementById('songSelect');
         const playBtn = document.getElementById('playBtn');
         let isPlaying = false, playMode = 0, tempRecom = null, moodDipilih = "Nggak milih emot";
-        
         audio.src = songSelect.value;
-        audio.onerror = function() { console.error("Lagu Error/Tidak Ditemukan: " + songSelect.value); };
 
         function togglePlay() {
             if(isPlaying){ audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; } 
@@ -705,7 +775,6 @@
             }
             isPlaying = !isPlaying;
         }
-
         function changeSong() { audio.src = songSelect.value; if(isPlaying) audio.play(); }
         function nextSong() {
             let i = songSelect.selectedIndex;
@@ -755,7 +824,7 @@
         }
         function closeZoom() { document.getElementById('zoomModal').style.display = 'none'; }
 
-        // === STOK PESAN MASKOT KUCING (ANTI-REPEAT) ===
+        // === MASKOT KUCING ===
         const catMessagesOriginal = [
             "Lagi sedih ya? Coba dengerin playlist lagu di atas dulu gih 🎧",
             "Gak usah pusing, stel lagu favorit lo terus merem sebentar ☁️",
@@ -782,13 +851,12 @@
             if(catMessagesPool.length === 0) catMessagesPool = [...catMessagesOriginal];
             const randomIndex = Math.floor(Math.random() * catMessagesPool.length);
             const msg = catMessagesPool.splice(randomIndex, 1)[0];
-            
             bubble.innerText = msg;
             bubble.style.display = 'block';
             setTimeout(() => { bubble.style.display = 'none'; }, 5000);
         }
 
-        // === FUN ZONE: FORTUNE COOKIE (ANTI-REPEAT) ===
+        // === FORTUNE COOKIE ===
         const cookieMessagesOriginal = [
             "Hari ini lo bakal dapet kabar baik yang ngebikin senyum seharian! ✨",
             "Jangan ragu sama kemampuan lo, lo tuh sebenernya keren banget 🌟",
@@ -806,44 +874,38 @@
             document.getElementById('fun-flower').style.display = 'none';
             document.getElementById('fun-puzzle').style.display = 'none';
             document.getElementById('fun-' + game).style.display = 'block';
-
             if(game === 'puzzle') initPuzzleGame('fun');
             if(game === 'flower') startFlowerQuiz();
         }
-
         function backToFunLobby() {
             document.getElementById('fun-lobby').style.display = 'block';
             document.getElementById('fun-cookie').style.display = 'none';
             document.getElementById('fun-flower').style.display = 'none';
             document.getElementById('fun-puzzle').style.display = 'none';
         }
-
         function crackCookie() {
             if(cookiePool.length === 0) cookiePool = [...cookieMessagesOriginal];
             const idx = Math.floor(Math.random() * cookiePool.length);
             const msg = cookiePool.splice(idx, 1)[0];
-            
             const paper = document.getElementById('cookiePaper');
             paper.innerText = "✨ " + msg;
             paper.style.display = 'block';
             confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
         }
 
-        // === FUN ZONE: FLOWER QUIZ ===
+        // === FLOWER QUIZ ===
         const quizData = [
             { q: "1. Kalau ada waktu luang di sore hari, lo lebih suka ngapain?", a: ["Nyantai sambil denger musik", "Jalan-jalan nyari udara segar", "Nonton film / marathon series"] },
             { q: "2. Suasana mana yang paling ngebikin lo merasa tenang?", a: ["Keheningan malam bertabur bintang", "Warna hangat senja di sore hari", "Suara gemericik air / hujan gerimis"] },
             { q: "3. Warna mana yang paling ngewakilin karakter lo?", a: ["Biru / Pastel yang menenangkan", "Pink / Merah yang hangat ceria", "Ungu / Hitam yang elegan misterius"] }
         ];
         let currentQuizIdx = 0;
-
         function startFlowerQuiz() {
             currentQuizIdx = 0;
             document.getElementById('quizContainer').style.display = 'block';
             document.getElementById('quizResult').style.display = 'none';
             showQuizStep();
         }
-
         function showQuizStep() {
             const q = quizData[currentQuizIdx];
             document.getElementById('quizQuestion').innerText = q.q;
@@ -853,7 +915,6 @@
                 opts.innerHTML += `<button class="btn-action btn-secondary" style="font-size:0.85rem;" onclick="answerQuiz(${i})">${opt}</button>`;
             });
         }
-
         function answerQuiz(i) {
             currentQuizIdx++;
             if(currentQuizIdx < quizData.length) {
@@ -864,20 +925,23 @@
                 document.getElementById('flowerEmoji').innerText = "🌹";
                 document.getElementById('flowerTitle').innerText = "Vibe Kamu: Bunga Mawar (Rose Vibe)";
                 document.getElementById('flowerDesc').innerText = "Karakter lo tuh hangat, tenang, dan selalu bisa bikin suasana di sekitar lo jadi nyaman!";
-                tempRecom = 8; // Enchanted
+                tempRecom = 8;
             }
         }
         function applyFlowerSong() { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); }
 
-        // === SYSTEM DUAL PUZZLE ===
-        let currentLvl = 1, currentType = 'fun';
+        // === PUZZLE: LOCK LEVEL + HINT + WIN POPUP ===
+        let currentLvl = 1;
+        let currentType = 'fun';
         let puzzleGrid = [];
+        let firstTile = null;
+        let puzzleSolvedThisLevel = false;
 
         const gombalanList = [
             "Satu level gampang berhasil lo lewati tanpa kendala. Gue cuma seneng aja ngeliat lo betah nyobain web buatan gue ini dari awal tadi. Btw, menurut lo tampilan web gue ini gimana? Tulis pendapat lo di bawah ya! ✨",
             "Grid 4x4 pun langsung lo beresin dengan mulus. Padahal kepingan gambar tadi lumayan acak-acakan kayak pikiran gue pas pertama kali ngeliat lo. Kalo diperhatiin, lo emang tipe cewek yang fokus dan gak gampang nyerah ya? 🌸",
             "Masuk level lima kali lima, ritme main lo makin dapet aja nih. Gue sengaja bikin fitur ini biar lo bisa santai dan dapet sedikit senyuman di sela-sela hari lo yang padat. Semoga hari ini hal baik berpihak ke lo ya. Momen paling seru lo hari ini apa? ☁️",
-            "Ukuran puzzle-nya mulai ngecilin dan kotaknya makin banyak. Tapi ngeliat nama lo tetep bertahan nyelesaiin game ini tuh rasanya seru banget. Gue penasaran deh, ekspresi muka lo sekarang lagi serious banget atau malah sambil ketawa sendiri nih? 😜",
+            "Ukuran puzzle-nya mulai ngecilin dan kotaknya makin banyak. Tapi ngeliat nama lo tetep bertahan nyelesaiin game ini tuh rasanya seru banget. Gue penasaran deh, ekspresi muka lo sekarang lagi serius banget atau malah sambil ketawa sendiri nih? 😜",
             "Setengah perjalanan berhasil lo lewati dengan sempurna! Btw dari tadi dengerin lagu di playlist web ini, ada lagu yang bener-bener pas sama mood lo hari ini gak? Ketik judul lagu favorit lo di bawah dong 🎧",
             "Selamat datang di level 8x8! Ini batas maksimal ukuran puzzle yang pusingnya kebangetan. Tapi respon lo yang tetep bertahan terbukti kalo lo tuh bukan cewek yang gampang nyerah. Definisi cewek keren yang bikin orang kagum dari jauh ✨",
             "Kalo kepingan gambar ini butuh ketelitian biar pas di posisinya, hadirnya lo di space ini tuh kayak ngasih warna baru yang bikin semuanya makin estetik. Lagi dengerin lagu apa sekarang? Tumpahin perasaan lo di kolom bawah yuk 🌙",
@@ -886,26 +950,75 @@
             "LEVEL 10 OFFICIALLY CLEARED! Gokil banget, lo resmi naklukin puzzle tersulit di Secret Base ini! Sebagai piala kemenangan karena lo udah berhasil namatin semuanya... Boleh dong PAP-nya maniezz? Kirim langsung ke WA gue aja yaa, nomor gue gak ganti kok 😉 Atau mau bales pesan ini di bawah juga boleh banget! 💖✨"
         ];
 
+        function progressKey(type) { return type === 'secret' ? 'cello_sc_puzzle_max' : 'cello_pz_puzzle_max'; }
+        function getMaxUnlocked(type) {
+            const v = parseInt(localStorage.getItem(progressKey(type)) || '1', 10);
+            return Math.min(10, Math.max(1, v));
+        }
+        function setMaxUnlocked(type, lvl) {
+            const cur = getMaxUnlocked(type);
+            if (lvl > cur) localStorage.setItem(progressKey(type), String(Math.min(10, lvl)));
+        }
         function getGridSize(lvl) {
-            if(lvl === 1) return 3;
-            if(lvl === 2) return 4;
-            if(lvl === 3) return 5;
-            if(lvl === 4) return 6;
-            if(lvl === 5) return 7;
-            return 8; // Level 6-10 = 8x8
+            if (lvl === 1) return 3;
+            if (lvl === 2) return 4;
+            if (lvl === 3) return 5;
+            if (lvl === 4) return 6;
+            if (lvl === 5) return 7;
+            return 8;
+        }
+        function clearHintUI() {
+            document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(el => {
+                el.classList.remove('hint-from', 'hint-to');
+            });
+            const ht = document.getElementById('hintText');
+            const hs = document.getElementById('hintTextSecret');
+            if (ht) ht.textContent = '';
+            if (hs) hs.textContent = '';
         }
 
         function initPuzzleGame(type) {
             currentType = type;
+            puzzleSolvedThisLevel = false;
+            firstTile = null;
+            clearHintUI();
+
+            const maxOk = getMaxUnlocked(type);
+            if (currentLvl > maxOk) currentLvl = maxOk;
+
             const lvlBar = document.getElementById(type === 'fun' ? 'funLvlBar' : 'secLvlBar');
+            const lockInfo = document.getElementById(type === 'fun' ? 'funLockInfo' : 'secLockInfo');
             lvlBar.innerHTML = '';
-            for(let i=1; i<=10; i++) {
-                lvlBar.innerHTML += `<button class="lvl-btn ${i===currentLvl?'active':''}" onclick="selectLvl(${i})">Lvl ${i}</button>`;
+
+            for (let i = 1; i <= 10; i++) {
+                const locked = i > maxOk;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'lvl-btn' + (i === currentLvl ? ' active' : '') + (locked ? ' locked' : '');
+                btn.textContent = 'Lvl ' + i;
+                btn.onclick = () => selectLvl(i);
+                lvlBar.appendChild(btn);
+            }
+
+            if (lockInfo) {
+                lockInfo.textContent = maxOk >= 10
+                    ? 'Semua level kebuka. Mantap! ✨'
+                    : `Level 1–${maxOk} kebuka. Selesaiin level sekarang buat buka level ${maxOk + 1}.`;
             }
             renderPuzzleBoard();
         }
 
-        function selectLvl(lvl) { currentLvl = lvl; initPuzzleGame(currentType); }
+        function selectLvl(lvl) {
+            const maxOk = getMaxUnlocked(currentType);
+            if (lvl > maxOk) {
+                alert(`Level ${lvl} masih terkunci 🔒\nSelesaiin Level ${maxOk} dulu ya.`);
+                return;
+            }
+            currentLvl = lvl;
+            puzzleSolvedThisLevel = false;
+            firstTile = null;
+            initPuzzleGame(currentType);
+        }
 
         function renderPuzzleBoard() {
             const size = getGridSize(currentLvl);
@@ -915,40 +1028,42 @@
             board.innerHTML = '';
 
             const total = size * size;
-            puzzleGrid = Array.from({length: total}, (_, i) => i);
-            puzzleGrid.sort(() => Math.random() - 0.5);
+            puzzleGrid = Array.from({ length: total }, (_, i) => i);
+            do { puzzleGrid.sort(() => Math.random() - 0.5); } while (puzzleGrid.every((v, i) => v === i));
 
             const imgSrc = currentType === 'fun' ? `./pz${currentLvl}.jpeg` : `./sc${currentLvl}.jpeg`;
+            const percent = 100 / (size - 1);
 
             puzzleGrid.forEach((val, idx) => {
                 const tile = document.createElement('div');
                 tile.className = 'puzzle-tile';
+                tile.dataset.index = idx;
                 const row = Math.floor(val / size);
                 const col = val % size;
-                const percent = 100 / (size - 1);
-                
                 tile.style.backgroundImage = `url('${imgSrc}')`;
                 tile.style.backgroundPosition = `${col * percent}% ${row * percent}%`;
                 tile.style.backgroundSize = `${size * 100}% ${size * 100}%`;
-                
                 tile.onclick = () => clickTile(idx);
                 board.appendChild(tile);
             });
         }
 
-        let firstTile = null;
         function clickTile(idx) {
-            if(firstTile === null) {
+            if (puzzleSolvedThisLevel) return;
+            const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
+            const tiles = board.querySelectorAll('.puzzle-tile');
+
+            if (firstTile === null) {
                 firstTile = idx;
-                document.querySelectorAll('.puzzle-tile')[idx].style.opacity = '0.6';
-            } else {
-                let temp = puzzleGrid[firstTile];
-                puzzleGrid[firstTile] = puzzleGrid[idx];
-                puzzleGrid[idx] = temp;
-                firstTile = null;
-                updateBoardTiles();
-                checkPuzzleWin();
+                tiles[idx].style.opacity = '0.55';
+                return;
             }
+            const t = puzzleGrid[firstTile];
+            puzzleGrid[firstTile] = puzzleGrid[idx];
+            puzzleGrid[idx] = t;
+            firstTile = null;
+            updateBoardTiles();
+            checkPuzzleWin();
         }
 
         function updateBoardTiles() {
@@ -956,7 +1071,7 @@
             const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
             const tiles = board.querySelectorAll('.puzzle-tile');
             const percent = 100 / (size - 1);
-
+            clearHintUI();
             puzzleGrid.forEach((val, idx) => {
                 tiles[idx].style.opacity = '1';
                 const row = Math.floor(val / size);
@@ -967,34 +1082,88 @@
 
         function checkPuzzleWin() {
             const isWin = puzzleGrid.every((val, idx) => val === idx);
-            if(isWin) {
-                confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-                if(currentType === 'secret') {
-                    document.getElementById('gombalTitle').innerText = `Level ${currentLvl} Cleared! ✨`;
-                    document.getElementById('gombalText').innerText = gombalanList[currentLvl - 1];
-                    document.getElementById('gombalModal').style.display = 'flex';
-                } else {
-                    alert(`Yey! Level ${currentLvl} Selesai! Pinter banget lo ✨`);
+            if (!isWin) return;
+            puzzleSolvedThisLevel = true;
+            confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
+            setMaxUnlocked(currentType, currentLvl + 1);
+
+            if (currentType === 'secret') {
+                document.getElementById('gombalTitle').innerText = `Level ${currentLvl} Cleared! ✨`;
+                document.getElementById('gombalText').innerText = gombalanList[currentLvl - 1];
+                document.getElementById('gombalModal').style.display = 'flex';
+                initPuzzleGame('secret');
+            } else {
+                const next = currentLvl < 10 ? currentLvl + 1 : null;
+                document.getElementById('puzzleWinTitle').innerText = `Level ${currentLvl} Selesai! 🎉`;
+                document.getElementById('puzzleWinText').innerText = next
+                    ? `Pinter banget! Level ${next} udah kebuka. Mau langsung main level berikutnya?`
+                    : `Semua level Easy Puzzle udah lo taklukin. Gila sih! ✨`;
+                document.getElementById('puzzleWinModal').style.display = 'flex';
+                initPuzzleGame('fun');
+            }
+        }
+
+        function closePuzzleWin(goNext) {
+            document.getElementById('puzzleWinModal').style.display = 'none';
+            if (goNext && currentLvl < 10) {
+                const maxOk = getMaxUnlocked('fun');
+                if (currentLvl + 1 <= maxOk) {
+                    currentLvl = currentLvl + 1;
+                    initPuzzleGame('fun');
                 }
             }
         }
 
-        function closeGombalModal() { document.getElementById('gombalModal').style.display = 'none'; }
+        function giveHint() {
+            if (puzzleSolvedThisLevel) { alert('Level ini udah selesai ✨'); return; }
+            const size = getGridSize(currentLvl);
+            clearHintUI();
 
-        // FUNGSI BALASAN GOMBALAN (OPSIONAL)
+            let wrongPos = -1;
+            for (let i = 0; i < puzzleGrid.length; i++) {
+                if (puzzleGrid[i] !== i) { wrongPos = i; break; }
+            }
+            if (wrongPos === -1) return;
+
+            const pieceId = puzzleGrid[wrongPos];
+            const fromIdx = wrongPos;
+            const toIdx = pieceId;
+
+            const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
+            const tiles = board.querySelectorAll('.puzzle-tile');
+            tiles[fromIdx].classList.add('hint-from');
+            tiles[toIdx].classList.add('hint-to');
+
+            const fromR = Math.floor(fromIdx / size) + 1;
+            const fromC = (fromIdx % size) + 1;
+            const toR = Math.floor(toIdx / size) + 1;
+            const toC = (toIdx % size) + 1;
+
+            let arah = '';
+            if (toR < fromR) arah += 'atas ';
+            if (toR > fromR) arah += 'bawah ';
+            if (toC < fromC) arah += 'kiri';
+            if (toC > fromC) arah += 'kanan';
+            if (!arah.trim()) arah = 'sudah deket';
+
+            const msg = `💡 Kepingan kuning (baris ${fromR}, kolom ${fromC}) harusnya ke kotak hijau (baris ${toR}, kolom ${toC}) → geser ke arah ${arah.trim()}. Klik kuning, lalu klik hijau.`;
+            const el = document.getElementById(currentType === 'fun' ? 'hintText' : 'hintTextSecret');
+            if (el) el.textContent = msg;
+
+            setTimeout(() => {
+                document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(t => {
+                    t.classList.remove('hint-from', 'hint-to');
+                });
+            }, 4000);
+        }
+
+        function closeGombalModal() { document.getElementById('gombalModal').style.display = 'none'; }
         function kirimBalasanGombal(e) {
             e.preventDefault();
             const val = document.getElementById('gombalReplyInput').value.trim();
-            
-            if(val === "") {
-                alert("Makasih udah mainin game ini! ✨");
-                closeGombalModal();
-                return;
-            }
-
+            if(val === "") { alert("Makasih udah mainin game ini! ✨"); closeGombalModal(); return; }
             const pesan = `💖 *BALASAN GOMBALAN LEVEL ${currentLvl}!*\n\n📝 Balasan:\n${val}`;
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
-
             fetch(url).then(res => res.json()).then(data => {
                 if(data.ok) {
                     alert("Balasan sukses terkirim ke Telegram! 🚀");
@@ -1004,7 +1173,7 @@
             });
         }
 
-        // === SECRET BASE & MODAL CONTROLS ===
+        // === SECRET BASE ===
         function openAccess() {
             document.getElementById('accessModal').style.display = 'flex';
             document.getElementById('accessInput').value = '';
@@ -1027,11 +1196,7 @@
             } else { document.getElementById('accessError').style.display = 'block'; }
         }
         function closeSecretSpace() { document.getElementById('secretSpace').classList.remove('active'); document.body.style.overflow = ''; }
-
-        function openSecretPuzzleMode() {
-            document.getElementById('secretPuzzleModal').style.display = 'block';
-            initPuzzleGame('secret');
-        }
+        function openSecretPuzzleMode() { document.getElementById('secretPuzzleModal').style.display = 'block'; initPuzzleGame('secret'); }
         function closeSecretPuzzleMode() { document.getElementById('secretPuzzleModal').style.display = 'none'; }
 
         // === FORM TELEGRAM UTAMA ===
@@ -1043,15 +1208,11 @@
             document.getElementById('recomBox').style.display = 'block';
         }
         function putarLaguRecom() { if(tempRecom !== null) { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); } }
-
         function kirimPesanKeTele(pesan, formId, isBio) {
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
             fetch(url).then(res => res.json()).then(data => {
-                if(data.ok) {
-                    alert("Pesan sukses meluncur ke Cello! 🚀");
-                    document.getElementById(formId).reset();
-                    if(isBio) goToSlide(1);
-                } else { alert("Gagal ngirim! Pastiin lo udah pernah klik START di bot Telegram."); }
+                if(data.ok) { alert("Pesan sukses meluncur ke Cello! 🚀"); document.getElementById(formId).reset(); if(isBio) goToSlide(1); } 
+                else { alert("Gagal ngirim! Pastiin lo udah pernah klik START di bot Telegram."); }
             });
         }
         function kirimBio(e) {
