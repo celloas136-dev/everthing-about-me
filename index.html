@@ -9,26 +9,28 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        /* === TEMA SORE / SUNSET (LIGHT MODE) === */
+        /* === TEMA SIANG DREMY PASTEL (LIGHT MODE UPGRADED) === */
         :root {
-            --primary: #ff6b6b;
-            --secondary: #ffb88c;
-            --glass-bg: rgba(255, 255, 255, 0.55);
-            --glass-border: rgba(255, 255, 255, 0.75);
-            --text-dark: #2d3436;
-            --bg-body: linear-gradient(to bottom, #ff9a9e 0%, #fecfef 45%, #f6d365 100%);
-            --text-highlight: #c0392b;
+            --primary: #ff5c8a;
+            --secondary: #ff9eaf;
+            --glass-bg: rgba(255, 255, 255, 0.68);
+            --glass-border: rgba(255, 255, 255, 0.85);
+            --text-dark: #3a2e39; /* Warm Plum Dark */
+            --bg-body: linear-gradient(-45deg, #ffdde1, #ee9ca7, #f7d6e0, #ffe5ec);
+            --text-highlight: #ff2a5f;
+            --card-shadow: 0 20px 40px rgba(238, 156, 167, 0.2);
         }
 
-        /* === TEMA MALAM (DARK MODE) === */
+        /* === TEMA MALAM (DARK MODE AVIONIC) === */
         .dark-mode {
             --primary: #00f3ff;
             --secondary: #0055ff;
-            --glass-bg: rgba(15, 23, 42, 0.7);
+            --glass-bg: rgba(15, 23, 42, 0.72);
             --glass-border: rgba(0, 243, 255, 0.3);
             --text-dark: #e2e8f0;
             --bg-body: linear-gradient(to bottom, #020617 0%, #0f172a 50%, #1e1b4b 100%);
             --text-highlight: #00f3ff;
+            --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,28 +40,41 @@
             color: var(--text-dark);
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; padding: 20px 15px 80px 15px;
-            background: var(--bg-body); background-attachment: fixed;
-            transition: background 0.8s ease; position: relative; overflow-x: hidden;
+            background: var(--bg-body); background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            background-attachment: fixed;
+            transition: all 0.6s ease; position: relative; overflow-x: hidden;
         }
 
-        /* MATAHARI SORE (LIGHT MODE) */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* === MATAHARI & SPARKLES SORE (LIGHT MODE) === */
         body:not(.dark-mode)::after {
-            content: ''; position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%);
-            width: 320px; height: 320px; border-radius: 50%; z-index: -2; pointer-events: none;
-            background: radial-gradient(circle, rgba(255,236,179,1) 0%, rgba(255,183,77,0.7) 45%, transparent 70%);
-            box-shadow: 0 0 120px rgba(255, 152, 0, 0.6);
+            content: ''; position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            width: 450px; height: 450px; border-radius: 50%; z-index: -2; pointer-events: none;
+            background: radial-gradient(circle, rgba(255,230,200,0.85) 0%, rgba(255,180,200,0.4) 45%, transparent 70%);
+            filter: blur(35px); animation: floatSun 8s ease-in-out infinite alternate;
         }
-        body:not(.dark-mode)::before {
-            content: ''; position: fixed; top: 0; left: 0; width: 200%; height: 100%; z-index: -1; pointer-events: none;
-            background-image: 
-                radial-gradient(circle at 20% 25%, rgba(255,255,255,0.4) 0%, transparent 20%),
-                radial-gradient(circle at 75% 35%, rgba(255,255,255,0.3) 0%, transparent 25%),
-                radial-gradient(circle at 45% 65%, rgba(255,255,255,0.35) 0%, transparent 30%);
-            animation: cloudDrift 45s linear infinite;
-        }
-        @keyframes cloudDrift { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes floatSun { 0% { transform: translateX(-50%) translateY(0); } 100% { transform: translateX(-50%) translateY(20px); } }
 
-        /* BULAN & BINTANG (DARK MODE - POJOK KANAN ATAS) */
+        body:not(.dark-mode)::before {
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background-image:
+                radial-gradient(2px 2px at 15% 20%, rgba(255,255,255,0.9), transparent),
+                radial-gradient(3px 3px at 35% 15%, rgba(255,182,193,0.8), transparent),
+                radial-gradient(2px 2px at 75% 25%, rgba(255,255,255,0.9), transparent),
+                radial-gradient(3px 3px at 85% 65%, rgba(255,182,193,0.7), transparent),
+                radial-gradient(2px 2px at 25% 75%, rgba(255,255,255,0.9), transparent),
+                radial-gradient(3px 3px at 60% 85%, rgba(255,200,220,0.8), transparent);
+            background-size: 100% 100%; animation: floatSparkles 6s ease-in-out infinite alternate;
+        }
+        @keyframes floatSparkles { 0% { opacity: 0.5; } 100% { opacity: 0.9; } }
+
+        /* === BULAN & BINTANG (DARK MODE - POJOK KANAN ATAS) === */
         body.dark-mode::after {
             content: ''; position: fixed; top: 25px; right: 25px;
             width: 90px; height: 90px; border-radius: 50%; z-index: -2; pointer-events: none;
@@ -91,38 +106,40 @@
             position: fixed; top: 15px; right: 15px;
             background: var(--glass-bg); border: 2px solid var(--glass-border);
             color: var(--primary); font-size: 1.4rem; width: 48px; height: 48px;
-            border-radius: 50%; cursor: pointer; backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15); transition: 0.3s; z-index: 100;
+            border-radius: 50%; cursor: pointer; backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.3s; z-index: 100;
         }
         .theme-btn:hover { transform: rotate(25deg) scale(1.1); }
         .dark-mode .theme-btn { box-shadow: 0 0 18px var(--primary); }
 
         .glass-card {
-            background: var(--glass-bg); backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border); border-radius: 28px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); width: 100%; max-width: 500px;
+            background: var(--glass-bg); backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1.5px solid var(--glass-border); border-radius: 28px;
+            box-shadow: var(--card-shadow); width: 100%; max-width: 500px;
             padding: 24px; text-align: center; margin-bottom: 18px; transition: all 0.45s ease;
         }
 
         .music-player h3 { font-family: 'Fredoka', cursive; color: var(--text-highlight); margin-bottom: 14px; }
         .song-select {
             width: 100%; padding: 12px 14px; border-radius: 14px; border: none;
-            background: rgba(255,255,255,0.4); font-family: 'Poppins'; font-size: 0.9rem;
+            background: rgba(255,255,255,0.5); font-family: 'Poppins'; font-size: 0.9rem;
             color: var(--text-dark); outline: none; margin-bottom: 14px;
         }
+        .dark-mode .song-select { background: rgba(255,255,255,0.15); }
         .dark-mode .song-select option { color: #000; }
 
         .controls { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
         .btn-icon {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none; color: white; width: 48px; height: 48px; border-radius: 50%;
-            cursor: pointer; font-size: 1.05rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.3s;
+            cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 16px rgba(255, 92, 138, 0.35); transition: 0.3s;
         }
         .dark-mode .btn-icon { box-shadow: 0 0 16px var(--primary); color: #0f172a; }
         .btn-icon:hover { transform: translateY(-4px) scale(1.06); }
 
         .btn-mode {
-            background: rgba(255,255,255,0.3); border: 2px solid var(--primary); color: var(--primary);
+            background: rgba(255,255,255,0.4); border: 2px solid var(--primary); color: var(--primary);
             padding: 8px 18px; border-radius: 20px; font-weight: 600; cursor: pointer;
             transition: all 0.3s ease; margin-top: 14px;
         }
@@ -132,11 +149,11 @@
         .nav-menu { display: flex; gap: 8px; width: 100%; max-width: 500px; margin-bottom: 18px; }
         .nav-btn {
             flex: 1; padding: 11px 6px; border: 1px solid var(--glass-border); border-radius: 14px;
-            background: var(--glass-bg); backdrop-filter: blur(10px);
+            background: var(--glass-bg); backdrop-filter: blur(12px);
             font-family: 'Fredoka', cursive; font-size: 0.85rem; color: var(--text-dark);
             cursor: pointer; transition: 0.3s;
         }
-        .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 6px 18px rgba(255, 92, 138, 0.35); }
         .dark-mode .nav-btn.active { color: #0f172a; box-shadow: 0 0 16px var(--primary); }
 
         .content-section { display: none; animation: slideUp 0.45s ease; }
@@ -157,15 +174,16 @@
         h2 { font-family: 'Fredoka', cursive; color: var(--text-highlight); font-size: 1.4rem; margin-bottom: 10px; }
         p { font-size: 0.88rem; margin-bottom: 14px; }
         .fact-box {
-            background: rgba(255,255,255,0.3); padding: 18px; border-radius: 18px;
+            background: rgba(255,255,255,0.4); padding: 18px; border-radius: 18px;
             text-align: left; border-left: 6px solid var(--primary); margin-bottom: 18px;
         }
+        .dark-mode .fact-box { background: rgba(255,255,255,0.1); }
         .fact-item { margin-bottom: 10px; font-size: 0.85rem; }
 
         .form-group { text-align: left; margin-bottom: 10px; }
         .input-custom {
             width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.4); font-family: 'Poppins'; outline: none; font-size: 0.85rem; color: var(--text-dark);
+            background: rgba(255,255,255,0.5); font-family: 'Poppins'; outline: none; font-size: 0.85rem; color: var(--text-dark);
         }
         .dark-mode .input-custom { background: rgba(0,0,0,0.3); }
         .dark-mode .input-custom::placeholder { color: #94a3b8; }
@@ -175,22 +193,22 @@
             width: 100%; padding: 13px; border-radius: 14px; border: none;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white; font-family: 'Fredoka', cursive; font-size: 1rem;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.12); transition: 0.3s; margin-top: 10px;
+            cursor: pointer; box-shadow: 0 6px 18px rgba(255, 92, 138, 0.35); transition: 0.3s; margin-top: 10px;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
         .dark-mode .btn-action { color: #0f172a; box-shadow: 0 0 16px rgba(0, 243, 255, 0.4); }
         .btn-action:hover { transform: translateY(-3px); }
-        .btn-secondary { background: rgba(255,255,255,0.3); color: var(--text-dark); box-shadow: none; border: 1px solid var(--glass-border); }
+        .btn-secondary { background: rgba(255,255,255,0.4); color: var(--text-dark); box-shadow: none; border: 1px solid var(--glass-border); }
         .btn-secondary:hover { background: var(--primary); color: white; }
         .btn-flex { display: flex; gap: 10px; margin-top: 10px; }
 
         .mood-container { display: flex; justify-content: space-around; margin: 18px 0; }
         .mood-box { text-align: center; }
         .mood-btn {
-            font-size: 1.8rem; background: rgba(255,255,255,0.4); border: 2px solid transparent;
+            font-size: 1.8rem; background: rgba(255,255,255,0.45); border: 2px solid transparent;
             width: 54px; height: 54px; border-radius: 50%; cursor: pointer; transition: 0.3s;
         }
-        .mood-btn:hover, .mood-btn.selected { background: rgba(255,255,255,0.7); border-color: var(--primary); transform: scale(1.1); box-shadow: 0 0 12px var(--primary); }
+        .mood-btn:hover, .mood-btn.selected { background: rgba(255,255,255,0.8); border-color: var(--primary); transform: scale(1.1); box-shadow: 0 0 12px var(--primary); }
         .mood-text { display: block; font-size: 0.7rem; font-weight: 600; margin-top: 5px; opacity: 0.85; }
 
         .scroll-box { max-height: 52vh; overflow-y: auto; padding-right: 4px; }
@@ -200,10 +218,10 @@
         .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 10px; }
         .polaroid {
             background: #fff; padding: 10px 10px 25px 10px; border-radius: 6px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: 0.4s ease; transform: rotate(-3deg); cursor: pointer; position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12); transition: 0.4s ease; transform: rotate(-3deg); cursor: pointer; position: relative;
         }
         .polaroid:nth-child(even) { transform: rotate(3.5deg); }
-        .polaroid:hover { transform: scale(1.08) rotate(0deg); z-index: 10; box-shadow: 0 14px 28px rgba(0,0,0,0.28); }
+        .polaroid:hover { transform: scale(1.08) rotate(0deg); z-index: 10; box-shadow: 0 14px 28px rgba(0,0,0,0.22); }
         .polaroid img { width: 100%; height: 135px; object-fit: cover; border-radius: 4px; background: #e5e7eb; display: block; }
         .polaroid::after { content: '🔍 Tap buat Zoom'; position: absolute; bottom: 6px; left: 0; width: 100%; font-size: 0.65rem; color: #777; font-weight: 600; text-align: center; }
         .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 12px rgba(0, 243, 255, 0.22); }
@@ -212,12 +230,12 @@
         /* === 🎮 FUN ZONE LOBBY & GAME CARDS === */
         .fun-cards { display: grid; grid-template-columns: repeat(1, 1fr); gap: 14px; margin-top: 15px; }
         .fun-card {
-            background: rgba(255,255,255,0.4); border: 1.5px solid var(--glass-border);
+            background: rgba(255,255,255,0.45); border: 1.5px solid var(--glass-border);
             border-radius: 20px; padding: 18px; text-align: center; cursor: pointer;
             transition: all 0.3s ease; display: flex; align-items: center; gap: 15px;
         }
         .dark-mode .fun-card { background: rgba(15,23,42,0.5); }
-        .fun-card:hover { transform: translateY(-4px) scale(1.02); background: rgba(255,255,255,0.6); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .fun-card:hover { transform: translateY(-4px) scale(1.02); background: rgba(255,255,255,0.7); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .fun-card-icon { font-size: 2.2rem; min-width: 50px; }
         .fun-card-info { text-align: left; }
         .fun-card-info h4 { font-family: 'Fredoka', cursive; font-size: 1.1rem; color: var(--text-highlight); }
@@ -244,10 +262,7 @@
             transition: transform 0.1s ease; box-shadow: inset 0 0 2px rgba(255,255,255,0.5);
         }
 
-        /* Level Selector */
-        .level-select {
-            display: flex; gap: 6px; overflow-x: auto; padding: 8px 0; margin-bottom: 10px;
-        }
+        .level-select { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0; margin-bottom: 10px; }
         .lvl-btn {
             padding: 6px 12px; border-radius: 10px; border: 1px solid var(--primary);
             background: rgba(255,255,255,0.3); font-size: 0.75rem; font-weight: 600;
@@ -255,7 +270,7 @@
         }
         .lvl-btn.active { background: var(--primary); color: white; }
 
-        /* === 🐾 MASKOT KUCING IMUT (POJOK KANAN BAWAH) === */
+        /* === 🐾 MASKOT KUCING IMUT === */
         .cat-mascot {
             position: fixed; bottom: 20px; right: 20px; z-index: 99; cursor: pointer;
             transition: transform 0.3s ease; animation: catFloat 4s ease-in-out infinite;
@@ -292,7 +307,7 @@
         .access-icon {
             width: 70px; height: 70px; margin: 0 auto 20px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white;
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); box-shadow: 0 8px 20px rgba(255, 117, 140, 0.4);
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); box-shadow: 0 8px 20px rgba(255, 92, 138, 0.4);
         }
         .dark-mode .access-icon { color: #0f172a; box-shadow: 0 0 25px rgba(0,243,255,0.5); }
         .access-title { font-family: 'Fredoka', cursive; font-size: 1.5rem; color: var(--text-dark); margin-bottom: 8px; }
@@ -339,15 +354,15 @@
         }
 
         .space-header { position: relative; z-index: 5; text-align: center; padding: 20px 16px 5px; color: #00f3ff; }
-        .space-header h2 { font-family: 'Fredoka', cursive; font-size: 1.4rem; text-shadow: 0 0 20px rgba(0,243,255,0.8); margin-bottom: 4px; }
-        .space-header p { font-size: 0.8rem; opacity: 0.9; color: #a5f3fc; }
+        .space-header h2 { font-family: 'Fredoka', cursive; font-size: 1.5rem; text-shadow: 0 0 20px rgba(0,243,255,0.8); margin-bottom: 5px; }
+        .space-header p { font-size: 0.85rem; opacity: 0.9; color: #a5f3fc; }
 
         .hanging-area {
             position: relative; z-index: 10; height: calc(100vh - 220px); width: 100%; max-width: 900px; margin: 0 auto;
         }
-        .hang-item { position: absolute; width: 105px; cursor: pointer; animation: floatY 5s ease-in-out infinite; }
+        .hang-item { position: absolute; width: 110px; cursor: pointer; animation: floatY 5s ease-in-out infinite; }
         .hang-item:nth-child(1) { left: 8%; top: 4%; transform: rotate(-5deg); }
-        .hang-item:nth-child(2) { left: 38%; top: 2%; transform: rotate(4deg); width: 115px; }
+        .hang-item:nth-child(2) { left: 38%; top: 2%; transform: rotate(4deg); width: 120px; }
         .hang-item:nth-child(3) { left: 68%; top: 6%; transform: rotate(-3deg); }
         .hang-item:nth-child(4) { left: 15%; top: 25%; transform: rotate(5deg); width: 110px; }
         .hang-item:nth-child(5) { left: 52%; top: 22%; transform: rotate(-4deg); }
@@ -513,9 +528,8 @@
         </div>
     </div>
 
-    <!-- 🎮 MENU 4: FUN ZONE (LOBBY + GAME) -->
+    <!-- 🎮 MENU 4: FUN ZONE -->
     <div id="sec-funzone" class="glass-card content-section">
-        <!-- Sub-Page: Lobby -->
         <div id="fun-lobby">
             <h2>Fun Zone 🎮</h2>
             <p>Pilih arena yang mau lo cobain!</p>
@@ -544,7 +558,6 @@
             </div>
         </div>
 
-        <!-- Sub-Page: Cookie Game -->
         <div id="fun-cookie" style="display:none;">
             <h2>Fortune Cookie 🥠</h2>
             <p>Tap kuenya sampe pecah!</p>
@@ -555,7 +568,6 @@
             <button class="btn-action btn-secondary" onclick="backToFunLobby()">⬅️ Kembali ke Fun Zone</button>
         </div>
 
-        <!-- Sub-Page: Flower Quiz -->
         <div id="fun-flower" style="display:none;">
             <h2>Flower Vibe Quiz 🌸</h2>
             <div id="quizContainer">
@@ -571,7 +583,6 @@
             <button class="btn-action btn-secondary" style="margin-top:15px;" onclick="backToFunLobby()">⬅️ Kembali ke Fun Zone</button>
         </div>
 
-        <!-- Sub-Page: Fun Puzzle 3x3 s/d 8x8 -->
         <div id="fun-puzzle" style="display:none;">
             <h2>Photo Puzzle 🧩</h2>
             <div class="level-select" id="funLvlBar"></div>
@@ -636,7 +647,7 @@
         </div>
     </div>
 
-    <!-- SECRET PUZZLE MODAL (3x3 s/d 8x8) -->
+    <!-- SECRET PUZZLE MODAL -->
     <div id="secretPuzzleModal" style="display:none; position:fixed; inset:0; z-index:1500; background:rgba(2,6,23,0.95); backdrop-filter:blur(15px); padding:20px; text-align:center; overflow-y:auto;">
         <h2 style="color:#00f3ff; font-family:'Fredoka'; margin-top:10px;">Classified Puzzle 🧩</h2>
         <p style="color:#a5f3fc; font-size:0.8rem;">Selesaikan puzzle rahasia dari Level 1 - 10.</p>
@@ -646,7 +657,7 @@
         <button class="btn-action btn-secondary" style="max-width:280px; margin:10px auto;" onclick="closeSecretPuzzleMode()">Kembali ke Secret Base 📡</button>
     </div>
 
-    <!-- GOMBALAN / REPLY FORM MODAL (TIAP SELESAI LEVEL SECRET) -->
+    <!-- MODAL GOMBALAN LEVEL CLEAR -->
     <div id="gombalModal">
         <div class="gombal-box">
             <h3 id="gombalTitle">Level Clear! ✨</h3>
@@ -654,7 +665,7 @@
             
             <form id="gombalReplyForm" onsubmit="kirimBalasanGombal(event)">
                 <div class="form-group">
-                    <input type="text" id="gombalReplyInput" class="input-custom" placeholder="Balas di sini / kirim link PAP..." style="background:rgba(255,255,255,0.1); color:#fff; border-color:#00f3ff;">
+                    <input type="text" id="gombalReplyInput" class="input-custom" placeholder="Bales di sini (opsional)..." style="background:rgba(255,255,255,0.1); color:#fff; border-color:#00f3ff;">
                 </div>
                 <button type="submit" class="btn-action"><i class="fas fa-paper-plane"></i> Kirim Balasan</button>
             </form>
@@ -858,8 +869,7 @@
         }
         function applyFlowerSong() { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); }
 
-        // === SYSTEM DUAL PUZZLE (FUN 3x3-8x8 & SECRET 3x3-8x8) ===
-        // Grid Scale: Lv1=3x3, Lv2=4x4, Lv3=5x5, Lv4=6x6, Lv5=7x7, Lv6-10=8x8
+        // === SYSTEM DUAL PUZZLE ===
         let currentLvl = 1, currentType = 'fun';
         let puzzleGrid = [];
 
@@ -867,13 +877,13 @@
             "Satu level gampang berhasil lo lewati tanpa kendala. Gue cuma seneng aja ngeliat lo betah nyobain web buatan gue ini dari awal tadi. Btw, menurut lo tampilan web gue ini gimana? Tulis pendapat lo di bawah ya! ✨",
             "Grid 4x4 pun langsung lo beresin dengan mulus. Padahal kepingan gambar tadi lumayan acak-acakan kayak pikiran gue pas pertama kali ngeliat lo. Kalo diperhatiin, lo emang tipe cewek yang fokus dan gak gampang nyerah ya? 🌸",
             "Masuk level lima kali lima, ritme main lo makin dapet aja nih. Gue sengaja bikin fitur ini biar lo bisa santai dan dapet sedikit senyuman di sela-sela hari lo yang padat. Semoga hari ini hal baik berpihak ke lo ya. Momen paling seru lo hari ini apa? ☁️",
-            "Ukuran puzzle-nya mulai ngecilin dan kotaknya makin banyak. Tapi ngeliat nama lo tetep bertahan nyelesaiin game ini tuh rasanya seru banget. Gue penasaran deh, ekspresi muka lo sekarang lagi serius banget atau malah sambil ketawa sendiri nih? 😜",
+            "Ukuran puzzle-nya mulai ngecilin dan kotaknya makin banyak. Tapi ngeliat nama lo tetep bertahan nyelesaiin game ini tuh rasanya seru banget. Gue penasaran deh, ekspresi muka lo sekarang lagi serious banget atau malah sambil ketawa sendiri nih? 😜",
             "Setengah perjalanan berhasil lo lewati dengan sempurna! Btw dari tadi dengerin lagu di playlist web ini, ada lagu yang bener-bener pas sama mood lo hari ini gak? Ketik judul lagu favorit lo di bawah dong 🎧",
             "Selamat datang di level 8x8! Ini batas maksimal ukuran puzzle yang pusingnya kebangetan. Tapi respon lo yang tetep bertahan terbukti kalo lo tuh bukan cewek yang gampang nyerah. Definisi cewek keren yang bikin orang kagum dari jauh ✨",
             "Kalo kepingan gambar ini butuh ketelitian biar pas di posisinya, hadirnya lo di space ini tuh kayak ngasih warna baru yang bikin semuanya makin estetik. Lagi dengerin lagu apa sekarang? Tumpahin perasaan lo di kolom bawah yuk 🌙",
             "Delapan level udah kelar! Jujur, gue kagum banget sama ketekunan lo. Gak semua orang punya kesabaran buat namatin puzzle yang serumit ini. Nanti kalo game ini udah kelar, ada hal khusus yang pengen lo sampein ke gue gak? 😉",
             "Tinggal satu langkah lagi menuju puncaknya. Makasih ya udah meluangkan waktu lo yang berharga buat nyobain semua fitur di sini. Semoga semua energi positif dari web ini bisa nemenin lo sampai besok-besok ✨",
-            "LEVEL 10 OFFICIALLY CLEARED! Gokil banget, lo resmi naklukin puzzle tersulit di Secret Base ini! Sebagai piala kemenangan karena lo udah berhasil namatin semuanya... Boleh dong PAP-nya maniezz? Kirim foto manis atau pap ter-random lo di kolom bawah sekarang! 💖✨"
+            "LEVEL 10 OFFICIALLY CLEARED! Gokil banget, lo resmi naklukin puzzle tersulit di Secret Base ini! Sebagai piala kemenangan karena lo udah berhasil namatin semuanya... Boleh dong PAP-nya maniezz? Kirim langsung ke WA gue aja yaa, nomor gue gak ganti kok 😉 Atau mau bales pesan ini di bawah juga boleh banget! 💖✨"
         ];
 
         function getGridSize(lvl) {
@@ -882,7 +892,7 @@
             if(lvl === 3) return 5;
             if(lvl === 4) return 6;
             if(lvl === 5) return 7;
-            return 8; // Level 6-10 mentok 8x8
+            return 8; // Level 6-10 = 8x8
         }
 
         function initPuzzleGame(type) {
@@ -906,10 +916,9 @@
 
             const total = size * size;
             puzzleGrid = Array.from({length: total}, (_, i) => i);
-            puzzleGrid.sort(() => Math.random() - 0.5); // Shuffle
+            puzzleGrid.sort(() => Math.random() - 0.5);
 
             const imgSrc = currentType === 'fun' ? `./pz${currentLvl}.jpeg` : `./sc${currentLvl}.jpeg`;
-            const fallbackSrc = currentType === 'fun' ? `./pz${currentLvl}.jpg` : `./sc${currentLvl}.jpg`;
 
             puzzleGrid.forEach((val, idx) => {
                 const tile = document.createElement('div');
@@ -972,14 +981,20 @@
 
         function closeGombalModal() { document.getElementById('gombalModal').style.display = 'none'; }
 
+        // FUNGSI BALASAN GOMBALAN (OPSIONAL)
         function kirimBalasanGombal(e) {
             e.preventDefault();
-            const val = document.getElementById('gombalReplyInput').value;
-            if(!val) return;
+            const val = document.getElementById('gombalReplyInput').value.trim();
             
-            const pesan = `💖 *BALASAN GOMBALAN LEVEL ${currentLvl}!*\n\n📝 Balasan/Link PAP:\n${val}`;
+            if(val === "") {
+                alert("Makasih udah mainin game ini! ✨");
+                closeGombalModal();
+                return;
+            }
+
+            const pesan = `💖 *BALASAN GOMBALAN LEVEL ${currentLvl}!*\n\n📝 Balasan:\n${val}`;
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
-            
+
             fetch(url).then(res => res.json()).then(data => {
                 if(data.ok) {
                     alert("Balasan sukses terkirim ke Telegram! 🚀");
