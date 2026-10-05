@@ -1,14 +1,3 @@
-Siap, Cell! Gua rombak halaman **Classified Puzzle**-nya. 
-
-Sekarang pas masuk ke puzzle rahasia, background-nya **bukan cuma warna gelap blur lagi**, tapi bener-bener **ruang angkasa penuh bintang kelap-kelip**. Terus gua tambahin **Kabut Galaksi / Nebula bercahaya (warna ungu kebiruan)** di bagian atas belakang biar keliatan super estetik dan magis. 
-
-Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di belakang, tapi **teks dan puzzle lo tetap terbaca dengan sangat jelas** di depannya.
-
----
-
-### 📄 KODE FULL TERBARU `index.html` (Tinggal Copy & Timpa)
-
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -20,7 +9,7 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        /* === TEMA SORE / SUNSET (LIGHT MODE) === */
+        /* === TEMA SIANG (LIGHT MODE) === */
         :root {
             --primary: #e07a5f;
             --secondary: #f2a07b;
@@ -31,7 +20,7 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
             --card-shadow: 0 16px 40px rgba(80, 40, 60, 0.12);
         }
 
-        /* === TEMA MALAM (DARK MODE AVIONIC) === */
+        /* === TEMA MALAM (DARK MODE) === */
         .dark-mode {
             --primary: #00f3ff;
             --secondary: #0055ff;
@@ -52,55 +41,35 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
             transition: background 0.6s ease; position: relative; overflow-x: hidden;
         }
 
-        /* MODE SIANG: Background Sunset */
-        body:not(.dark-mode) {
-            background: linear-gradient(to bottom, #87ceeb 0%, #b8d4e8 18%, #f5c6aa 45%, #f7a072 70%, #e07a5f 100%);
-            background-attachment: fixed;
-        }
+        body:not(.dark-mode) { background: linear-gradient(to bottom, #87ceeb 0%, #b8d4e8 18%, #f5c6aa 45%, #f7a072 70%, #e07a5f 100%); background-attachment: fixed; }
+        body.dark-mode { background: linear-gradient(to bottom, #020617 0%, #0f172a 50%, #1e1b4b 100%); background-attachment: fixed; }
 
-        /* MODE MALAM: Background Gelap */
-        body.dark-mode {
-            background: linear-gradient(to bottom, #020617 0%, #0f172a 50%, #1e1b4b 100%);
-            background-attachment: fixed;
-        }
-
-        /* ========== DEKORASI MODE SIANG ========== */
+        /* DEKORASI SIANG */
         .day-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
         .dark-mode .day-decor { display: none !important; }
-
-        /* MATAHARI (Pojok Kanan Atas) */
+        
+        /* MATAHARI (DITURUNIN BIAR NGGA NUMPUK TOMBOL MOON) */
         .day-sun {
-            position: absolute; top: 28px; right: 28px;
-            width: 88px; height: 88px; border-radius: 50%;
+            position: absolute; top: 75px; right: 25px; width: 75px; height: 75px; border-radius: 50%;
             background: radial-gradient(circle at 35% 35%, #fff7d6 0%, #ffe566 35%, #ffb347 70%, rgba(255, 140, 66, 0.3) 100%);
-            box-shadow: 0 0 40px 12px rgba(255, 200, 80, 0.75), 0 0 90px 30px rgba(255, 160, 60, 0.35), 0 0 140px 50px rgba(255, 120, 80, 0.2);
+            box-shadow: 0 0 35px 10px rgba(255, 200, 80, 0.75), 0 0 80px 25px rgba(255, 160, 60, 0.35);
             animation: sunPulse 5s ease-in-out infinite alternate;
         }
         @keyframes sunPulse { 0% { transform: scale(1); filter: brightness(1); } 100% { transform: scale(1.06); filter: brightness(1.08); } }
 
-        /* AWAN SORE */
-        .day-cloud {
-            position: absolute; background: rgba(255, 255, 255, 0.55);
-            border-radius: 50px; filter: blur(2px); opacity: 0.85;
-        }
-        .day-cloud::before, .day-cloud::after {
-            content: ''; position: absolute; background: inherit; border-radius: 50%;
-        }
+        .day-cloud { position: absolute; background: rgba(255, 255, 255, 0.55); border-radius: 50px; filter: blur(2px); opacity: 0.85; }
+        .day-cloud::before, .day-cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; }
         .day-cloud.c1 { width: 140px; height: 42px; top: 18%; left: -20px; animation: cloudMove 48s linear infinite; }
-        .day-cloud.c1::before { width: 55px; height: 55px; top: -28px; left: 18px; }
-        .day-cloud.c1::after  { width: 70px; height: 70px; top: -35px; left: 50px; }
+        .day-cloud.c1::before { width: 55px; height: 55px; top: -28px; left: 18px; } .day-cloud.c1::after  { width: 70px; height: 70px; top: -35px; left: 50px; }
         .day-cloud.c2 { width: 180px; height: 48px; top: 28%; right: -40px; animation: cloudMove 62s linear infinite reverse; opacity: 0.7; }
-        .day-cloud.c2::before { width: 70px; height: 70px; top: -32px; left: 25px; }
-        .day-cloud.c2::after  { width: 85px; height: 85px; top: -40px; left: 70px; }
+        .day-cloud.c2::before { width: 70px; height: 70px; top: -32px; left: 25px; } .day-cloud.c2::after  { width: 85px; height: 85px; top: -40px; left: 70px; }
         .day-cloud.c3 { width: 120px; height: 36px; top: 42%; left: 15%; animation: cloudMove 55s linear infinite; opacity: 0.6; }
-        .day-cloud.c3::before { width: 48px; height: 48px; top: -24px; left: 15px; }
-        .day-cloud.c3::after  { width: 60px; height: 60px; top: -30px; left: 45px; }
+        .day-cloud.c3::before { width: 48px; height: 48px; top: -24px; left: 15px; } .day-cloud.c3::after  { width: 60px; height: 60px; top: -30px; left: 45px; }
         .day-cloud.c4 { width: 160px; height: 44px; top: 55%; right: 10%; animation: cloudMove 70s linear infinite reverse; opacity: 0.5; }
-        .day-cloud.c4::before { width: 60px; height: 60px; top: -28px; left: 20px; }
-        .day-cloud.c4::after  { width: 75px; height: 75px; top: -36px; left: 60px; }
+        .day-cloud.c4::before { width: 60px; height: 60px; top: -28px; left: 20px; } .day-cloud.c4::after  { width: 75px; height: 75px; top: -36px; left: 60px; }
         @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(40px); } }
 
-        /* SILUET GUNUNG */
+        /* GUNUNG UNIVERSAL */
         .mountains-bg {
             position: fixed; left: 0; right: 0; bottom: 0; height: 42vh; max-height: 380px; z-index: 0; pointer-events: none;
             background: radial-gradient(ellipse 80% 60% at 15% 100%, rgba(107,79,107,0.7) 0%, transparent 70%),
@@ -125,13 +94,11 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
         .dark-mode .mountains-bg::before { background: rgba(8,12,25,0.8); }
         .dark-mode .mountains-bg::after { background: rgba(0,0,0,0.9); }
 
-        /* ========== BULAN & BINTANG (DARK MODE) ========== */
+        /* DEKORASI MALAM */
         body.dark-mode::after {
-            content: ''; position: fixed; top: 25px; right: 25px;
-            width: 90px; height: 90px; border-radius: 50%; z-index: -2; pointer-events: none;
+            content: ''; position: fixed; top: 25px; right: 25px; width: 85px; height: 85px; border-radius: 50%; z-index: -2; pointer-events: none;
             background: radial-gradient(circle at 35% 35%, #ffffff 15%, #cbd5e1 55%, #94a3b8 90%);
-            box-shadow: 0 0 50px rgba(255,255,255,0.6), 0 0 100px rgba(0,243,255,0.3);
-            animation: floatMoon 6s ease-in-out infinite alternate;
+            box-shadow: 0 0 50px rgba(255,255,255,0.6), 0 0 100px rgba(0,243,255,0.3); animation: floatMoon 6s ease-in-out infinite alternate;
         }
         @keyframes floatMoon { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
 
@@ -143,7 +110,6 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
                 radial-gradient(2px 2px at 80px 250px, rgba(0,243,255,0.9), transparent), radial-gradient(1px 1px at 320px 300px, #fff, transparent),
                 radial-gradient(1.5px 1.5px at 500px 350px, rgba(255,255,255,0.85), transparent), radial-gradient(2px 2px at 200px 500px, rgba(0,243,255,0.7), transparent),
                 radial-gradient(1px 1px at 50px 600px, #fff, transparent), radial-gradient(1.5px 1.5px at 400px 650px, rgba(255,255,255,0.9), transparent),
-                /* BINTANG EKSTRA */
                 radial-gradient(1px 1px at 100px 150px, #fff, transparent), radial-gradient(1.5px 1.5px at 250px 450px, rgba(0,243,255,0.8), transparent),
                 radial-gradient(2px 2px at 550px 50px, rgba(255,255,255,0.7), transparent), radial-gradient(1px 1px at 420px 220px, #fff, transparent),
                 radial-gradient(1.5px 1.5px at 180px 580px, rgba(255,255,255,0.8), transparent), radial-gradient(1px 1px at 380px 480px, #fff, transparent);
@@ -283,8 +249,17 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
         .puzzle-tile.hint-to { outline: 3px dashed #00e676; outline-offset: -2px; box-shadow: 0 0 12px rgba(0, 230, 118, 0.7); animation: hintPulse 0.8s ease infinite alternate; }
         @keyframes hintPulse { from { opacity: 0.7; } to { opacity: 1; } }
 
-        .level-select { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0; margin-bottom: 10px; }
-        .lvl-btn { padding: 6px 12px; border-radius: 10px; border: 1px solid var(--primary); background: rgba(255,255,255,0.3); font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--text-dark); }
+        /* LEVEL SELECTOR HP FIX (SCROLL SANGAT MULUS) */
+        .level-select {
+            display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 10px;
+            width: 100%; -webkit-overflow-scrolling: touch; touch-action: pan-x; scrollbar-width: thin;
+        }
+        .lvl-btn {
+            flex-shrink: 0; padding: 8px 14px; border-radius: 12px; border: 1px solid var(--primary);
+            background: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 600;
+            cursor: pointer; white-space: nowrap; color: var(--text-dark); transition: 0.2s;
+        }
+        .dark-mode .lvl-btn { background: rgba(15,23,42,0.6); color: #fff; }
         .lvl-btn.active { background: var(--primary); color: white; }
         .lvl-btn.locked { opacity: 0.4; filter: grayscale(0.5); } .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
 
@@ -319,8 +294,6 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
         .access-error { display: none; margin-top: 12px; font-size: 0.85rem; color: #ff4d6d; font-weight: 600; }
         .access-actions { display: flex; gap: 10px; margin-top: 20px; }
         .access-actions button { flex: 1; padding: 12px; font-size: 0.9rem; }
-        .shake { animation: shake 0.4s ease; }
-        @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
 
         /* SECRET SPACE */
         #secretSpace { display: none; position: fixed; inset: 0; z-index: 1200; background: radial-gradient(ellipse at center, #0b1021 0%, #000000 100%); overflow: hidden; }
@@ -554,7 +527,7 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
 
     <!-- FOOTER -->
     <div class="footer">
-        <p>follow ig gua ya di <a href="https://instagram.com/angn_smrn" target="_blank">@angn_smrn</a> <span class="secret-icon" onclick="openAccess()" title="Classified">✈️</span></p>
+        <p>follow ig gua ya di <a href="https://instagram.com/angn_smrn" target="_blank">@angn_smrn</a> <span class="secret-icon" onclick="openAccess()">✈️</span></p>
     </div>
 
     <!-- 🐾 MASKOT KUCING -->
@@ -571,7 +544,7 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
         </div>
     </div>
 
-    <!-- POPUP ACCESS TERMINAL (SIAP TERBANG?) -->
+    <!-- POPUP ACCESS TERMINAL -->
     <div id="accessModal" class="custom-modal" onclick="closeAccess(event)">
         <div class="custom-panel" id="accessPanel" onclick="event.stopPropagation()">
             <div class="access-icon"><i class="fas fa-rocket"></i></div>
@@ -589,7 +562,7 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
         </div>
     </div>
 
-    <!-- SECRET SPACE (DEEP SPACE) -->
+    <!-- SECRET SPACE -->
     <div id="secretSpace">
         <div class="space-galaxy"></div>
         <div class="planet-1"></div>
@@ -615,7 +588,7 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
         </div>
     </div>
 
-    <!-- SECRET PUZZLE MODAL DENGAN GALAKSI BACKGROUND -->
+    <!-- SECRET PUZZLE MODAL (BACKGROUND GALAKSI & BINTANG) -->
     <div id="secretPuzzleModal">
         <div class="space-stars"></div>
         <div class="puzzle-nebula"></div>
@@ -776,12 +749,14 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
             bubble.style.display = 'block';
             catBubbleOpen = true;
         }
+
         function hideCatBubble() {
             const bubble = document.getElementById('catBubble');
             if (!bubble) return;
             bubble.style.display = 'none';
             catBubbleOpen = false;
         }
+
         document.addEventListener('click', function (e) {
             if (!catBubbleOpen) return;
             const mascot = document.querySelector('.cat-mascot');
@@ -865,7 +840,7 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
         }
         function applyFlowerSong() { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); }
 
-        // === PUZZLE DENGAN SISTEM LEVEL LOCK ===
+        // === PUZZLE ENGINE ===
         let currentLvl = 1;
         let currentType = 'fun';
         let puzzleGrid = [];
@@ -902,8 +877,7 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
             document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(el => { el.classList.remove('hint-from', 'hint-to'); });
             const ht = document.getElementById('hintText');
             const hs = document.getElementById('hintTextSecret');
-            if (ht) ht.textContent = '';
-            if (hs) hs.textContent = '';
+            if (ht) ht.textContent = ''; if (hs) hs.textContent = '';
         }
 
         function initPuzzleGame(type) {
@@ -937,6 +911,12 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
             renderPuzzleBoard();
         }
 
+        function closeLockedModal(e) {
+            if (e === true || (e && e.target === document.getElementById('lockedModal'))) {
+                document.getElementById('lockedModal').style.display = 'none';
+            }
+        }
+
         function selectLvl(lvl) {
             const maxOk = getMaxUnlocked(currentType);
             if (lvl > maxOk) {
@@ -947,12 +927,6 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
             puzzleSolvedThisLevel = false;
             firstTile = null;
             initPuzzleGame(currentType);
-        }
-
-        function closeLockedModal(e) {
-            if (e === true || (e && e.target === document.getElementById('lockedModal'))) {
-                document.getElementById('lockedModal').style.display = 'none';
-            }
         }
 
         function renderPuzzleBoard() {
@@ -1150,7 +1124,7 @@ Gua juga udah atur layernya (z-index) biar galaksinya keliatan jelas menyala di 
             fetch(url).then(res => res.json()).then(data => {
                 if(data.ok) { alert("Pesan sukses meluncur ke Cello! 🚀"); document.getElementById(formId).reset(); if(isBio) goToSlide(1); } 
                 else { alert("Gagal ngirim! Pastiin lo udah pernah klik START di bot Telegram."); }
-            }).catch(() => { alert("Gagal koneksi! Cek internet lo."); });
+            });
         }
         function kirimBio(e) {
             e.preventDefault();
