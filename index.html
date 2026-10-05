@@ -9,231 +9,99 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        /* === TEMA SIANG SORE (LIGHT MODE) === */
-        :root {
-            --primary: #e07a5f;
-            --secondary: #f2a07b;
-            --glass-bg: rgba(255, 255, 255, 0.72);
-            --glass-border: rgba(255, 255, 255, 0.85);
-            --text-dark: #3d2c40;
-            --text-highlight: #c0392b;
-            --card-shadow: 0 16px 40px rgba(80, 40, 60, 0.12);
-        }
-
-        /* === TEMA MALAM (DARK MODE AVIONIC) === */
-        .dark-mode {
-            --primary: #00f3ff;
-            --secondary: #0055ff;
-            --glass-bg: rgba(15, 23, 42, 0.72);
-            --glass-border: rgba(0, 243, 255, 0.3);
-            --text-dark: #e2e8f0;
-            --text-highlight: #00f3ff;
-            --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-        }
+        /* === TEMA SORE & MALAM === */
+        :root { --primary: #e07a5f; --secondary: #f2a07b; --glass-bg: rgba(255, 255, 255, 0.72); --glass-border: rgba(255, 255, 255, 0.85); --text-dark: #3d2c40; --text-highlight: #c0392b; --card-shadow: 0 16px 40px rgba(80, 40, 60, 0.12); }
+        .dark-mode { --primary: #00f3ff; --secondary: #0055ff; --glass-bg: rgba(15, 23, 42, 0.72); --glass-border: rgba(0, 243, 255, 0.3); --text-dark: #e2e8f0; --text-highlight: #00f3ff; --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Poppins', sans-serif; color: var(--text-dark);
-            display: flex; flex-direction: column; align-items: center;
-            min-height: 100vh; padding: 20px 15px 80px 15px;
-            transition: background 0.6s ease; position: relative; overflow-x: hidden;
-        }
-
+        body { font-family: 'Poppins', sans-serif; color: var(--text-dark); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px 15px 80px 15px; transition: background 0.6s ease; position: relative; overflow-x: hidden; }
         body:not(.dark-mode) { background: linear-gradient(to bottom, #87ceeb 0%, #b8d4e8 18%, #f5c6aa 45%, #f7a072 70%, #e07a5f 100%); background-attachment: fixed; }
         body.dark-mode { background: linear-gradient(to bottom, #020617 0%, #0f172a 50%, #1e1b4b 100%); background-attachment: fixed; }
 
-        /* DEKORASI SIANG */
+        /* DEKORASI SIANG (Matahari, Awan, Gunung) */
         .day-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
         .dark-mode .day-decor { display: none !important; }
-
-        /* MATAHARI */
-        .day-sun {
-            position: absolute; top: 28px; right: 28px; width: 88px; height: 88px; border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #fff7d6 0%, #ffe566 35%, #ffb347 70%, rgba(255, 140, 66, 0.3) 100%);
-            box-shadow: 0 0 40px 12px rgba(255, 200, 80, 0.75), 0 0 90px 30px rgba(255, 160, 60, 0.35), 0 0 140px 50px rgba(255, 120, 80, 0.2);
-            animation: sunPulse 5s ease-in-out infinite alternate;
-        }
+        .day-sun { position: absolute; top: 75px; right: 25px; width: 75px; height: 75px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff7d6 0%, #ffe566 35%, #ffb347 70%, rgba(255, 140, 66, 0.3) 100%); box-shadow: 0 0 35px 10px rgba(255, 200, 80, 0.75), 0 0 80px 25px rgba(255, 160, 60, 0.35); animation: sunPulse 5s ease-in-out infinite alternate; }
         @keyframes sunPulse { 0% { transform: scale(1); filter: brightness(1); } 100% { transform: scale(1.06); filter: brightness(1.08); } }
-
         .day-cloud { position: absolute; background: rgba(255, 255, 255, 0.55); border-radius: 50px; filter: blur(2px); opacity: 0.85; }
         .day-cloud::before, .day-cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; }
-        .day-cloud.c1 { width: 140px; height: 42px; top: 18%; left: -20px; animation: cloudMove 48s linear infinite; }
-        .day-cloud.c1::before { width: 55px; height: 55px; top: -28px; left: 18px; } .day-cloud.c1::after  { width: 70px; height: 70px; top: -35px; left: 50px; }
-        .day-cloud.c2 { width: 180px; height: 48px; top: 28%; right: -40px; animation: cloudMove 62s linear infinite reverse; opacity: 0.7; }
-        .day-cloud.c2::before { width: 70px; height: 70px; top: -32px; left: 25px; } .day-cloud.c2::after  { width: 85px; height: 85px; top: -40px; left: 70px; }
-        .day-cloud.c3 { width: 120px; height: 36px; top: 42%; left: 15%; animation: cloudMove 55s linear infinite; opacity: 0.6; }
-        .day-cloud.c3::before { width: 48px; height: 48px; top: -24px; left: 15px; } .day-cloud.c3::after  { width: 60px; height: 60px; top: -30px; left: 45px; }
-        .day-cloud.c4 { width: 160px; height: 44px; top: 55%; right: 10%; animation: cloudMove 70s linear infinite reverse; opacity: 0.5; }
-        .day-cloud.c4::before { width: 60px; height: 60px; top: -28px; left: 20px; } .day-cloud.c4::after  { width: 75px; height: 75px; top: -36px; left: 60px; }
+        .day-cloud.c1 { width: 140px; height: 42px; top: 18%; left: -20px; animation: cloudMove 48s linear infinite; } .day-cloud.c1::before { width: 55px; height: 55px; top: -28px; left: 18px; } .day-cloud.c1::after  { width: 70px; height: 70px; top: -35px; left: 50px; }
+        .day-cloud.c2 { width: 180px; height: 48px; top: 28%; right: -40px; animation: cloudMove 62s linear infinite reverse; opacity: 0.7; } .day-cloud.c2::before { width: 70px; height: 70px; top: -32px; left: 25px; } .day-cloud.c2::after  { width: 85px; height: 85px; top: -40px; left: 70px; }
+        .day-cloud.c3 { width: 120px; height: 36px; top: 42%; left: 15%; animation: cloudMove 55s linear infinite; opacity: 0.6; } .day-cloud.c3::before { width: 48px; height: 48px; top: -24px; left: 15px; } .day-cloud.c3::after  { width: 60px; height: 60px; top: -30px; left: 45px; }
+        .day-cloud.c4 { width: 160px; height: 44px; top: 55%; right: 10%; animation: cloudMove 70s linear infinite reverse; opacity: 0.5; } .day-cloud.c4::before { width: 60px; height: 60px; top: -28px; left: 20px; } .day-cloud.c4::after  { width: 75px; height: 75px; top: -36px; left: 60px; }
         @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(40px); } }
 
-        /* GUNUNG */
-        .mountains-bg {
-            position: fixed; left: 0; right: 0; bottom: 0; height: 42vh; max-height: 380px; z-index: 0; pointer-events: none;
-            background: radial-gradient(ellipse 80% 60% at 15% 100%, rgba(107,79,107,0.7) 0%, transparent 70%),
-                        radial-gradient(ellipse 90% 70% at 50% 100%, rgba(92,64,96,0.7) 0%, transparent 72%),
-                        radial-gradient(ellipse 85% 65% at 85% 100%, rgba(74,53,85,0.7) 0%, transparent 70%);
-            transition: all 0.6s ease;
-        }
-        .mountains-bg::before {
-            content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 100%;
-            background: rgba(61,44,64,0.6); transition: all 0.6s ease;
-            clip-path: polygon(0% 100%, 0% 62%, 8% 55%, 18% 68%, 28% 48%, 38% 58%, 48% 40%, 58% 52%, 68% 35%, 78% 50%, 88% 42%, 100% 55%, 100% 100%);
-        }
-        .mountains-bg::after {
-            content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 70%;
-            background: rgba(42,31,48,0.7); transition: all 0.6s ease;
-            clip-path: polygon(0% 100%, 0% 75%, 12% 60%, 22% 72%, 35% 55%, 50% 65%, 62% 50%, 75% 62%, 88% 48%, 100% 58%, 100% 100%);
-        }
-        .dark-mode .mountains-bg {
-            background: radial-gradient(ellipse 80% 60% at 15% 100%, rgba(15,23,42,0.8) 0%, transparent 70%),
-                        radial-gradient(ellipse 90% 70% at 50% 100%, rgba(2,6,23,0.8) 0%, transparent 72%);
-        }
+        .mountains-bg { position: fixed; left: 0; right: 0; bottom: 0; height: 42vh; max-height: 380px; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 80% 60% at 15% 100%, rgba(107,79,107,0.7) 0%, transparent 70%), radial-gradient(ellipse 90% 70% at 50% 100%, rgba(92,64,96,0.7) 0%, transparent 72%), radial-gradient(ellipse 85% 65% at 85% 100%, rgba(74,53,85,0.7) 0%, transparent 70%); transition: all 0.6s ease; }
+        .mountains-bg::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 100%; background: rgba(61,44,64,0.6); transition: all 0.6s ease; clip-path: polygon(0% 100%, 0% 62%, 8% 55%, 18% 68%, 28% 48%, 38% 58%, 48% 40%, 58% 52%, 68% 35%, 78% 50%, 88% 42%, 100% 55%, 100% 100%); }
+        .mountains-bg::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 70%; background: rgba(42,31,48,0.7); transition: all 0.6s ease; clip-path: polygon(0% 100%, 0% 75%, 12% 60%, 22% 72%, 35% 55%, 50% 65%, 62% 50%, 75% 62%, 88% 48%, 100% 58%, 100% 100%); }
+        .dark-mode .mountains-bg { background: radial-gradient(ellipse 80% 60% at 15% 100%, rgba(15,23,42,0.8) 0%, transparent 70%), radial-gradient(ellipse 90% 70% at 50% 100%, rgba(2,6,23,0.8) 0%, transparent 72%); }
         .dark-mode .mountains-bg::before { background: rgba(8,12,25,0.8); } .dark-mode .mountains-bg::after { background: rgba(0,0,0,0.9); }
 
-        /* BULAN & BINTANG (DARK MODE) */
-        body.dark-mode::after {
-            content: ''; position: fixed; top: 25px; right: 25px; width: 90px; height: 90px; border-radius: 50%; z-index: -2; pointer-events: none;
-            background: radial-gradient(circle at 35% 35%, #ffffff 15%, #cbd5e1 55%, #94a3b8 90%);
-            box-shadow: 0 0 50px rgba(255,255,255,0.6), 0 0 100px rgba(0,243,255,0.3); animation: floatMoon 6s ease-in-out infinite alternate;
-        }
+        /* DEKORASI MALAM */
+        body.dark-mode::after { content: ''; position: fixed; top: 25px; right: 25px; width: 85px; height: 85px; border-radius: 50%; z-index: -2; pointer-events: none; background: radial-gradient(circle at 35% 35%, #ffffff 15%, #cbd5e1 55%, #94a3b8 90%); box-shadow: 0 0 50px rgba(255,255,255,0.6), 0 0 100px rgba(0,243,255,0.3); animation: floatMoon 6s ease-in-out infinite alternate; }
         @keyframes floatMoon { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
-
-        body.dark-mode::before {
-            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
-            background-image:
-                radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent), radial-gradient(2px 2px at 150px 80px, rgba(255,255,255,0.9), transparent),
-                radial-gradient(1px 1px at 300px 40px, #fff, transparent), radial-gradient(1.5px 1.5px at 450px 120px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(2px 2px at 80px 250px, rgba(0,243,255,0.9), transparent), radial-gradient(1px 1px at 320px 300px, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 500px 350px, rgba(255,255,255,0.85), transparent), radial-gradient(2px 2px at 200px 500px, rgba(0,243,255,0.7), transparent),
-                radial-gradient(1px 1px at 50px 600px, #fff, transparent), radial-gradient(1.5px 1.5px at 400px 650px, rgba(255,255,255,0.9), transparent),
-                radial-gradient(1px 1px at 100px 150px, #fff, transparent), radial-gradient(1.5px 1.5px at 250px 450px, rgba(0,243,255,0.8), transparent),
-                radial-gradient(2px 2px at 550px 50px, rgba(255,255,255,0.7), transparent), radial-gradient(1px 1px at 420px 220px, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 180px 580px, rgba(255,255,255,0.8), transparent), radial-gradient(1px 1px at 380px 480px, #fff, transparent);
-            background-size: 550px 650px; animation: twinkle 4s ease-in-out infinite alternate;
-        }
+        body.dark-mode::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; background-image: radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent), radial-gradient(2px 2px at 150px 80px, rgba(255,255,255,0.9), transparent), radial-gradient(1px 1px at 300px 40px, #fff, transparent), radial-gradient(1.5px 1.5px at 450px 120px, rgba(255,255,255,0.8), transparent), radial-gradient(2px 2px at 80px 250px, rgba(0,243,255,0.9), transparent), radial-gradient(1px 1px at 320px 300px, #fff, transparent), radial-gradient(1.5px 1.5px at 500px 350px, rgba(255,255,255,0.85), transparent), radial-gradient(2px 2px at 200px 500px, rgba(0,243,255,0.7), transparent), radial-gradient(1px 1px at 50px 600px, #fff, transparent), radial-gradient(1.5px 1.5px at 400px 650px, rgba(255,255,255,0.9), transparent), radial-gradient(1px 1px at 100px 150px, #fff, transparent), radial-gradient(1.5px 1.5px at 250px 450px, rgba(0,243,255,0.8), transparent), radial-gradient(2px 2px at 550px 50px, rgba(255,255,255,0.7), transparent), radial-gradient(1px 1px at 420px 220px, #fff, transparent), radial-gradient(1.5px 1.5px at 180px 580px, rgba(255,255,255,0.8), transparent), radial-gradient(1px 1px at 380px 480px, #fff, transparent); background-size: 550px 650px; animation: twinkle 4s ease-in-out infinite alternate; }
         @keyframes twinkle { 0% { opacity: 0.4; } 100% { opacity: 1; } }
 
         /* Z-INDEX LAYERING */
         .theme-btn, .glass-card, .nav-menu, .footer, .cat-mascot, .cat-bubble { position: relative; z-index: 5; }
-        .theme-btn { z-index: 100; } .cat-mascot, .cat-bubble { z-index: 99; }
-
-        .theme-btn {
-            position: fixed; top: 15px; right: 15px; background: var(--glass-bg); border: 2px solid var(--glass-border);
-            color: var(--primary); font-size: 1.4rem; width: 48px; height: 48px; border-radius: 50%; cursor: pointer;
-            backdrop-filter: blur(12px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.3s;
-        }
+        .theme-btn { z-index: 100; position: fixed; top: 15px; right: 15px; background: var(--glass-bg); border: 2px solid var(--glass-border); color: var(--primary); font-size: 1.4rem; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(12px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.3s; }
         .theme-btn:hover { transform: rotate(25deg) scale(1.1); }
         .dark-mode .theme-btn { box-shadow: 0 0 18px var(--primary); }
+        .cat-mascot, .cat-bubble { z-index: 99; }
 
-        /* KARTU KACA UTAMA */
-        .glass-card {
-            background: var(--glass-bg); backdrop-filter: blur(16px);
-            border: 1.5px solid var(--glass-border); border-radius: 28px;
-            box-shadow: var(--card-shadow); width: 100%; max-width: 500px;
-            padding: 24px; text-align: center; margin-bottom: 18px; transition: all 0.45s ease;
-        }
-
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1.5px solid var(--glass-border); border-radius: 28px; box-shadow: var(--card-shadow); width: 100%; max-width: 500px; padding: 24px; text-align: center; margin-bottom: 18px; transition: all 0.45s ease; }
         .music-player h3 { font-family: 'Fredoka', cursive; color: var(--text-highlight); margin-bottom: 14px; }
-        .song-select {
-            width: 100%; padding: 12px 14px; border-radius: 14px; border: none;
-            background: rgba(255,255,255,0.5); font-family: 'Poppins'; font-size: 0.9rem; color: var(--text-dark); outline: none; margin-bottom: 14px;
-        }
+        .song-select { width: 100%; padding: 12px 14px; border-radius: 14px; border: none; background: rgba(255,255,255,0.5); font-family: 'Poppins'; font-size: 0.9rem; color: var(--text-dark); outline: none; margin-bottom: 14px; }
         .dark-mode .song-select { background: rgba(255,255,255,0.15); } .dark-mode .song-select option { color: #000; }
-        
         .controls { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
-        .btn-icon {
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; color: white; width: 48px; height: 48px;
-            border-radius: 50%; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 16px rgba(224, 122, 95, 0.4); transition: 0.3s;
-        }
-        .dark-mode .btn-icon { box-shadow: 0 0 16px var(--primary); color: #0f172a; }
-        .btn-icon:hover { transform: translateY(-4px) scale(1.06); }
-
-        .btn-mode {
-            background: rgba(255,255,255,0.4); border: 2px solid var(--primary); color: var(--primary);
-            padding: 8px 18px; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 14px;
-        }
-        .btn-mode:hover { background: var(--primary); color: white; }
-        .dark-mode .btn-mode:hover { color: #0f172a; box-shadow: 0 0 12px var(--primary); }
+        .btn-icon { background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; color: white; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 16px rgba(224, 122, 95, 0.4); transition: 0.3s; }
+        .dark-mode .btn-icon { box-shadow: 0 0 16px var(--primary); color: #0f172a; } .btn-icon:hover { transform: translateY(-4px) scale(1.06); }
+        .btn-mode { background: rgba(255,255,255,0.4); border: 2px solid var(--primary); color: var(--primary); padding: 8px 18px; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 14px; }
+        .btn-mode:hover { background: var(--primary); color: white; } .dark-mode .btn-mode:hover { color: #0f172a; box-shadow: 0 0 12px var(--primary); }
 
         .nav-menu { display: flex; gap: 8px; width: 100%; max-width: 500px; margin-bottom: 18px; }
-        .nav-btn {
-            flex: 1; padding: 11px 6px; border: 1px solid var(--glass-border); border-radius: 14px;
-            background: var(--glass-bg); backdrop-filter: blur(12px); font-family: 'Fredoka', cursive; font-size: 0.85rem; color: var(--text-dark);
-            cursor: pointer; transition: 0.3s;
-        }
-        .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 6px 18px rgba(224, 122, 95, 0.4); }
-        .dark-mode .nav-btn.active { color: #0f172a; box-shadow: 0 0 16px var(--primary); }
-
-        .content-section { display: none; animation: slideUp 0.45s ease; }
-        .content-section.active { display: block; }
+        .nav-btn { flex: 1; padding: 11px 6px; border: 1px solid var(--glass-border); border-radius: 14px; background: var(--glass-bg); backdrop-filter: blur(12px); font-family: 'Fredoka', cursive; font-size: 0.85rem; color: var(--text-dark); cursor: pointer; transition: 0.3s; }
+        .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 6px 18px rgba(224, 122, 95, 0.4); } .dark-mode .nav-btn.active { color: #0f172a; box-shadow: 0 0 16px var(--primary); }
+        .content-section { display: none; animation: slideUp 0.45s ease; } .content-section.active { display: block; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         .slide { display: none; } .slide.active { display: block; }
 
         .img-wrapper { position: relative; width: 160px; height: 160px; margin: 0 auto 18px; }
-        .img-wrapper::before {
-            content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; z-index: -1; animation: spin 5s linear infinite;
-        }
+        .img-wrapper::before { content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; z-index: -1; animation: spin 5s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .profile-img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; border: 4px solid var(--glass-border); }
-
         h2 { font-family: 'Fredoka', cursive; color: var(--text-highlight); font-size: 1.4rem; margin-bottom: 10px; }
         p { font-size: 0.88rem; margin-bottom: 14px; }
         .fact-box { background: rgba(255,255,255,0.4); padding: 18px; border-radius: 18px; text-align: left; border-left: 6px solid var(--primary); margin-bottom: 18px; }
-        .dark-mode .fact-box { background: rgba(255,255,255,0.1); }
-        .fact-item { margin-bottom: 10px; font-size: 0.85rem; }
-
+        .dark-mode .fact-box { background: rgba(255,255,255,0.1); } .fact-item { margin-bottom: 10px; font-size: 0.85rem; }
         .form-group { text-align: left; margin-bottom: 10px; }
-        .input-custom {
-            width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.5); font-family: 'Poppins'; outline: none; font-size: 0.85rem; color: var(--text-dark);
-        }
+        .input-custom { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.5); font-family: 'Poppins'; outline: none; font-size: 0.85rem; color: var(--text-dark); }
         .dark-mode .input-custom { background: rgba(0,0,0,0.3); } .dark-mode .input-custom::placeholder { color: #94a3b8; }
         textarea.input-custom { height: 100px; resize: none; }
-
-        .btn-action {
-            width: 100%; padding: 13px; border-radius: 14px; border: none;
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-family: 'Fredoka', cursive; font-size: 1rem;
-            cursor: pointer; box-shadow: 0 6px 18px rgba(224, 122, 95, 0.35); transition: 0.3s; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        .dark-mode .btn-action { color: #0f172a; box-shadow: 0 0 16px rgba(0, 243, 255, 0.4); }
-        .btn-action:hover { transform: translateY(-3px); }
+        .btn-action { width: 100%; padding: 13px; border-radius: 14px; border: none; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-family: 'Fredoka', cursive; font-size: 1rem; cursor: pointer; box-shadow: 0 6px 18px rgba(224, 122, 95, 0.35); transition: 0.3s; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .dark-mode .btn-action { color: #0f172a; box-shadow: 0 0 16px rgba(0, 243, 255, 0.4); } .btn-action:hover { transform: translateY(-3px); }
         .btn-secondary { background: rgba(255,255,255,0.4); color: var(--text-dark); box-shadow: none; border: 1px solid var(--glass-border); }
-        .btn-secondary:hover { background: var(--primary); color: white; }
-        .btn-flex { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-secondary:hover { background: var(--primary); color: white; } .btn-flex { display: flex; gap: 10px; margin-top: 10px; }
 
-        .mood-container { display: flex; justify-content: space-around; margin: 18px 0; }
-        .mood-box { text-align: center; }
-        .mood-btn {
-            font-size: 1.8rem; background: rgba(255,255,255,0.45); border: 2px solid transparent; width: 54px; height: 54px; border-radius: 50%; cursor: pointer; transition: 0.3s;
-        }
+        .mood-container { display: flex; justify-content: space-around; margin: 18px 0; } .mood-box { text-align: center; }
+        .mood-btn { font-size: 1.8rem; background: rgba(255,255,255,0.45); border: 2px solid transparent; width: 54px; height: 54px; border-radius: 50%; cursor: pointer; transition: 0.3s; }
         .mood-btn:hover, .mood-btn.selected { background: rgba(255,255,255,0.8); border-color: var(--primary); transform: scale(1.1); box-shadow: 0 0 12px var(--primary); }
         .mood-text { display: block; font-size: 0.7rem; font-weight: 600; margin-top: 5px; opacity: 0.85; }
-
-        .scroll-box { max-height: 52vh; overflow-y: auto; padding-right: 4px; }
-        .scroll-box::-webkit-scrollbar { width: 5px; } .scroll-box::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
+        .scroll-box { max-height: 52vh; overflow-y: auto; padding-right: 4px; } .scroll-box::-webkit-scrollbar { width: 5px; } .scroll-box::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 10px; }
-        .polaroid {
-            background: #fff; padding: 10px 10px 25px 10px; border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); transition: 0.4s ease; transform: rotate(-3deg); cursor: pointer; position: relative;
-        }
-        .polaroid:nth-child(even) { transform: rotate(3.5deg); }
-        .polaroid:hover { transform: scale(1.08) rotate(0deg); z-index: 10; box-shadow: 0 14px 28px rgba(0,0,0,0.22); }
+        .polaroid { background: #fff; padding: 10px 10px 25px 10px; border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); transition: 0.4s ease; transform: rotate(-3deg); cursor: pointer; position: relative; }
+        .polaroid:nth-child(even) { transform: rotate(3.5deg); } .polaroid:hover { transform: scale(1.08) rotate(0deg); z-index: 10; box-shadow: 0 14px 28px rgba(0,0,0,0.22); }
         .polaroid img { width: 100%; height: 135px; object-fit: cover; border-radius: 4px; background: #e5e7eb; display: block; }
         .polaroid::after { content: '🔍 Tap buat Zoom'; position: absolute; bottom: 6px; left: 0; width: 100%; font-size: 0.65rem; color: #777; font-weight: 600; text-align: center; }
         .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 12px rgba(0, 243, 255, 0.22); } .dark-mode .polaroid::after { color: #94a3b8; }
 
-        /* FUN ZONE LOBBY */
+        /* FUN ZONE */
         .fun-cards { display: grid; grid-template-columns: repeat(1, 1fr); gap: 14px; margin-top: 15px; }
-        .fun-card {
-            background: rgba(255,255,255,0.45); border: 1.5px solid var(--glass-border); border-radius: 20px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 15px;
-        }
-        .dark-mode .fun-card { background: rgba(15,23,42,0.5); }
-        .fun-card:hover { transform: translateY(-4px) scale(1.02); background: rgba(255,255,255,0.7); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .fun-card-icon { font-size: 2.2rem; min-width: 50px; }
-        .fun-card-info { text-align: left; } .fun-card-info h4 { font-family: 'Fredoka', cursive; font-size: 1.1rem; color: var(--text-highlight); } .fun-card-info p { font-size: 0.78rem; margin: 0; opacity: 0.85; }
+        .fun-card { background: rgba(255,255,255,0.45); border: 1.5px solid var(--glass-border); border-radius: 20px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 15px; }
+        .dark-mode .fun-card { background: rgba(15,23,42,0.5); } .fun-card:hover { transform: translateY(-4px) scale(1.02); background: rgba(255,255,255,0.7); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .fun-card-icon { font-size: 2.2rem; min-width: 50px; } .fun-card-info { text-align: left; } .fun-card-info h4 { font-family: 'Fredoka', cursive; font-size: 1.1rem; color: var(--text-highlight); } .fun-card-info p { font-size: 0.78rem; margin: 0; opacity: 0.85; }
 
         .cookie-wrapper { text-align: center; padding: 20px 0; }
         .cookie-img { font-size: 5rem; cursor: pointer; display: inline-block; animation: bounce 2s infinite; transition: 0.3s; }
@@ -249,9 +117,7 @@
 
         .level-select { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 10px; width: 100%; -webkit-overflow-scrolling: touch; touch-action: pan-x; scrollbar-width: thin; }
         .lvl-btn { flex-shrink: 0; padding: 8px 14px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--text-dark); transition: 0.2s; }
-        .dark-mode .lvl-btn { background: rgba(15,23,42,0.6); color: #fff; }
-        .lvl-btn.active { background: var(--primary); color: white; }
-        .lvl-btn.locked { opacity: 0.4; filter: grayscale(0.5); } .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
+        .dark-mode .lvl-btn { background: rgba(15,23,42,0.6); color: #fff; } .lvl-btn.active { background: var(--primary); color: white; } .lvl-btn.locked { opacity: 0.4; filter: grayscale(0.5); } .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
 
         /* MASKOT KUCING */
         .cat-mascot { position: fixed; bottom: 20px; right: 20px; z-index: 99; cursor: pointer; transition: transform 0.3s ease; animation: catFloat 4s ease-in-out infinite; }
@@ -290,77 +156,71 @@
         #secretSpace { display: none; position: fixed; inset: 0; z-index: 1200; background: radial-gradient(ellipse at center, #0b1021 0%, #000000 100%); overflow: hidden; }
         #secretSpace.active { display: block; animation: fadeIn 0.5s ease; }
         
-        .space-galaxy { position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 500px; border-radius: 50%; background: radial-gradient(ellipse, rgba(138,43,226,0.15) 0%, transparent 60%); pointer-events: none; filter: blur(30px); }
-        .planet-1 { position: absolute; top: 8%; left: -5%; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #ff7e5f, #feb47b); box-shadow: inset -20px -20px 40px rgba(0,0,0,0.8), 0 0 40px rgba(255,126,95,0.4); pointer-events: none; }
-        .planet-2 { position: absolute; bottom: 12%; right: -8%; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle at 40% 20%, #1cb5e0, #000046); box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9), 0 0 50px rgba(28,181,224,0.3); pointer-events: none; }
-        .space-stars { position: absolute; inset: 0; z-index: 3; background-image: radial-gradient(2px 2px at 10% 20%, #fff, transparent), radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.8), transparent), radial-gradient(2px 2px at 50% 10%, #00f3ff, transparent); background-size: 300px 300px; animation: twinkle 4s ease-in-out infinite alternate; pointer-events: none; }
+        .space-galaxy { position: absolute; top: 15%; left: 50%; transform: translateX(-50%); width: 100vw; height: 500px; border-radius: 50%; background: radial-gradient(ellipse, rgba(138,43,226,0.2) 0%, transparent 65%); pointer-events: none; filter: blur(40px); }
+        .planet-1 { position: absolute; top: 10%; left: -5%; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #ff7e5f, #feb47b); box-shadow: inset -15px -15px 30px rgba(0,0,0,0.8), 0 0 30px rgba(255,126,95,0.3); pointer-events: none; }
+        .planet-2 { position: absolute; bottom: 20%; right: -5%; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle at 40% 20%, #1cb5e0, #000046); box-shadow: inset -25px -25px 50px rgba(0,0,0,0.9), 0 0 40px rgba(28,181,224,0.3); pointer-events: none; }
+        .space-stars { position: absolute; inset: 0; z-index: 3; background-image: radial-gradient(2px 2px at 10% 20%, #fff, transparent), radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.8), transparent), radial-gradient(2px 2px at 50% 10%, #00f3ff, transparent), radial-gradient(1.5px 1.5px at 80% 30%, #fff, transparent), radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.6), transparent); background-size: 250px 250px; animation: twinkle 3s ease-in-out infinite alternate; pointer-events: none; }
         
         .space-header { position: relative; z-index: 5; text-align: center; padding: 20px 16px 5px; color: #00f3ff; }
         .space-header h2 { font-family: 'Fredoka', cursive; font-size: 1.5rem; text-shadow: 0 0 20px rgba(0,243,255,0.8); margin-bottom: 5px; }
         
-        .hanging-area { position: relative; z-index: 10; height: 45vh; width: 100%; max-width: 900px; margin: 0 auto; overflow: hidden; }
-        .hang-item { position: absolute; width: 110px; cursor: pointer; animation: floatY 5s ease-in-out infinite; }
-        .hang-item:nth-child(1) { left: 8%; top: 4%; transform: rotate(-5deg); } .hang-item:nth-child(2) { left: 38%; top: 2%; transform: rotate(4deg); width: 120px; }
-        .hang-item:nth-child(3) { left: 68%; top: 6%; transform: rotate(-3deg); } .hang-item:nth-child(4) { left: 15%; top: 45%; transform: rotate(5deg); width: 110px; }
-        .hang-item:nth-child(5) { left: 52%; top: 42%; transform: rotate(-4deg); } .hang-item:nth-child(6) { left: 75%; top: 48%; transform: rotate(3deg); width: 100px; }
+        .hanging-area { position: relative; z-index: 10; height: 60vh; width: 100%; max-width: 900px; margin: 0 auto; overflow: hidden; }
+        .hang-item { position: absolute; width: 100px; cursor: pointer; animation: floatY 5s ease-in-out infinite; }
+        .hang-item:nth-child(1) { left: 5%; top: 2%; transform: rotate(-5deg); }
+        .hang-item:nth-child(2) { left: 28%; top: 5%; transform: rotate(4deg); width: 110px; }
+        .hang-item:nth-child(3) { left: 52%; top: 3%; transform: rotate(-3deg); }
+        .hang-item:nth-child(4) { left: 75%; top: 6%; transform: rotate(5deg); }
+        .hang-item:nth-child(5) { left: 10%; top: 35%; transform: rotate(-4deg); width: 105px; }
+        .hang-item:nth-child(6) { left: 35%; top: 38%; transform: rotate(3deg); }
+        .hang-item:nth-child(7) { left: 60%; top: 35%; transform: rotate(-3deg); }
+        .hang-item:nth-child(8) { left: 82%; top: 32%; transform: rotate(6deg); width: 95px; }
         @keyframes floatY { 0%, 100% { transform: translateY(0) rotate(var(--rot, -4deg)); } 50% { transform: translateY(-10px) rotate(var(--rot, -4deg)); } }
         .hang-string { width: 2px; height: 30px; margin: 0 auto; background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(0,243,255,0.7)); }
         .hang-photo { background: #fff; padding: 5px 5px 18px 5px; border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
         .hang-photo img { width: 100%; height: 85px; object-fit: cover; border-radius: 2px; display: block; }
 
-        /* MENU SECRET FUN ZONE BARU */
-        .secret-menu-grid {
-            position: relative; z-index: 20; width: 95%; max-width: 420px; margin: 5px auto 0;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-        }
-        .secret-card-btn {
-            background: rgba(15,23,42,0.65); border: 1px solid rgba(0, 243, 255, 0.4);
-            color: #00f3ff; padding: 15px 10px; border-radius: 16px; text-align: center;
-            cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            font-family: 'Fredoka', cursive; font-size: 0.9rem;
-        }
-        .secret-card-btn:hover { background: rgba(0, 243, 255, 0.15); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,243,255,0.25); }
-        .secret-card-btn i { display: block; font-size: 1.6rem; margin-bottom: 8px; color: #fff; }
+        .space-actions { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 300px; text-align: center; }
 
-        .space-actions { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 50; width: 90%; max-width: 300px; }
-
-        /* MODAL SECRET FEATURES */
-        .secret-feature-modal {
+        /* SECRET FUN ZONE LOBBY */
+        #secretFunLobby {
             display: none; position: fixed; inset: 0; z-index: 1500;
             background: radial-gradient(ellipse at center, #0b1021 0%, #000000 100%);
-            padding: 20px; text-align: center; overflow-y: auto; overflow-x: hidden;
-            animation: fadeIn 0.3s ease;
+            padding: 20px; text-align: center; overflow-y: auto; overflow-x: hidden; animation: fadeIn 0.3s ease;
         }
-        .sf-header h2 { color: #00f3ff; font-family: 'Fredoka'; text-shadow: 0 0 15px rgba(0,243,255,0.8); margin: 10px 0; }
-        .sf-header p { color: #a5f3fc; font-size: 0.85rem; margin-bottom: 20px; }
-        
+        .secret-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 400px; margin: 20px auto; position: relative; z-index: 10; }
+        .secret-card-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(0, 243, 255, 0.5); color: #00f3ff; padding: 20px 10px; border-radius: 16px; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,243,255,0.2); font-family: 'Fredoka', cursive; font-size: 0.95rem; }
+        .secret-card-btn:hover { background: rgba(0, 243, 255, 0.2); transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,243,255,0.4); }
+        .secret-card-btn i { display: block; font-size: 2rem; margin-bottom: 10px; color: #fff; }
+
         /* 🎟️ BOARDING PASS */
         .ticket-wrapper {
-            background: rgba(255,255,255,0.95); border-radius: 15px; padding: 20px; margin: 20px auto;
-            max-width: 320px; color: #111; text-align: left; position: relative;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5); border-left: 8px solid #00f3ff;
-            background-image: radial-gradient(circle at 0 50%, transparent 10px, rgba(255,255,255,0.95) 11px);
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)); backdrop-filter: blur(20px); border: 1px solid rgba(0,243,255,0.5);
+            border-radius: 20px; color: #fff; padding: 25px; box-shadow: 0 10px 30px rgba(0,243,255,0.2), inset 0 0 20px rgba(0,243,255,0.1);
+            max-width: 320px; margin: 20px auto; position: relative; overflow: hidden; text-align: left;
         }
-        .ticket-header { display: flex; justify-content: space-between; border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px; font-weight: bold; }
-        .ticket-body { display: flex; flex-direction: column; gap: 8px; font-family: monospace; font-size: 0.9rem; }
-        .ticket-footer { text-align: center; margin-top: 15px; font-size: 2rem; color: #333; letter-spacing: -2px; }
-        
+        .ticket-wrapper::before { content: ''; position: absolute; left: -20px; top: 50%; width: 40px; height: 40px; background: #0b1021; border-radius: 50%; transform: translateY(-50%); border-right: 1px solid rgba(0,243,255,0.5); }
+        .ticket-wrapper::after { content: ''; position: absolute; right: -20px; top: 50%; width: 40px; height: 40px; background: #0b1021; border-radius: 50%; transform: translateY(-50%); border-left: 1px solid rgba(0,243,255,0.5); }
+        .ticket-dashed { border-bottom: 2px dashed rgba(0,243,255,0.4); margin: 15px 0; }
+        .ticket-flight-info { display: flex; justify-content: space-between; text-align: center; margin-top: 15px; font-size: 0.85rem; }
+        .ticket-barcode { height: 40px; width: 100%; background: repeating-linear-gradient(90deg, #fff, #fff 2px, transparent 2px, transparent 4px, #fff 4px, #fff 5px, transparent 5px, transparent 8px); margin-top: 20px; opacity: 0.8;}
+
         /* ⭐ BOTOL BINTANG */
-        .jar-container { font-size: 6rem; margin: 10px auto 20px; filter: drop-shadow(0 0 20px rgba(255, 236, 179, 0.5)); position: relative; }
-        .flying-star { position: absolute; left: 50%; font-size: 1.5rem; animation: flyStar 1.5s ease forwards; opacity: 0; pointer-events: none; }
-        @keyframes flyStar { 0% { transform: translate(-50%, 50px) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -50px) scale(1.5); opacity: 0; } }
+        .jar-container { font-size: 6rem; margin: 10px auto 20px; filter: drop-shadow(0 0 25px rgba(255, 236, 179, 0.6)); position: relative; display: inline-block; }
+        .flying-star { position: absolute; left: 50%; font-size: 2rem; opacity: 0; pointer-events: none; }
+        @keyframes flyIntoJar { 0% { transform: translate(-50%, 80px) scale(0.5); opacity: 1; } 50% { transform: translate(-50%, -20px) scale(1.5); opacity: 1; text-shadow: 0 0 20px #fff; } 100% { transform: translate(-50%, -80px) scale(0.2); opacity: 0; } }
 
         /* 🧃 VENDING MACHINE */
-        .vending-machine {
-            background: rgba(15,23,42,0.8); border: 2px solid #00f3ff; border-radius: 15px; padding: 20px;
-            width: 100%; max-width: 300px; margin: 0 auto 20px;
-        }
+        .vending-machine { background: rgba(15,23,42,0.8); border: 2px solid #00f3ff; border-radius: 15px; padding: 20px; width: 100%; max-width: 300px; margin: 0 auto 20px; position: relative; z-index: 10; }
         .vending-row { display: flex; justify-content: space-around; margin-bottom: 20px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; }
         .vend-can { font-size: 2.5rem; cursor: pointer; transition: 0.3s; background: none; border: none; }
-        .vend-can:hover { transform: scale(1.2); filter: drop-shadow(0 0 10px #fff); }
+        .vend-can:hover { transform: scale(1.2); filter: drop-shadow(0 0 15px #fff); }
         .vending-drop { height: 60px; background: #000; border-radius: 5px; position: relative; overflow: hidden; margin-top: 10px; }
         .dropped-can { position: absolute; left: 50%; transform: translateX(-50%); font-size: 2rem; bottom: -50px; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .dropped-can.show { bottom: 10px; }
+
+        /* CUSTOM ALERT (AESTHETIC) */
+        #customAlertModal { display: none; position: fixed; inset: 0; z-index: 15000; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s; }
+        .alert-box { background: #0f172a; border: 2px solid #00f3ff; border-radius: 20px; padding: 25px; text-align: center; color: #e2e8f0; width: 100%; max-width: 350px; box-shadow: 0 0 35px rgba(0,243,255,0.4); }
 
         /* MODAL GOMBALAN / WIN */
         #gombalModal, #puzzleWinModal { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s; }
@@ -374,7 +234,6 @@
         .zoom-box img { max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 6px; }
         .zoom-caption { margin-top: 10px; font-family: 'Fredoka', cursive; font-size: 0.95rem; color: #00f3ff; }
         .close-zoom { position: absolute; top: -15px; right: -15px; background: #00f3ff; color: #0f172a; width: 35px; height: 35px; border-radius: 50%; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        
         @keyframes popZoom { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -390,6 +249,7 @@
 
     <button class="theme-btn" onclick="toggleTheme()" id="themeIcon"><i class="fas fa-moon"></i></button>
 
+    <!-- 🎵 MUSIC PLAYER -->
     <div class="glass-card music-player">
         <h3><i class="fas fa-headphones"></i> pilih lagu yang lo suka</h3>
         <audio id="audioPlayer"></audio>
@@ -413,6 +273,7 @@
         <button class="btn-mode" onclick="toggleMode()" id="modeBtn">Mode: Urut ➡️</button>
     </div>
 
+    <!-- 📌 NAVIGASI -->
     <div class="nav-menu">
         <button class="nav-btn active" id="nav-about" onclick="switchMenu('about')">🙋‍♂️ About</button>
         <button class="nav-btn" id="nav-curhat" onclick="switchMenu('curhat')">💭 Cerita</button>
@@ -420,9 +281,12 @@
         <button class="nav-btn" id="nav-funzone" onclick="switchMenu('funzone')">🎮 Fun Zone</button>
     </div>
 
+    <!-- 🙋‍♂️ MENU 1: ABOUT -->
     <div id="sec-about" class="glass-card content-section active">
         <div id="slide-1" class="slide active">
-            <div class="img-wrapper"><img src="./foto-cello.jpg" alt="Foto" class="profile-img" onerror="this.onerror=null; this.src='./foto-cello.jpeg';"></div>
+            <div class="img-wrapper">
+                <img src="./foto-cello.jpg" alt="Foto Cello" class="profile-img" onerror="this.onerror=null; this.src='./foto-cello.jpeg';">
+            </div>
             <h2>Hai, nama gua Cello ✨</h2>
             <p>Welcome to my space! Santai dulu aja sambil dengerin lagu.</p>
             <button class="btn-action" onclick="goToSlide(2)">Liat Fakta Gua ➡️</button>
@@ -436,7 +300,10 @@
                 <div class="fact-item">✈️ <b>Cita-cita:</b> Kerja di sektor Avionic.</div>
                 <div class="fact-item">🎂 <b>Lahir:</b> Ngawi, 05 Maret 2009.</div>
             </div>
-            <div class="btn-flex"><button class="btn-action" onclick="goToSlide(3)">mau kenalin diri juga?</button><button class="btn-action btn-secondary" onclick="goToSlide(1)">⬅️ Back</button></div>
+            <div class="btn-flex">
+                <button class="btn-action" onclick="goToSlide(3)">mau kenalin diri juga?</button>
+                <button class="btn-action btn-secondary" onclick="goToSlide(1)">⬅️ Back</button>
+            </div>
         </div>
         <div id="slide-3" class="slide">
             <h2>Tentang Lo 🫵</h2>
@@ -457,6 +324,7 @@
         </div>
     </div>
 
+    <!-- 💭 MENU 2: CERITA -->
     <div id="sec-curhat" class="glass-card content-section">
         <h2>How is your day? ☁️</h2>
         <div class="mood-container">
@@ -475,6 +343,7 @@
         </form>
     </div>
 
+    <!-- 📸 MENU 3: GALERI -->
     <div id="sec-gallery" class="glass-card content-section">
         <h2>Aesthetic Gallery 📸</h2>
         <p>Tap foto mana saja buat liat ukuran gede ✨</p>
@@ -488,6 +357,7 @@
         </div>
     </div>
 
+    <!-- 🎮 MENU 4: FUN ZONE -->
     <div id="sec-funzone" class="glass-card content-section">
         <div id="fun-lobby">
             <h2>Fun Zone 🎮</h2>
@@ -535,11 +405,12 @@
         </div>
     </div>
 
+    <!-- FOOTER -->
     <div class="footer">
         <p>follow ig gua ya di <a href="https://instagram.com/angn_smrn" target="_blank">@angn_smrn</a> <span class="secret-icon" onclick="openAccess()">✈️</span></p>
     </div>
 
-    <!-- MASKOT KUCING -->
+    <!-- 🐾 MASKOT KUCING -->
     <div class="cat-mascot" onclick="clickCatMascot(event)"><div class="cat-icon">🐱</div></div>
     <div id="catBubble" class="cat-bubble"></div>
 
@@ -580,6 +451,7 @@
             <h2>✦ Deep Space Base ✦</h2>
         </div>
         
+        <!-- DIBUAT 8 FOTO MENGISI SELURUH AREA ATAS & TENGAH -->
         <div class="hanging-area">
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret1.jpeg" onerror="this.onerror=null; this.src='./secret1.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret2.jpeg" onerror="this.onerror=null; this.src='./secret2.jpg';"></div></div>
@@ -587,23 +459,33 @@
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret4.jpeg" onerror="this.onerror=null; this.src='./secret4.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret5.jpeg" onerror="this.onerror=null; this.src='./secret5.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret6.jpeg" onerror="this.onerror=null; this.src='./secret6.jpg';"></div></div>
-        </div>
-
-        <!-- SECRET FUN ZONE MENU -->
-        <div class="secret-menu-grid">
-            <div class="secret-card-btn" onclick="openSecretApp('puzzle')"><i class="fas fa-puzzle-piece"></i>Classified Puzzle</div>
-            <div class="secret-card-btn" onclick="openSecretApp('ticket')"><i class="fas fa-ticket-alt"></i>Boarding Pass</div>
-            <div class="secret-card-btn" onclick="openSecretApp('star')"><i class="fas fa-star"></i>Wish Star Jar</div>
-            <div class="secret-card-btn" onclick="openSecretApp('vending')"><i class="fas fa-wine-bottle"></i>Surprise Drink</div>
+            <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret7.jpeg" onerror="this.onerror=null; this.src='./secret7.jpg';"></div></div>
+            <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret8.jpeg" onerror="this.onerror=null; this.src='./secret8.jpg';"></div></div>
         </div>
 
         <div class="space-actions">
-            <button class="btn-action btn-secondary" style="font-size:0.85rem;" onclick="closeSecretSpace()">mau mendarat? 🛬</button>
+            <button class="btn-action" style="font-size:0.85rem;" onclick="openSecretFunLobby()"><i class="fas fa-gamepad"></i> Secret Fun Zone</button>
+            <button class="btn-action btn-secondary" style="font-size:0.85rem; margin-top:0;" onclick="closeSecretSpace()">mau mendarat? 🛬</button>
         </div>
     </div>
 
-    <!-- MODAL SECRET FEATURES -->
-    
+    <!-- SECRET FUN ZONE LOBBY -->
+    <div id="secretFunLobby" class="secret-feature-modal">
+        <div class="space-stars"></div>
+        <div class="space-galaxy"></div>
+        <div style="position:relative; z-index:10;">
+            <h2 style="color:#00f3ff; font-family:'Fredoka'; text-shadow:0 0 15px rgba(0,243,255,0.8);">Secret Fun Zone 🎮</h2>
+            <p style="color:#a5f3fc; font-size:0.85rem;">Pilih akses eksklusif lo di bawah ini.</p>
+            <div class="secret-menu-grid">
+                <div class="secret-card-btn" onclick="openSecretApp('puzzle')"><i class="fas fa-puzzle-piece"></i>Classified Puzzle</div>
+                <div class="secret-card-btn" onclick="openSecretApp('ticket')"><i class="fas fa-ticket-alt"></i>Boarding Pass</div>
+                <div class="secret-card-btn" onclick="openSecretApp('star')"><i class="fas fa-star"></i>Wish Star Jar</div>
+                <div class="secret-card-btn" onclick="openSecretApp('vending')"><i class="fas fa-wine-bottle"></i>Surprise Drink</div>
+            </div>
+            <button class="btn-action btn-secondary" style="max-width:200px; margin:20px auto;" onclick="closeSecretFunLobby()">Kembali 📡</button>
+        </div>
+    </div>
+
     <!-- 1. CLASSIFIED PUZZLE -->
     <div id="secApp-puzzle" class="secret-feature-modal">
         <div class="space-stars"></div><div class="puzzle-nebula"></div>
@@ -622,21 +504,32 @@
     <div id="secApp-ticket" class="secret-feature-modal">
         <div class="space-stars"></div>
         <div class="sf-header"><h2>Boarding Pass 🎟️</h2><p>Bikin tiket eksklusif lo hari ini.</p></div>
-        <div id="ticketFormBox" style="max-width:320px; margin:0 auto; background:rgba(0,0,0,0.5); padding:20px; border-radius:15px; border:1px solid #00f3ff;">
+        <div id="ticketFormBox" style="max-width:320px; margin:0 auto; background:rgba(0,0,0,0.5); padding:20px; border-radius:15px; border:1px solid #00f3ff; position:relative; z-index:10;">
             <input type="text" id="ticketName" class="input-custom dark-mode" placeholder="Ketik nama lo..." style="text-align:center;">
             <button class="btn-action" onclick="generateTicket()" style="margin-top:15px;">Bikin Tiket</button>
             <button class="btn-action btn-secondary" onclick="closeSecretApp('ticket')">Kembali</button>
         </div>
-        <div id="ticketResult" style="display:none;">
+        <div id="ticketResult" style="display:none; position:relative; z-index:10;">
             <div class="ticket-wrapper">
-                <div class="ticket-header"><span>VIP FLIGHT</span><span><i class="fas fa-plane"></i></span></div>
-                <div class="ticket-body">
-                    <div>PASSENGER:<br><b id="tName" style="font-size:1.1rem; color:#00f3ff;"></b></div>
-                    <div>DESTINATION:<br><b>To Deep Space 🚀</b></div>
-                    <div>STATUS:<br><b>Verified Explorer ✨</b></div>
-                    <div style="font-size:0.75rem; margin-top:10px; color:#555;">"Makasih udah mampir ke space ini ya!"</div>
+                <div class="ticket-header" style="display:flex; justify-content:space-between; align-items:center; color:#00f3ff;">
+                    <span style="font-weight:bold; letter-spacing:2px;">BOARDING PASS</span><i class="fas fa-plane"></i>
                 </div>
-                <div class="ticket-footer"><i class="fas fa-barcode"></i>||||| | ||</div>
+                <div class="ticket-dashed"></div>
+                <div class="ticket-body" style="text-align:left;">
+                    <div style="font-size:0.75rem; color:#a5f3fc;">PASSENGER NAME</div>
+                    <div id="tName" style="font-size:1.4rem; font-weight:bold; text-transform:uppercase; color:#fff; margin-bottom:10px;"></div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <div><div style="font-size:0.75rem; color:#a5f3fc;">FROM</div><div style="font-size:1.1rem; font-weight:bold;">EARTH</div></div>
+                        <div><i class="fas fa-arrow-right" style="color:#00f3ff; margin-top:10px;"></i></div>
+                        <div style="text-align:right;"><div style="font-size:0.75rem; color:#a5f3fc;">TO</div><div style="font-size:1.1rem; font-weight:bold; color:#ff758c;">MY HEART 💖</div></div>
+                    </div>
+                    <div class="ticket-flight-info">
+                        <div><span style="color:#a5f3fc; font-size:0.7rem;">FLIGHT</span><br>CL-2024</div>
+                        <div><span style="color:#a5f3fc; font-size:0.7rem;">GATE</span><br>05</div>
+                        <div><span style="color:#a5f3fc; font-size:0.7rem;">SEAT</span><br>01A</div>
+                    </div>
+                </div>
+                <div class="ticket-barcode"></div>
             </div>
             <button class="btn-action btn-secondary" style="max-width:320px; margin:0 auto;" onclick="closeSecretApp('ticket')">Tutup</button>
         </div>
@@ -646,13 +539,15 @@
     <div id="secApp-star" class="secret-feature-modal">
         <div class="space-stars"></div>
         <div class="sf-header"><h2>Wish Star Jar ⭐</h2><p>Tulis harapan lo, ubah jadi bintang.</p></div>
-        <div class="jar-container" id="jarContainer">🍶✨</div>
-        <textarea id="wishInput" class="input-custom dark-mode" placeholder="Tulis harapan rahasia lo di sini..." style="max-width:320px; margin:0 auto; display:block;"></textarea>
-        <div class="btn-flex" style="max-width:320px; margin:15px auto;">
-            <button class="btn-action btn-secondary" onclick="putInJar()">✨ Masukin Botol</button>
-            <button class="btn-action" onclick="sendWishToTele()">📤 Kirim ke Tele</button>
+        <div class="jar-container" id="jarContainer" style="z-index:10;">🍶✨</div>
+        <div style="position:relative; z-index:10;">
+            <textarea id="wishInput" class="input-custom dark-mode" placeholder="Tulis harapan rahasia lo di sini..." style="max-width:320px; margin:0 auto; display:block;"></textarea>
+            <div class="btn-flex" style="max-width:320px; margin:15px auto;">
+                <button class="btn-action btn-secondary" onclick="putInJar()">✨ Masukin Botol</button>
+                <button class="btn-action" onclick="sendWishToTele()">📤 Kirim ke Tele</button>
+            </div>
+            <button class="btn-action btn-secondary" style="max-width:320px; margin:0 auto;" onclick="closeSecretApp('star')">Kembali</button>
         </div>
-        <button class="btn-action btn-secondary" style="max-width:320px; margin:0 auto;" onclick="closeSecretApp('star')">Kembali</button>
     </div>
 
     <!-- 4. VENDING MACHINE -->
@@ -665,23 +560,31 @@
                 <button class="vend-can" onclick="dropCan('soda')">🥤</button>
                 <button class="vend-can" onclick="dropCan('matcha')">🍵</button>
             </div>
-            <div class="vending-drop">
-                <div id="droppedCan" class="dropped-can"></div>
-            </div>
+            <div class="vending-drop"><div id="droppedCan" class="dropped-can"></div></div>
         </div>
-        <div id="vendingResult" style="display:none; max-width:320px; margin:0 auto 15px; background:rgba(0,0,0,0.6); border:1px solid #00f3ff; padding:15px; border-radius:12px; color:#a5f3fc; font-size:0.9rem;"></div>
-        <button class="btn-action btn-secondary" style="max-width:320px; margin:0 auto;" onclick="closeSecretApp('vending')">Kembali</button>
+        <div id="vendingResult" style="display:none; max-width:320px; margin:0 auto 15px; background:rgba(0,0,0,0.6); border:1px solid #00f3ff; padding:15px; border-radius:12px; color:#a5f3fc; font-size:0.9rem; position:relative; z-index:10;"></div>
+        <button class="btn-action btn-secondary" style="max-width:320px; margin:0 auto; position:relative; z-index:10;" onclick="closeSecretApp('vending')">Kembali</button>
+    </div>
+
+    <!-- CUSTOM AESTHETIC ALERT -->
+    <div id="customAlertModal" class="custom-modal" onclick="closeCustomAlert()">
+        <div class="alert-box" onclick="event.stopPropagation()">
+            <h3 id="customAlertTitle" style="color:#00f3ff; font-family:'Fredoka'; margin-bottom:10px;">Title</h3>
+            <p id="customAlertText" style="font-size:0.9rem; line-height:1.5; margin-bottom:20px;"></p>
+            <button class="btn-action btn-secondary" onclick="closeCustomAlert()">Oke</button>
+        </div>
     </div>
 
     <!-- MODAL PUZZLE WIN -->
     <div id="puzzleWinModal" class="custom-modal" onclick="closePuzzleWin(false)">
         <div class="custom-panel" style="border-color:var(--primary);" onclick="event.stopPropagation()">
-            <h3 id="puzzleWinTitle" style="color:var(--primary); font-family:'Fredoka';">Level Clear! ✨</h3>
+            <h3 id="puzzleWinTitle" style="color:var(--primary); font-family:'Fredoka'; margin-bottom:10px;">Level Clear! ✨</h3>
             <p id="puzzleWinText" style="font-size:0.9rem;line-height:1.5;margin-bottom:20px;"></p>
             <button type="button" class="btn-action" onclick="closePuzzleWin(true)">Level berikutnya ➡️</button>
             <button type="button" class="btn-action btn-secondary" style="margin-top:10px;" onclick="closePuzzleWin(false)">Tutup</button>
         </div>
     </div>
+    
     <div id="gombalModal">
         <div class="gombal-box">
             <h3 id="gombalTitle">Level Clear! ✨</h3>
@@ -708,26 +611,22 @@
         const audio = document.getElementById('audioPlayer'); const songSelect = document.getElementById('songSelect'); const playBtn = document.getElementById('playBtn');
         let isPlaying = false, playMode = 0, tempRecom = null, moodDipilih = "Nggak milih emot";
         audio.src = songSelect.value;
-        function togglePlay() { if(isPlaying){ audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; } else { audio.play().then(_ => { playBtn.innerHTML = '<i class="fas fa-pause"></i>'; }).catch(() => { alert("Klik layar dulu sekali, baru tekan Play!"); }); } isPlaying = !isPlaying; }
+        function togglePlay() { if(isPlaying){ audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; } else { audio.play().then(_ => { playBtn.innerHTML = '<i class="fas fa-pause"></i>'; }).catch(() => { showCustomAlert("Oops!","Klik layar dulu sekali, baru tekan Play!"); }); } isPlaying = !isPlaying; }
         function changeSong() { audio.src = songSelect.value; if(isPlaying) audio.play(); }
         function nextSong() { let i = songSelect.selectedIndex; if(playMode === 1) i = Math.floor(Math.random() * songSelect.options.length); else if(playMode === 0) i = (i + 1) % songSelect.options.length; songSelect.selectedIndex = i; changeSong(); }
         function prevSong() { songSelect.selectedIndex = (songSelect.selectedIndex - 1 + songSelect.options.length) % songSelect.options.length; changeSong(); }
         function toggleMode() { playMode = (playMode + 1) % 3; const btn = document.getElementById('modeBtn'); if(playMode===0) btn.innerHTML = "Mode: Urut ➡️"; else if(playMode===1) btn.innerHTML = "Mode: Acak 🔀"; else btn.innerHTML = "Mode: 1 Lagu 🔁"; }
         audio.onended = () => { if(playMode===2) audio.play(); else nextSong(); };
 
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.getElementById('themeIcon');
-            icon.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        }
+        function toggleTheme() { document.body.classList.toggle('dark-mode'); const icon = document.getElementById('themeIcon'); icon.innerHTML = document.body.classList.contains('dark-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
 
-        function switchMenu(menu) {
-            ['about', 'curhat', 'gallery', 'funzone'].forEach(m => { document.getElementById('sec-'+m).classList.remove('active'); document.getElementById('nav-'+m).classList.remove('active'); });
-            document.getElementById('sec-'+menu).classList.add('active'); document.getElementById('nav-'+menu).classList.add('active');
-        }
+        function switchMenu(menu) { ['about', 'curhat', 'gallery', 'funzone'].forEach(m => { document.getElementById('sec-'+m).classList.remove('active'); document.getElementById('nav-'+m).classList.remove('active'); }); document.getElementById('sec-'+menu).classList.add('active'); document.getElementById('nav-'+menu).classList.add('active'); }
         function goToSlide(n) { document.querySelectorAll('.slide').forEach(s => s.classList.remove('active')); document.getElementById('slide-'+n).classList.add('active'); }
         function openZoomFromSrc(el) { const img = el.querySelector('img'); if(img && img.src) { document.getElementById('modalImg').src = img.src; document.getElementById('zoomModal').style.display = 'flex'; } }
         function closeZoom() { document.getElementById('zoomModal').style.display = 'none'; }
+
+        function showCustomAlert(title, text) { document.getElementById('customAlertTitle').innerText = title; document.getElementById('customAlertText').innerText = text; document.getElementById('customAlertModal').style.display = 'flex'; }
+        function closeCustomAlert() { document.getElementById('customAlertModal').style.display = 'none'; }
 
         // MASKOT
         const catMessagesOriginal = [ "Lagi sedih ya? Coba dengerin playlist gue dulu gih 🎧", "Gak usah pusing, stel lagu favorit lo terus merem sebentar ☁️", "Lagu di playlist ini enak-enak kan? Selera musik di sini gak pernah gagal 🎶", "Meow! Gue cuma kucing melayang, tapi saran gue berguna kan? 😎", "Senyum dikit dong, dari tadi mukanya kenceng banget 🤭", "Overthinking mulu, nanti pusing sendiri lho 😜", "Gak usah mikirin hal berat, lagu di web ini jauh lebih enak didengerin ✨", "Udah makan belum? Jangan ampe kelaparan terus lemes ya 🍲", "Hari ini lo udah keren kok, jangan terlalu keras sama diri sendiri ✨", "Lagi capek ya? Rehat sebentar gapapa, dunia gak bakal kabur kok 🌸", "Pelan-pelan aja, yang penting lo tetep jalan 🚀", "Kalo ada uneg-uneg, tumpahin aja di menu Cerita, aman kok 💭", "Kue keberuntungan di Fun Zone udah dicoba belum? Cobain gih 🥠", "Cobain main puzzle di Fun Zone deh, tes seberapa jago lo 🧩", "Coba ganti ke Mode Malam deh, ada bulan sama bintangnya terang banget 🌙", "Udah liat foto-foto di galeri polaroid belum? Estetik kan? 📸", "Tau gak? Di footer ada tombol pesawat rahasia lho... tapi butuh kunci ✈️" ];
@@ -751,6 +650,8 @@
         function applyFlowerSong() { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); }
 
         // SECRET MENU NEW FEATURES
+        function openSecretFunLobby() { document.getElementById('secretFunLobby').style.display = 'block'; }
+        function closeSecretFunLobby() { document.getElementById('secretFunLobby').style.display = 'none'; }
         function openSecretApp(app) { document.getElementById('secApp-' + app).style.display = 'block'; if(app === 'puzzle') initPuzzleGame('secret'); }
         function closeSecretApp(app) { document.getElementById('secApp-' + app).style.display = 'none'; }
         
@@ -769,23 +670,27 @@
             star.className = 'flying-star'; star.innerText = '✨';
             document.getElementById('jarContainer').appendChild(star);
             input.value = '';
-            setTimeout(() => { star.remove(); alert("Harapan lo udah tersimpan aman di botol ini! ✨"); }, 1500);
+            setTimeout(() => { star.remove(); showCustomAlert("Botol Bintang ⭐", "Harapan lo udah tersimpan aman di botol ini! ✨"); }, 1400);
         }
         function sendWishToTele() {
             const val = document.getElementById('wishInput').value.trim();
             if(!val) return;
             const pesan = `🌟 *BINTANG HARAPAN BARU!*\n\n📝 Pesan:\n${val}`;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`)
-            .then(r=>r.json()).then(d=>{ if(d.ok) { alert("Pesan lo udah meluncur aman ke Telegram gue! 🚀"); document.getElementById('wishInput').value=''; } });
+            .then(r=>r.json()).then(d=>{ if(d.ok) { showCustomAlert("Terkirim! 🚀", "Pesan lo udah meluncur aman ke Telegram gue! ✨"); document.getElementById('wishInput').value=''; } });
         }
 
+        const drinkMsgs = {
+            strawberry: [ "Lo udah berusaha keras hari ini, manisnya kaleng ini khusus buat lo yang pantes bahagia 🍓", "Semoga hari lo semanis strawberry ini ya! Semangat terus ✨", "Kalo lagi capek, istirahat dulu. Lo berhak dapet treat manis ini 🍓" ],
+            soda: [ "Kalau lagi pusing, minum yang seger-seger terus dengerin lagu di playlist gue gih 🥤", "Tarik napas dalem-dalem, hembusin. Seger kan? Kayak soda ini 💙", "Biar pikiran lo secerah langit biru, chill dulu sambil minum soda ini 🥤" ],
+            matcha: [ "Santai dulu aja, dunia gak bakal kabur kok. Lo pantes dapet waktu tenang 🍵", "Matcha ini buat lo yang butuh ketenangan. Relax, everything will be fine 🌿", "Pelan-pelan aja. Nikmatin momennya kayak lo nikmatin matcha ini 🍵" ]
+        };
         function dropCan(type) {
             const can = document.getElementById('droppedCan');
             const res = document.getElementById('vendingResult');
-            let emoji = '🍓', text = '';
-            if(type === 'strawberry') { emoji = '🍓'; text = "Lo udah berusaha keras hari ini, manisnya kaleng ini khusus buat lo yang pantes bahagia."; }
-            if(type === 'soda') { emoji = '🥤'; text = "Kalau lagi pusing/penat, minum yang seger-seger terus dengerin lagu di playlist gue gih."; }
-            if(type === 'matcha') { emoji = '🍵'; text = "Santai dulu aja, dunia gak bakal kabur kok. Lo pantes dapet waktu tenang."; }
+            let emoji = type === 'strawberry' ? '🍓' : type === 'soda' ? '🥤' : '🍵';
+            let msgs = drinkMsgs[type];
+            let text = msgs[Math.floor(Math.random() * msgs.length)];
             
             can.innerText = emoji; can.classList.remove('show');
             setTimeout(() => { can.classList.add('show'); }, 50);
@@ -867,7 +772,7 @@
         }
         function closePuzzleWin(goNext) { document.getElementById('puzzleWinModal').style.display = 'none'; if (goNext && currentLvl < 10) { const maxOk = getMaxUnlocked('fun'); if (currentLvl + 1 <= maxOk) { currentLvl = currentLvl + 1; initPuzzleGame('fun'); } } }
         function giveHint() {
-            if (puzzleSolvedThisLevel) { alert('Level ini udah selesai ✨'); return; }
+            if (puzzleSolvedThisLevel) { showCustomAlert("Udah Kelar!","Level ini udah selesai ✨"); return; }
             const size = getGridSize(currentLvl); clearHintUI();
             let wrongPos = -1; for (let i = 0; i < puzzleGrid.length; i++) { if (puzzleGrid[i] !== i) { wrongPos = i; break; } }
             if (wrongPos === -1) return;
@@ -883,10 +788,10 @@
         function closeGombalModal() { document.getElementById('gombalModal').style.display = 'none'; }
         function kirimBalasanGombal(e) {
             e.preventDefault(); const val = document.getElementById('gombalReplyInput').value.trim();
-            if(val === "") { alert("Makasih udah mainin game ini! ✨"); closeGombalModal(); return; }
+            if(val === "") { showCustomAlert("Makasih!","Makasih udah mainin game ini! ✨"); closeGombalModal(); return; }
             const pesan = `💖 *BALASAN GOMBALAN LEVEL ${currentLvl}!*\n\n📝 Balasan:\n${val}`;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`).then(res => res.json()).then(data => {
-                if(data.ok) { alert("Balasan sukses terkirim ke Telegram! 🚀"); document.getElementById('gombalReplyForm').reset(); closeGombalModal(); } else { alert("Gagal kirim, coba cek koneksi."); }
+                if(data.ok) { showCustomAlert("Sukses!","Balasan sukses terkirim ke Telegram! 🚀"); document.getElementById('gombalReplyForm').reset(); closeGombalModal(); } else { showCustomAlert("Oops!","Gagal kirim, coba cek koneksi."); }
             });
         }
 
@@ -899,7 +804,7 @@
         function closeSecretSpace() { document.getElementById('secretSpace').classList.remove('active'); document.body.style.overflow = ''; }
         function pilihMood(nama, laguIdx, judulLagu) { moodDipilih = nama; tempRecom = laguIdx; document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected')); event.currentTarget.classList.add('selected'); document.getElementById('recomText').innerHTML = `Lagi ngerasa ${nama.split(' ')[0]} ya? Coba dengerin <b>${judulLagu}</b> deh!`; document.getElementById('recomBox').style.display = 'block'; }
         function putarLaguRecom() { if(tempRecom !== null) { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); } }
-        function kirimPesanKeTele(pesan, formId, isBio) { fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`).then(res => res.json()).then(data => { if(data.ok) { alert("Pesan sukses meluncur ke Cello! 🚀"); document.getElementById(formId).reset(); if(isBio) goToSlide(1); } else { alert("Gagal ngirim! Pastiin lo udah pernah klik START di bot Telegram."); } }); }
+        function kirimPesanKeTele(pesan, formId, isBio) { fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`).then(res => res.json()).then(data => { if(data.ok) { showCustomAlert("Terkirim!","Pesan sukses meluncur ke Cello! 🚀"); document.getElementById(formId).reset(); if(isBio) goToSlide(1); } else { showCustomAlert("Gagal!","Pastiin lo udah pernah klik START di bot Telegram."); } }); }
         function kirimBio(e) { e.preventDefault(); const n = document.getElementById('vName').value || '-'; const i = document.getElementById('vIg').value || '-'; const cl = document.getElementById('vColor').value || '-'; const f = document.getElementById('vFood').value || '-'; const h = document.getElementById('vHobby').value || '-'; const d = document.getElementById('vDream').value || '-'; const b = document.getElementById('vTtl').value || '-'; const pesan = `🌟 *BIODATA BARU MASUK!*\n\n👤 Nama: ${n}\n📱 IG: ${i}\n🎨 Warna: ${cl}\n🍲 Makanan: ${f}\n🎣 Hobi: ${h}\n✈️ Cita-cita: ${d}\n🎂 TTL: ${b}`; kirimPesanKeTele(pesan, 'formBio', true); }
         function kirimCurhat(e) { e.preventDefault(); const curhat = document.getElementById('curhatText').value; const pesan = `💭 *CURHATAN BARU MASUK!*\n\n🎭 Mood: ${moodDipilih}\n📝 Cerita:\n${curhat}`; kirimPesanKeTele(pesan, 'formCurhat', false); }
     </script>
