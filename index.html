@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        /* === TEMA SIANG SORE (LIGHT MODE) === */
+        /* === TEMA SIANG (LIGHT MODE) === */
         :root {
             --primary: #e07a5f;
             --secondary: #f2a07b;
@@ -20,7 +20,7 @@
             --card-shadow: 0 16px 40px rgba(80, 40, 60, 0.12);
         }
 
-        /* === TEMA MALAM (DARK MODE AVIONIC) === */
+        /* === TEMA MALAM (DARK MODE) === */
         .dark-mode {
             --primary: #00f3ff;
             --secondary: #0055ff;
@@ -41,146 +41,117 @@
             transition: background 0.6s ease; position: relative; overflow-x: hidden;
         }
 
-        /* MODE SIANG: Background Sunset */
-        body:not(.dark-mode) {
-            background: linear-gradient(to bottom, #87ceeb 0%, #b8d4e8 18%, #f5c6aa 45%, #f7a072 70%, #e07a5f 100%);
-            background-attachment: fixed;
-        }
+        body:not(.dark-mode) { background: linear-gradient(to bottom, #87ceeb 0%, #b8d4e8 18%, #f5c6aa 45%, #f7a072 70%, #e07a5f 100%); background-attachment: fixed; }
+        body.dark-mode { background: linear-gradient(to bottom, #020617 0%, #0f172a 50%, #1e1b4b 100%); background-attachment: fixed; }
 
-        /* MODE MALAM: Background Gelap */
-        body.dark-mode {
-            background: linear-gradient(to bottom, #020617 0%, #0f172a 50%, #1e1b4b 100%);
-            background-attachment: fixed;
-        }
-
-        /* ========== DEKORASI MODE SIANG ========== */
+        /* DEKORASI SIANG */
         .day-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
         .dark-mode .day-decor { display: none !important; }
-
-        /* MATAHARI (Pojok Kanan Atas) */
         .day-sun {
-            position: absolute; top: 28px; right: 28px;
-            width: 88px; height: 88px; border-radius: 50%;
+            position: absolute; top: 28px; right: 28px; width: 88px; height: 88px; border-radius: 50%;
             background: radial-gradient(circle at 35% 35%, #fff7d6 0%, #ffe566 35%, #ffb347 70%, rgba(255, 140, 66, 0.3) 100%);
             box-shadow: 0 0 40px 12px rgba(255, 200, 80, 0.75), 0 0 90px 30px rgba(255, 160, 60, 0.35), 0 0 140px 50px rgba(255, 120, 80, 0.2);
             animation: sunPulse 5s ease-in-out infinite alternate;
         }
         @keyframes sunPulse { 0% { transform: scale(1); filter: brightness(1); } 100% { transform: scale(1.06); filter: brightness(1.08); } }
 
-        /* AWAN SORE */
-        .day-cloud {
-            position: absolute; background: rgba(255, 255, 255, 0.55);
-            border-radius: 50px; filter: blur(2px); opacity: 0.85;
-        }
-        .day-cloud::before, .day-cloud::after {
-            content: ''; position: absolute; background: inherit; border-radius: 50%;
-        }
+        .day-cloud { position: absolute; background: rgba(255, 255, 255, 0.55); border-radius: 50px; filter: blur(2px); opacity: 0.85; }
+        .day-cloud::before, .day-cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; }
         .day-cloud.c1 { width: 140px; height: 42px; top: 18%; left: -20px; animation: cloudMove 48s linear infinite; }
-        .day-cloud.c1::before { width: 55px; height: 55px; top: -28px; left: 18px; }
-        .day-cloud.c1::after  { width: 70px; height: 70px; top: -35px; left: 50px; }
+        .day-cloud.c1::before { width: 55px; height: 55px; top: -28px; left: 18px; } .day-cloud.c1::after  { width: 70px; height: 70px; top: -35px; left: 50px; }
         .day-cloud.c2 { width: 180px; height: 48px; top: 28%; right: -40px; animation: cloudMove 62s linear infinite reverse; opacity: 0.7; }
-        .day-cloud.c2::before { width: 70px; height: 70px; top: -32px; left: 25px; }
-        .day-cloud.c2::after  { width: 85px; height: 85px; top: -40px; left: 70px; }
+        .day-cloud.c2::before { width: 70px; height: 70px; top: -32px; left: 25px; } .day-cloud.c2::after  { width: 85px; height: 85px; top: -40px; left: 70px; }
         .day-cloud.c3 { width: 120px; height: 36px; top: 42%; left: 15%; animation: cloudMove 55s linear infinite; opacity: 0.6; }
-        .day-cloud.c3::before { width: 48px; height: 48px; top: -24px; left: 15px; }
-        .day-cloud.c3::after  { width: 60px; height: 60px; top: -30px; left: 45px; }
+        .day-cloud.c3::before { width: 48px; height: 48px; top: -24px; left: 15px; } .day-cloud.c3::after  { width: 60px; height: 60px; top: -30px; left: 45px; }
         .day-cloud.c4 { width: 160px; height: 44px; top: 55%; right: 10%; animation: cloudMove 70s linear infinite reverse; opacity: 0.5; }
-        .day-cloud.c4::before { width: 60px; height: 60px; top: -28px; left: 20px; }
-        .day-cloud.c4::after  { width: 75px; height: 75px; top: -36px; left: 60px; }
+        .day-cloud.c4::before { width: 60px; height: 60px; top: -28px; left: 20px; } .day-cloud.c4::after  { width: 75px; height: 75px; top: -36px; left: 60px; }
         @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(40px); } }
 
-        /* SILUET GUNUNG */
-        .day-mountains {
-            position: absolute; left: 0; right: 0; bottom: 0;
-            height: 42vh; max-height: 380px; z-index: 0;
-            background: radial-gradient(ellipse 80% 60% at 15% 100%, #6b4f6b 0%, transparent 70%),
-                        radial-gradient(ellipse 90% 70% at 50% 100%, #5c4060 0%, transparent 72%),
-                        radial-gradient(ellipse 85% 65% at 85% 100%, #4a3555 0%, transparent 70%);
-            opacity: 0.55;
+        /* GUNUNG UNIVERSAL (SIANG & MALAM TETAP ADA) */
+        .mountains-bg {
+            position: fixed; left: 0; right: 0; bottom: 0; height: 42vh; max-height: 380px; z-index: 0; pointer-events: none;
+            background: radial-gradient(ellipse 80% 60% at 15% 100%, rgba(107,79,107,0.7) 0%, transparent 70%),
+                        radial-gradient(ellipse 90% 70% at 50% 100%, rgba(92,64,96,0.7) 0%, transparent 72%),
+                        radial-gradient(ellipse 85% 65% at 85% 100%, rgba(74,53,85,0.7) 0%, transparent 70%);
+            transition: all 0.6s ease;
         }
-        .day-mountains::before {
+        .mountains-bg::before {
             content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 100%;
-            background: #3d2c40; opacity: 0.45;
+            background: rgba(61,44,64,0.6); transition: all 0.6s ease;
             clip-path: polygon(0% 100%, 0% 62%, 8% 55%, 18% 68%, 28% 48%, 38% 58%, 48% 40%, 58% 52%, 68% 35%, 78% 50%, 88% 42%, 100% 55%, 100% 100%);
         }
-        .day-mountains::after {
+        .mountains-bg::after {
             content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 70%;
-            background: #2a1f30; opacity: 0.5;
+            background: rgba(42,31,48,0.7); transition: all 0.6s ease;
             clip-path: polygon(0% 100%, 0% 75%, 12% 60%, 22% 72%, 35% 55%, 50% 65%, 62% 50%, 75% 62%, 88% 48%, 100% 58%, 100% 100%);
         }
+        .dark-mode .mountains-bg {
+            background: radial-gradient(ellipse 80% 60% at 15% 100%, rgba(15,23,42,0.8) 0%, transparent 70%),
+                        radial-gradient(ellipse 90% 70% at 50% 100%, rgba(2,6,23,0.8) 0%, transparent 72%);
+        }
+        .dark-mode .mountains-bg::before { background: rgba(8,12,25,0.8); }
+        .dark-mode .mountains-bg::after { background: rgba(0,0,0,0.9); }
 
-        /* ========== BULAN & BINTANG (DARK MODE) ========== */
+        /* DEKORASI MALAM (BULAN & BINTANG LEBIH BANYAK) */
         body.dark-mode::after {
-            content: ''; position: fixed; top: 25px; right: 25px;
-            width: 90px; height: 90px; border-radius: 50%; z-index: 0; pointer-events: none;
+            content: ''; position: fixed; top: 28px; right: 28px; width: 90px; height: 90px; border-radius: 50%; z-index: -2; pointer-events: none;
             background: radial-gradient(circle at 35% 35%, #ffffff 15%, #cbd5e1 55%, #94a3b8 90%);
-            box-shadow: 0 0 50px rgba(255,255,255,0.6), 0 0 100px rgba(0,243,255,0.3);
-            animation: floatMoon 6s ease-in-out infinite alternate;
+            box-shadow: 0 0 50px rgba(255,255,255,0.6), 0 0 100px rgba(0,243,255,0.3); animation: floatMoon 6s ease-in-out infinite alternate;
         }
         @keyframes floatMoon { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
 
         body.dark-mode::before {
-            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
             background-image:
-                radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
-                radial-gradient(2px 2px at 150px 80px, rgba(255,255,255,0.9), transparent),
-                radial-gradient(1px 1px at 300px 40px, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 450px 120px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(2px 2px at 80px 250px, rgba(0,243,255,0.9), transparent),
-                radial-gradient(1px 1px at 320px 300px, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 500px 350px, rgba(255,255,255,0.85), transparent),
-                radial-gradient(2px 2px at 200px 500px, rgba(0,243,255,0.7), transparent),
-                radial-gradient(1px 1px at 50px 600px, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 400px 650px, rgba(255,255,255,0.9), transparent);
+                radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent), radial-gradient(2px 2px at 150px 80px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 300px 40px, #fff, transparent), radial-gradient(1.5px 1.5px at 450px 120px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 80px 250px, rgba(0,243,255,0.9), transparent), radial-gradient(1px 1px at 320px 300px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 500px 350px, rgba(255,255,255,0.85), transparent), radial-gradient(2px 2px at 200px 500px, rgba(0,243,255,0.7), transparent),
+                radial-gradient(1px 1px at 50px 600px, #fff, transparent), radial-gradient(1.5px 1.5px at 400px 650px, rgba(255,255,255,0.9), transparent),
+                /* BINTANG EKSTRA */
+                radial-gradient(1px 1px at 100px 150px, #fff, transparent), radial-gradient(1.5px 1.5px at 250px 450px, rgba(0,243,255,0.8), transparent),
+                radial-gradient(2px 2px at 550px 50px, rgba(255,255,255,0.7), transparent), radial-gradient(1px 1px at 420px 220px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 180px 580px, rgba(255,255,255,0.8), transparent), radial-gradient(1px 1px at 380px 480px, #fff, transparent);
             background-size: 550px 650px; animation: twinkle 4s ease-in-out infinite alternate;
         }
         @keyframes twinkle { 0% { opacity: 0.4; } 100% { opacity: 1; } }
 
         /* Z-INDEX LAYERING */
         .theme-btn, .glass-card, .nav-menu, .footer, .cat-mascot, .cat-bubble { position: relative; z-index: 5; }
-        .theme-btn { z-index: 100; }
-        .cat-mascot, .cat-bubble { z-index: 99; }
+        .theme-btn { z-index: 100; } .cat-mascot, .cat-bubble { z-index: 99; }
 
         .theme-btn {
-            position: fixed; top: 15px; right: 15px;
-            background: var(--glass-bg); border: 2px solid var(--glass-border);
-            color: var(--primary); font-size: 1.4rem; width: 48px; height: 48px;
-            border-radius: 50%; cursor: pointer; backdrop-filter: blur(12px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.3s;
+            position: fixed; top: 15px; right: 15px; background: var(--glass-bg); border: 2px solid var(--glass-border);
+            color: var(--primary); font-size: 1.4rem; width: 48px; height: 48px; border-radius: 50%; cursor: pointer;
+            backdrop-filter: blur(12px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: 0.3s;
         }
         .theme-btn:hover { transform: rotate(25deg) scale(1.1); }
         .dark-mode .theme-btn { box-shadow: 0 0 18px var(--primary); }
 
         .glass-card {
-            background: var(--glass-bg); backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1.5px solid var(--glass-border); border-radius: 28px;
-            box-shadow: var(--card-shadow); width: 100%; max-width: 500px;
+            background: var(--glass-bg); backdrop-filter: blur(16px); border: 1.5px solid var(--glass-border);
+            border-radius: 28px; box-shadow: var(--card-shadow); width: 100%; max-width: 500px;
             padding: 24px; text-align: center; margin-bottom: 18px; transition: all 0.45s ease;
         }
 
         .music-player h3 { font-family: 'Fredoka', cursive; color: var(--text-highlight); margin-bottom: 14px; }
         .song-select {
             width: 100%; padding: 12px 14px; border-radius: 14px; border: none;
-            background: rgba(255,255,255,0.5); font-family: 'Poppins'; font-size: 0.9rem;
-            color: var(--text-dark); outline: none; margin-bottom: 14px;
+            background: rgba(255,255,255,0.5); font-family: 'Poppins'; font-size: 0.9rem; color: var(--text-dark); outline: none; margin-bottom: 14px;
         }
-        .dark-mode .song-select { background: rgba(255,255,255,0.15); }
-        .dark-mode .song-select option { color: #000; }
-
+        .dark-mode .song-select { background: rgba(255,255,255,0.15); } .dark-mode .song-select option { color: #000; }
+        
         .controls { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
         .btn-icon {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none; color: white; width: 48px; height: 48px; border-radius: 50%;
-            cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 16px rgba(224, 122, 95, 0.4); transition: 0.3s;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; color: white; width: 48px; height: 48px;
+            border-radius: 50%; cursor: pointer; font-size: 1.05rem; box-shadow: 0 6px 16px rgba(224, 122, 95, 0.4); transition: 0.3s;
         }
         .dark-mode .btn-icon { box-shadow: 0 0 16px var(--primary); color: #0f172a; }
         .btn-icon:hover { transform: translateY(-4px) scale(1.06); }
 
         .btn-mode {
             background: rgba(255,255,255,0.4); border: 2px solid var(--primary); color: var(--primary);
-            padding: 8px 18px; border-radius: 20px; font-weight: 600; cursor: pointer;
-            transition: all 0.3s ease; margin-top: 14px;
+            padding: 8px 18px; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 14px;
         }
         .btn-mode:hover { background: var(--primary); color: white; }
         .dark-mode .btn-mode:hover { color: #0f172a; box-shadow: 0 0 12px var(--primary); }
@@ -188,8 +159,7 @@
         .nav-menu { display: flex; gap: 8px; width: 100%; max-width: 500px; margin-bottom: 18px; }
         .nav-btn {
             flex: 1; padding: 11px 6px; border: 1px solid var(--glass-border); border-radius: 14px;
-            background: var(--glass-bg); backdrop-filter: blur(12px);
-            font-family: 'Fredoka', cursive; font-size: 0.85rem; color: var(--text-dark);
+            background: var(--glass-bg); backdrop-filter: blur(12px); font-family: 'Fredoka', cursive; font-size: 0.85rem; color: var(--text-dark);
             cursor: pointer; transition: 0.3s;
         }
         .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 6px 18px rgba(224, 122, 95, 0.4); }
@@ -198,24 +168,19 @@
         .content-section { display: none; animation: slideUp 0.45s ease; }
         .content-section.active { display: block; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-        .slide { display: none; }
-        .slide.active { display: block; }
+        .slide { display: none; } .slide.active { display: block; }
 
         .img-wrapper { position: relative; width: 160px; height: 160px; margin: 0 auto 18px; }
         .img-wrapper::before {
             content: ''; position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%;
-            z-index: -1; animation: spin 5s linear infinite;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; z-index: -1; animation: spin 5s linear infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .profile-img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; border: 4px solid var(--glass-border); }
 
         h2 { font-family: 'Fredoka', cursive; color: var(--text-highlight); font-size: 1.4rem; margin-bottom: 10px; }
         p { font-size: 0.88rem; margin-bottom: 14px; }
-        .fact-box {
-            background: rgba(255,255,255,0.4); padding: 18px; border-radius: 18px;
-            text-align: left; border-left: 6px solid var(--primary); margin-bottom: 18px;
-        }
+        .fact-box { background: rgba(255,255,255,0.4); padding: 18px; border-radius: 18px; text-align: left; border-left: 6px solid var(--primary); margin-bottom: 18px; }
         .dark-mode .fact-box { background: rgba(255,255,255,0.1); }
         .fact-item { margin-bottom: 10px; font-size: 0.85rem; }
 
@@ -224,16 +189,13 @@
             width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border);
             background: rgba(255,255,255,0.5); font-family: 'Poppins'; outline: none; font-size: 0.85rem; color: var(--text-dark);
         }
-        .dark-mode .input-custom { background: rgba(0,0,0,0.3); }
-        .dark-mode .input-custom::placeholder { color: #94a3b8; }
+        .dark-mode .input-custom { background: rgba(0,0,0,0.3); } .dark-mode .input-custom::placeholder { color: #94a3b8; }
         textarea.input-custom { height: 100px; resize: none; }
 
         .btn-action {
             width: 100%; padding: 13px; border-radius: 14px; border: none;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white; font-family: 'Fredoka', cursive; font-size: 1rem;
-            cursor: pointer; box-shadow: 0 6px 18px rgba(224, 122, 95, 0.35); transition: 0.3s; margin-top: 10px;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-family: 'Fredoka', cursive; font-size: 1rem;
+            cursor: pointer; box-shadow: 0 6px 18px rgba(224, 122, 95, 0.35); transition: 0.3s; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;
         }
         .dark-mode .btn-action { color: #0f172a; box-shadow: 0 0 16px rgba(0, 243, 255, 0.4); }
         .btn-action:hover { transform: translateY(-3px); }
@@ -244,236 +206,130 @@
         .mood-container { display: flex; justify-content: space-around; margin: 18px 0; }
         .mood-box { text-align: center; }
         .mood-btn {
-            font-size: 1.8rem; background: rgba(255,255,255,0.45); border: 2px solid transparent;
-            width: 54px; height: 54px; border-radius: 50%; cursor: pointer; transition: 0.3s;
+            font-size: 1.8rem; background: rgba(255,255,255,0.45); border: 2px solid transparent; width: 54px; height: 54px; border-radius: 50%; cursor: pointer; transition: 0.3s;
         }
         .mood-btn:hover, .mood-btn.selected { background: rgba(255,255,255,0.8); border-color: var(--primary); transform: scale(1.1); box-shadow: 0 0 12px var(--primary); }
         .mood-text { display: block; font-size: 0.7rem; font-weight: 600; margin-top: 5px; opacity: 0.85; }
 
         .scroll-box { max-height: 52vh; overflow-y: auto; padding-right: 4px; }
-        .scroll-box::-webkit-scrollbar { width: 5px; }
-        .scroll-box::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
+        .scroll-box::-webkit-scrollbar { width: 5px; } .scroll-box::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 10px; }
         .polaroid {
-            background: #fff; padding: 10px 10px 25px 10px; border-radius: 6px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12); transition: 0.4s ease; transform: rotate(-3deg); cursor: pointer; position: relative;
+            background: #fff; padding: 10px 10px 25px 10px; border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,0.12); transition: 0.4s ease; transform: rotate(-3deg); cursor: pointer; position: relative;
         }
         .polaroid:nth-child(even) { transform: rotate(3.5deg); }
         .polaroid:hover { transform: scale(1.08) rotate(0deg); z-index: 10; box-shadow: 0 14px 28px rgba(0,0,0,0.22); }
         .polaroid img { width: 100%; height: 135px; object-fit: cover; border-radius: 4px; background: #e5e7eb; display: block; }
         .polaroid::after { content: '🔍 Tap buat Zoom'; position: absolute; bottom: 6px; left: 0; width: 100%; font-size: 0.65rem; color: #777; font-weight: 600; text-align: center; }
-        .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 12px rgba(0, 243, 255, 0.22); }
-        .dark-mode .polaroid::after { color: #94a3b8; }
+        .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 12px rgba(0, 243, 255, 0.22); } .dark-mode .polaroid::after { color: #94a3b8; }
 
         /* FUN ZONE */
         .fun-cards { display: grid; grid-template-columns: repeat(1, 1fr); gap: 14px; margin-top: 15px; }
         .fun-card {
-            background: rgba(255,255,255,0.45); border: 1.5px solid var(--glass-border);
-            border-radius: 20px; padding: 18px; text-align: center; cursor: pointer;
-            transition: all 0.3s ease; display: flex; align-items: center; gap: 15px;
+            background: rgba(255,255,255,0.45); border: 1.5px solid var(--glass-border); border-radius: 20px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 15px;
         }
         .dark-mode .fun-card { background: rgba(15,23,42,0.5); }
         .fun-card:hover { transform: translateY(-4px) scale(1.02); background: rgba(255,255,255,0.7); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .fun-card-icon { font-size: 2.2rem; min-width: 50px; }
-        .fun-card-info { text-align: left; }
-        .fun-card-info h4 { font-family: 'Fredoka', cursive; font-size: 1.1rem; color: var(--text-highlight); }
-        .fun-card-info p { font-size: 0.78rem; margin: 0; opacity: 0.85; }
+        .fun-card-info { text-align: left; } .fun-card-info h4 { font-family: 'Fredoka', cursive; font-size: 1.1rem; color: var(--text-highlight); } .fun-card-info p { font-size: 0.78rem; margin: 0; opacity: 0.85; }
 
         .cookie-wrapper { text-align: center; padding: 20px 0; }
         .cookie-img { font-size: 5rem; cursor: pointer; display: inline-block; animation: bounce 2s infinite; transition: 0.3s; }
         .cookie-img:hover { transform: scale(1.15) rotate(10deg); }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .cookie-paper {
-            background: #fff8dc; color: #8b4513; border: 2px dashed #d2b48c; padding: 15px;
-            border-radius: 12px; margin-top: 15px; font-family: 'Fredoka', cursive; font-size: 0.95rem;
-            display: none; animation: popZoom 0.4s ease; box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
+        .cookie-paper { background: #fff8dc; color: #8b4513; border: 2px dashed #d2b48c; padding: 15px; border-radius: 12px; margin-top: 15px; font-family: 'Fredoka', cursive; font-size: 0.95rem; display: none; animation: popZoom 0.4s ease; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
 
-        .puzzle-board {
-            display: grid; gap: 4px; margin: 15px auto; width: 280px; height: 280px;
-            background: rgba(0,0,0,0.1); padding: 4px; border-radius: 12px; border: 2px solid var(--primary);
-        }
-        .puzzle-tile {
-            background-size: 280px 280px; border-radius: 4px; cursor: pointer;
-            transition: transform 0.1s ease; box-shadow: inset 0 0 2px rgba(255,255,255,0.5);
-        }
-
-        .level-select { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0; margin-bottom: 10px; }
-        .lvl-btn {
-            padding: 6px 12px; border-radius: 10px; border: 1px solid var(--primary);
-            background: rgba(255,255,255,0.3); font-size: 0.75rem; font-weight: 600;
-            cursor: pointer; white-space: nowrap; color: var(--text-dark);
-        }
-        .lvl-btn.active { background: var(--primary); color: white; }
-        .lvl-btn.locked { opacity: 0.4; cursor: not-allowed; filter: grayscale(0.5); }
-        .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
-
-        /* HINT */
-        .puzzle-tile.hint-from {
-            outline: 3px solid #ffcc00; outline-offset: -2px;
-            box-shadow: 0 0 12px rgba(255, 200, 0, 0.8); z-index: 2;
-        }
-        .puzzle-tile.hint-to {
-            outline: 3px dashed #00e676; outline-offset: -2px;
-            box-shadow: 0 0 12px rgba(0, 230, 118, 0.7);
-            animation: hintPulse 0.8s ease infinite alternate;
-        }
+        .puzzle-board { display: grid; gap: 4px; margin: 15px auto; width: 280px; height: 280px; background: rgba(0,0,0,0.1); padding: 4px; border-radius: 12px; border: 2px solid var(--primary); }
+        .puzzle-tile { background-size: 280px 280px; border-radius: 4px; cursor: pointer; transition: transform 0.1s ease; box-shadow: inset 0 0 2px rgba(255,255,255,0.5); }
+        .puzzle-tile.hint-from { outline: 3px solid #ffcc00; outline-offset: -2px; box-shadow: 0 0 12px rgba(255, 200, 0, 0.8); z-index: 2; }
+        .puzzle-tile.hint-to { outline: 3px dashed #00e676; outline-offset: -2px; box-shadow: 0 0 12px rgba(0, 230, 118, 0.7); animation: hintPulse 0.8s ease infinite alternate; }
         @keyframes hintPulse { from { opacity: 0.7; } to { opacity: 1; } }
 
+        .level-select { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0; margin-bottom: 10px; }
+        .lvl-btn { padding: 6px 12px; border-radius: 10px; border: 1px solid var(--primary); background: rgba(255,255,255,0.3); font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--text-dark); }
+        .lvl-btn.active { background: var(--primary); color: white; }
+        .lvl-btn.locked { opacity: 0.4; filter: grayscale(0.5); } .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
+
         /* MASKOT KUCING */
-        .cat-mascot {
-            position: fixed; bottom: 20px; right: 20px; cursor: pointer;
-            transition: transform 0.3s ease; animation: catFloat 4s ease-in-out infinite;
-        }
+        .cat-mascot { position: fixed; bottom: 20px; right: 20px; z-index: 99; cursor: pointer; transition: transform 0.3s ease; animation: catFloat 4s ease-in-out infinite; }
         .cat-mascot:hover { transform: scale(1.15) rotate(5deg); }
         .cat-icon { font-size: 2.8rem; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2)); }
         @keyframes catFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-        .cat-bubble {
-            position: fixed; bottom: 85px; right: 20px; max-width: 250px;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            border: 2px solid var(--primary); color: #2d3436; padding: 12px 16px;
-            border-radius: 18px 18px 2px 18px; font-size: 0.82rem; font-weight: 500;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: none; animation: popZoom 0.3s ease;
-        }
+        .cat-bubble { position: fixed; bottom: 85px; right: 20px; z-index: 100; max-width: 250px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 2px solid var(--primary); color: #2d3436; padding: 12px 16px; border-radius: 18px 18px 2px 18px; font-size: 0.82rem; font-weight: 500; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: none; animation: popZoom 0.3s ease; }
         .dark-mode .cat-bubble { background: rgba(15,23,42,0.95); color: #e2e8f0; border-color: #00f3ff; }
 
-        .footer { margin-top: auto; padding: 18px 0; font-size: 0.85rem; text-align: center; }
+        .footer { margin-top: auto; padding: 18px 0; font-size: 0.85rem; text-align: center; z-index: 10;}
         .footer a { color: var(--primary); text-decoration: none; font-weight: bold; }
         .secret-icon { cursor: pointer; transition: 0.3s; display: inline-block; }
         .secret-icon:hover { transform: scale(1.35) translateY(-3px); }
 
-        #accessModal {
-            display: none; position: fixed; inset: 0; z-index: 1100;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(15px);
-            justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s ease;
-        }
-        .access-panel {
-            width: 100%; max-width: 360px; background: rgba(255, 255, 255, 0.9);
-            border-radius: 20px; padding: 35px 25px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        .dark-mode .access-panel { background: rgba(10, 15, 30, 0.9); border: 1px solid rgba(0, 243, 255, 0.4); }
-        .access-icon {
-            width: 70px; height: 70px; margin: 0 auto 20px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white;
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); box-shadow: 0 8px 20px rgba(224, 122, 95, 0.4);
-        }
+        /* MODAL POPUP ESTETIK */
+        .custom-modal { display: none; position: fixed; inset: 0; z-index: 1100; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s ease; }
+        .custom-panel { width: 100%; max-width: 360px; background: rgba(255, 255, 255, 0.9); border-radius: 20px; padding: 35px 25px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .dark-mode .custom-panel { background: rgba(10, 15, 30, 0.9); border: 1px solid rgba(0, 243, 255, 0.4); }
+        .access-icon { width: 70px; height: 70px; margin: 0 auto 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white; background: linear-gradient(135deg, var(--primary), var(--secondary)); box-shadow: 0 8px 20px rgba(224, 122, 95, 0.4); }
         .dark-mode .access-icon { color: #0f172a; box-shadow: 0 0 25px rgba(0,243,255,0.5); }
         .access-title { font-family: 'Fredoka', cursive; font-size: 1.5rem; color: var(--text-dark); margin-bottom: 8px; }
         .dark-mode .access-title { color: #00f3ff; }
         .access-sub { font-size: 0.85rem; opacity: 0.8; margin-bottom: 25px; }
 
         .input-wrapper { position: relative; width: 100%; }
-        .access-input {
-            width: 100%; padding: 14px 45px 14px 16px; border-radius: 12px; border: 2px solid rgba(0,0,0,0.1);
-            background: rgba(255,255,255,0.9); font-family: 'Poppins'; font-size: 1rem; color: var(--text-dark); outline: none;
-        }
+        .access-input { width: 100%; padding: 14px 45px 14px 16px; border-radius: 12px; border: 2px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); font-family: 'Poppins'; font-size: 1rem; color: var(--text-dark); outline: none; }
         .dark-mode .access-input { background: rgba(0,0,0,0.4); border-color: rgba(0,243,255,0.3); color: #00f3ff; }
         .toggle-pw { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--text-dark); cursor: pointer; }
         .dark-mode .toggle-pw { color: #00f3ff; }
         .access-error { display: none; margin-top: 12px; font-size: 0.85rem; color: #ff4d6d; font-weight: 600; }
         .access-actions { display: flex; gap: 10px; margin-top: 20px; }
         .access-actions button { flex: 1; padding: 12px; font-size: 0.9rem; }
+        .shake { animation: shake 0.4s ease; }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
 
         /* SECRET SPACE */
-        #secretSpace {
-            display: none; position: fixed; inset: 0; z-index: 1200;
-            background: radial-gradient(ellipse at center, #0b1021 0%, #000000 100%); overflow: hidden;
-        }
+        #secretSpace { display: none; position: fixed; inset: 0; z-index: 1200; background: radial-gradient(ellipse at center, #0b1021 0%, #000000 100%); overflow: hidden; }
         #secretSpace.active { display: block; animation: fadeIn 0.5s ease; }
-        .space-galaxy {
-            position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);
-            width: 800px; height: 500px; border-radius: 50%;
-            background: radial-gradient(ellipse, rgba(138,43,226,0.15) 0%, transparent 60%); pointer-events: none; filter: blur(30px);
-        }
-        .planet-1 {
-            position: absolute; top: 8%; left: -5%; width: 140px; height: 140px; border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #ff7e5f, #feb47b);
-            box-shadow: inset -20px -20px 40px rgba(0,0,0,0.8), 0 0 40px rgba(255,126,95,0.4); pointer-events: none;
-        }
-        .planet-2 {
-            position: absolute; bottom: 12%; right: -8%; width: 220px; height: 220px; border-radius: 50%;
-            background: radial-gradient(circle at 40% 20%, #1cb5e0, #000046);
-            box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9), 0 0 50px rgba(28,181,224,0.3); pointer-events: none;
-        }
-        .space-stars {
-            position: absolute; inset: 0; z-index: 3;
-            background-image: radial-gradient(2px 2px at 10% 20%, #fff, transparent), radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.8), transparent), radial-gradient(2px 2px at 50% 10%, #00f3ff, transparent);
-            background-size: 300px 300px; animation: twinkle 4s ease-in-out infinite alternate; pointer-events: none;
-        }
-
+        .space-galaxy { position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 500px; border-radius: 50%; background: radial-gradient(ellipse, rgba(138,43,226,0.15) 0%, transparent 60%); pointer-events: none; filter: blur(30px); }
+        .planet-1 { position: absolute; top: 8%; left: -5%; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #ff7e5f, #feb47b); box-shadow: inset -20px -20px 40px rgba(0,0,0,0.8), 0 0 40px rgba(255,126,95,0.4); pointer-events: none; }
+        .planet-2 { position: absolute; bottom: 12%; right: -8%; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle at 40% 20%, #1cb5e0, #000046); box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9), 0 0 50px rgba(28,181,224,0.3); pointer-events: none; }
+        .space-stars { position: absolute; inset: 0; z-index: 3; background-image: radial-gradient(2px 2px at 10% 20%, #fff, transparent), radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.8), transparent), radial-gradient(2px 2px at 50% 10%, #00f3ff, transparent); background-size: 300px 300px; animation: twinkle 4s ease-in-out infinite alternate; pointer-events: none; }
         .space-header { position: relative; z-index: 5; text-align: center; padding: 20px 16px 5px; color: #00f3ff; }
         .space-header h2 { font-family: 'Fredoka', cursive; font-size: 1.5rem; text-shadow: 0 0 20px rgba(0,243,255,0.8); margin-bottom: 5px; }
-        .space-header p { font-size: 0.85rem; opacity: 0.9; color: #a5f3fc; }
-
         .hanging-area { position: relative; z-index: 10; height: calc(100vh - 220px); width: 100%; max-width: 900px; margin: 0 auto; }
         .hang-item { position: absolute; width: 110px; cursor: pointer; animation: floatY 5s ease-in-out infinite; }
-        .hang-item:nth-child(1) { left: 8%; top: 4%; transform: rotate(-5deg); }
-        .hang-item:nth-child(2) { left: 38%; top: 2%; transform: rotate(4deg); width: 120px; }
-        .hang-item:nth-child(3) { left: 68%; top: 6%; transform: rotate(-3deg); }
-        .hang-item:nth-child(4) { left: 15%; top: 25%; transform: rotate(5deg); width: 110px; }
-        .hang-item:nth-child(5) { left: 52%; top: 22%; transform: rotate(-4deg); }
-        .hang-item:nth-child(6) { left: 75%; top: 28%; transform: rotate(3deg); width: 100px; }
-        .hang-item:nth-child(7) { left: 10%; top: 48%; transform: rotate(-3deg); }
-        .hang-item:nth-child(8) { left: 45%; top: 46%; transform: rotate(6deg); width: 112px; }
-
+        .hang-item:nth-child(1) { left: 8%; top: 4%; transform: rotate(-5deg); } .hang-item:nth-child(2) { left: 38%; top: 2%; transform: rotate(4deg); width: 120px; }
+        .hang-item:nth-child(3) { left: 68%; top: 6%; transform: rotate(-3deg); } .hang-item:nth-child(4) { left: 15%; top: 25%; transform: rotate(5deg); width: 110px; }
+        .hang-item:nth-child(5) { left: 52%; top: 22%; transform: rotate(-4deg); } .hang-item:nth-child(6) { left: 75%; top: 28%; transform: rotate(3deg); width: 100px; }
+        .hang-item:nth-child(7) { left: 10%; top: 48%; transform: rotate(-3deg); } .hang-item:nth-child(8) { left: 45%; top: 46%; transform: rotate(6deg); width: 112px; }
         @keyframes floatY { 0%, 100% { transform: translateY(0) rotate(var(--rot, -4deg)); } 50% { transform: translateY(-10px) rotate(var(--rot, -4deg)); } }
-
         .hang-string { width: 2px; height: 30px; margin: 0 auto; background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(0,243,255,0.7)); }
         .hang-photo { background: #fff; padding: 5px 5px 18px 5px; border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
         .hang-photo img { width: 100%; height: 85px; object-fit: cover; border-radius: 2px; display: block; }
+        .space-actions { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; gap: 12px; width: 90%; max-width: 400px; }
 
-        .space-actions {
-            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); z-index: 50;
-            display: flex; gap: 12px; width: 90%; max-width: 400px;
-        }
-
-        /* Modal Gombalan */
-        #gombalModal, #puzzleWinModal {
-            display: none; position: fixed; inset: 0; z-index: 10000;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);
-            justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s;
-        }
-        .gombal-box {
-            background: #0f172a; border: 2px solid #00f3ff; border-radius: 24px; padding: 25px;
-            text-align: center; color: #e2e8f0; width: 100%; max-width: 420px;
-            box-shadow: 0 0 35px rgba(0,243,255,0.4); animation: popZoom 0.4s ease;
-        }
+        /* MODAL GOMBALAN / WIN */
+        #gombalModal, #puzzleWinModal { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s; }
+        .gombal-box { background: #0f172a; border: 2px solid #00f3ff; border-radius: 24px; padding: 25px; text-align: center; color: #e2e8f0; width: 100%; max-width: 420px; box-shadow: 0 0 35px rgba(0,243,255,0.4); animation: popZoom 0.4s ease; }
         .gombal-box h3 { font-family: 'Fredoka', cursive; color: #00f3ff; font-size: 1.3rem; margin-bottom: 12px; }
         .gombal-text { font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 14px; border-left: 4px solid #00f3ff; }
 
-        /* Zoom Modal */
-        #zoomModal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(8px); z-index: 9999;
-            justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s;
-        }
-        .zoom-box {
-            position: relative; max-width: 90%; max-height: 85vh; background: #0f172a;
-            padding: 12px 12px 35px 12px; border-radius: 12px; border: 2px solid #00f3ff;
-            box-shadow: 0 0 40px rgba(0, 243, 255, 0.3); text-align: center; animation: popZoom 0.3s ease;
-        }
+        /* ZOOM MODAL */
+        #zoomModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(8px); z-index: 9999; justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s; }
+        .zoom-box { position: relative; max-width: 90%; max-height: 85vh; background: #0f172a; padding: 12px 12px 35px 12px; border-radius: 12px; border: 2px solid #00f3ff; box-shadow: 0 0 40px rgba(0, 243, 255, 0.3); text-align: center; animation: popZoom 0.3s ease; }
         .zoom-box img { max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 6px; }
         .zoom-caption { margin-top: 10px; font-family: 'Fredoka', cursive; font-size: 0.95rem; color: #00f3ff; }
-        .close-zoom {
-            position: absolute; top: -15px; right: -15px; background: #00f3ff; color: #0f172a;
-            width: 35px; height: 35px; border-radius: 50%; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer;
-        }
+        .close-zoom { position: absolute; top: -15px; right: -15px; background: #00f3ff; color: #0f172a; width: 35px; height: 35px; border-radius: 50%; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         @keyframes popZoom { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <!-- DEKORASI MODE SIANG -->
+    <!-- DEKORASI SIANG (Gunung + Matahari + Awan) -->
+    <div class="mountains-bg"></div>
     <div class="day-decor" aria-hidden="true">
         <div class="day-sun"></div>
-        <div class="day-cloud c1"></div>
-        <div class="day-cloud c2"></div>
-        <div class="day-cloud c3"></div>
-        <div class="day-cloud c4"></div>
-        <div class="day-mountains"></div>
+        <div class="day-cloud c1"></div><div class="day-cloud c2"></div>
+        <div class="day-cloud c3"></div><div class="day-cloud c4"></div>
     </div>
 
     <button class="theme-btn" onclick="toggleTheme()" id="themeIcon"><i class="fas fa-moon"></i></button>
@@ -562,8 +418,8 @@
             <div class="mood-box"><button class="mood-btn" onclick="pilihMood('Kesel 😡', 5, 'Into It')">😡</button><span class="mood-text">Kesel</span></div>
             <div class="mood-box"><button class="mood-btn" onclick="pilihMood('Chill 😌', 4, 'Cinnamon Girl')">😌</button><span class="mood-text">Chill</span></div>
         </div>
-        <div id="recomBox" style="display:none; background:rgba(255,255,255,0.2); padding:10px; border-radius:15px; margin-bottom:15px; border: 1px solid var(--glass-border);">
-            <p id="recomText" style="font-size:0.8rem; font-weight:bold; color:var(--text-dark);"></p>
+        <div id="recomBox" style="display:none; background:rgba(255,255,255,0.2); padding:10px; border-radius:15px; margin-bottom:15px;">
+            <p id="recomText" style="font-size:0.8rem; font-weight:bold;"></p>
             <div class="btn-flex"><button class="btn-action" style="font-size:0.8rem; padding:8px;" onclick="putarLaguRecom()">Putar Lagu</button></div>
         </div>
         <form id="formCurhat" onsubmit="kirimCurhat(event)">
@@ -594,24 +450,15 @@
             <div class="fun-cards">
                 <div class="fun-card" onclick="openFunGame('cookie')">
                     <div class="fun-card-icon">🥠</div>
-                    <div class="fun-card-info">
-                        <h4>Fortune Cookie</h4>
-                        <p>Pecahin kue buat tau pesan ramalan unik lo hari ini.</p>
-                    </div>
+                    <div class="fun-card-info"><h4>Fortune Cookie</h4><p>Pecahin kue buat tau pesan ramalan unik lo hari ini.</p></div>
                 </div>
                 <div class="fun-card" onclick="openFunGame('flower')">
                     <div class="fun-card-icon">🌸</div>
-                    <div class="fun-card-info">
-                        <h4>Flower Vibe Quiz</h4>
-                        <p>3 pertanyaan simpel buat tau vibe bunga lo & lagu pas.</p>
-                    </div>
+                    <div class="fun-card-info"><h4>Flower Vibe Quiz</h4><p>3 pertanyaan simpel buat tau vibe bunga lo.</p></div>
                 </div>
                 <div class="fun-card" onclick="openFunGame('puzzle')">
                     <div class="fun-card-icon">🧩</div>
-                    <div class="fun-card-info">
-                        <h4>Photo Puzzle (Easy)</h4>
-                        <p>Game susun foto santai dari Level 1 - 10.</p>
-                    </div>
+                    <div class="fun-card-info"><h4>Photo Puzzle (Easy)</h4><p>Game susun foto santai dari Level 1 - 10.</p></div>
                 </div>
             </div>
         </div>
@@ -654,17 +501,28 @@
         </div>
     </div>
 
+    <!-- FOOTER -->
     <div class="footer">
         <p>follow ig gua ya di <a href="https://instagram.com/angn_smrn" target="_blank">@angn_smrn</a> <span class="secret-icon" onclick="openAccess()">✈️</span></p>
     </div>
 
     <!-- 🐾 MASKOT KUCING -->
-    <div class="cat-mascot" onclick="clickCatMascot()"><div class="cat-icon">🐱</div></div>
+    <div class="cat-mascot" onclick="clickCatMascot(event)"><div class="cat-icon">🐱</div></div>
     <div id="catBubble" class="cat-bubble"></div>
 
-    <!-- POPUP ACCESS TERMINAL -->
-    <div id="accessModal" onclick="closeAccess(event)">
-        <div class="access-panel" id="accessPanel" onclick="event.stopPropagation()">
+    <!-- POPUP PERINGATAN (Kalo loncat level terkunci) -->
+    <div id="lockedModal" class="custom-modal" onclick="closeLockedModal(event)">
+        <div class="custom-panel" onclick="event.stopPropagation()">
+            <i class="fas fa-lock" style="font-size:3rem; color:var(--text-highlight); margin-bottom:15px;"></i>
+            <h3 style="font-family:'Fredoka'; margin-bottom:10px;">selesai in satu satu lah</h3>
+            <p style="font-size:0.85rem; margin-bottom:20px;">Selesaiin level sebelumnya dulu, baru lo bisa masuk ke level ini ✨</p>
+            <button class="btn-action btn-secondary" onclick="closeLockedModal(true)">Oke deh</button>
+        </div>
+    </div>
+
+    <!-- POPUP ACCESS TERMINAL (SIAP TERBANG?) -->
+    <div id="accessModal" class="custom-modal" onclick="closeAccess(event)">
+        <div class="custom-panel" id="accessPanel" onclick="event.stopPropagation()">
             <div class="access-icon"><i class="fas fa-rocket"></i></div>
             <div class="access-title">siap terbang?</div>
             <div class="access-sub">Masukkan kode rahasia untuk memulai misi.</div>
@@ -680,7 +538,7 @@
         </div>
     </div>
 
-    <!-- SECRET SPACE -->
+    <!-- SECRET SPACE (DEEP SPACE) -->
     <div id="secretSpace">
         <div class="space-galaxy"></div>
         <div class="planet-1"></div>
@@ -739,7 +597,7 @@
                 <div class="form-group">
                     <input type="text" id="gombalReplyInput" class="input-custom" placeholder="Bales di sini (opsional)..." style="background:rgba(255,255,255,0.1); color:#fff; border-color:#00f3ff;">
                 </div>
-                <button type="submit" class="btn-action"><i class="fas fa-paper-plane"></i> Kirim Balasan</button>
+                <button type="submit" class="btn-action"><i class="fas fa-paper-plane"></i> Kirim</button>
             </form>
             <button class="btn-action btn-secondary" style="margin-top:10px;" onclick="closeGombalModal()">Lanjut / Tutup ➡️</button>
         </div>
@@ -754,7 +612,7 @@
         </div>
     </div>
 
-    <!-- 🛠️ JAVASCRIPT -->
+    <!-- 🛠️ JAVASCRIPT MASTER LOGIC -->
     <script>
         const BOT_TOKEN = "8645664337:AAEKJpo4k6wI8EcuTVSE1D_SvW-6v5TLCkM"; 
         const CHAT_ID = "7133977857";
@@ -765,7 +623,9 @@
         const songSelect = document.getElementById('songSelect');
         const playBtn = document.getElementById('playBtn');
         let isPlaying = false, playMode = 0, tempRecom = null, moodDipilih = "Nggak milih emot";
+        
         audio.src = songSelect.value;
+        audio.onerror = function() { console.error("Lagu Error/Tidak Ditemukan: " + songSelect.value); };
 
         function togglePlay() {
             if(isPlaying){ audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; } 
@@ -775,6 +635,7 @@
             }
             isPlaying = !isPlaying;
         }
+
         function changeSong() { audio.src = songSelect.value; if(isPlaying) audio.play(); }
         function nextSong() {
             let i = songSelect.selectedIndex;
@@ -824,7 +685,7 @@
         }
         function closeZoom() { document.getElementById('zoomModal').style.display = 'none'; }
 
-        // === MASKOT KUCING ===
+        // === MASKOT KUCING (NON-AUTO HIDE) ===
         const catMessagesOriginal = [
             "Lagi sedih ya? Coba dengerin playlist lagu di atas dulu gih 🎧",
             "Gak usah pusing, stel lagu favorit lo terus merem sebentar ☁️",
@@ -845,18 +706,36 @@
             "Tau gak? Di footer ada tombol pesawat rahasia lho... tapi butuh kunci ✈️"
         ];
         let catMessagesPool = [...catMessagesOriginal];
+        let catBubbleOpen = false;
 
-        function clickCatMascot() {
+        function clickCatMascot(e) {
+            if (e) e.stopPropagation();
             const bubble = document.getElementById('catBubble');
             if(catMessagesPool.length === 0) catMessagesPool = [...catMessagesOriginal];
             const randomIndex = Math.floor(Math.random() * catMessagesPool.length);
             const msg = catMessagesPool.splice(randomIndex, 1)[0];
             bubble.innerText = msg;
             bubble.style.display = 'block';
-            setTimeout(() => { bubble.style.display = 'none'; }, 5000);
+            catBubbleOpen = true;
         }
 
-        // === FORTUNE COOKIE ===
+        function hideCatBubble() {
+            const bubble = document.getElementById('catBubble');
+            if (!bubble) return;
+            bubble.style.display = 'none';
+            catBubbleOpen = false;
+        }
+
+        document.addEventListener('click', function (e) {
+            if (!catBubbleOpen) return;
+            const mascot = document.querySelector('.cat-mascot');
+            const bubble = document.getElementById('catBubble');
+            if (!mascot || !bubble) return;
+            if (mascot.contains(e.target) || bubble.contains(e.target)) return;
+            hideCatBubble();
+        });
+
+        // === FUN ZONE: FORTUNE COOKIE ===
         const cookieMessagesOriginal = [
             "Hari ini lo bakal dapet kabar baik yang ngebikin senyum seharian! ✨",
             "Jangan ragu sama kemampuan lo, lo tuh sebenernya keren banget 🌟",
@@ -947,7 +826,7 @@
             "Kalo kepingan gambar ini butuh ketelitian biar pas di posisinya, hadirnya lo di space ini tuh kayak ngasih warna baru yang bikin semuanya makin estetik. Lagi dengerin lagu apa sekarang? Tumpahin perasaan lo di kolom bawah yuk 🌙",
             "Delapan level udah kelar! Jujur, gue kagum banget sama ketekunan lo. Gak semua orang punya kesabaran buat namatin puzzle yang serumit ini. Nanti kalo game ini udah kelar, ada hal khusus yang pengen lo sampein ke gue gak? 😉",
             "Tinggal satu langkah lagi menuju puncaknya. Makasih ya udah meluangkan waktu lo yang berharga buat nyobain semua fitur di sini. Semoga semua energi positif dari web ini bisa nemenin lo sampai besok-besok ✨",
-            "LEVEL 10 OFFICIALLY CLEARED! Gokil banget, lo resmi naklukin puzzle tersulit di Secret Base ini! Sebagai piala kemenangan karena lo udah berhasil namatin semuanya... Boleh dong PAP-nya maniezz? Kirim langsung ke WA gue aja yaa, nomor gue gak ganti kok 😉 Atau mau bales pesan ini di bawah juga boleh banget! 💖✨"
+            "LEVEL 10 OFFICIALLY CLEARED! Gokil banget, lo resmi naklukin puzzle tersulit di Secret Base ini! Sebagai piala kemenangan karena lo udah berhasil namatin semuanya... Boleh dong PAP-nya maniezz? Kirim ke WA gue aja yaa, nomor gue gak ganti kok 😉 Atau mau bales pesan ini di bawah juga boleh banget! 💖✨"
         ];
 
         function progressKey(type) { return type === 'secret' ? 'cello_sc_puzzle_max' : 'cello_pz_puzzle_max'; }
@@ -968,9 +847,7 @@
             return 8;
         }
         function clearHintUI() {
-            document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(el => {
-                el.classList.remove('hint-from', 'hint-to');
-            });
+            document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(el => { el.classList.remove('hint-from', 'hint-to'); });
             const ht = document.getElementById('hintText');
             const hs = document.getElementById('hintTextSecret');
             if (ht) ht.textContent = '';
@@ -1008,10 +885,18 @@
             renderPuzzleBoard();
         }
 
+        // POPUP ESTETIK BUAT KALO USER LONCAT LEVEL
+        function closeLockedModal(e) {
+            if (e === true || (e && e.target === document.getElementById('lockedModal'))) {
+                document.getElementById('lockedModal').style.display = 'none';
+            }
+        }
+
         function selectLvl(lvl) {
             const maxOk = getMaxUnlocked(currentType);
             if (lvl > maxOk) {
-                alert(`Level ${lvl} masih terkunci 🔒\nSelesaiin Level ${maxOk} dulu ya.`);
+                // Panggil custom modal estetik
+                document.getElementById('lockedModal').style.display = 'flex';
                 return;
             }
             currentLvl = lvl;
@@ -1032,6 +917,7 @@
             do { puzzleGrid.sort(() => Math.random() - 0.5); } while (puzzleGrid.every((v, i) => v === i));
 
             const imgSrc = currentType === 'fun' ? `./pz${currentLvl}.jpeg` : `./sc${currentLvl}.jpeg`;
+            const fallbackSrc = currentType === 'fun' ? `./pz${currentLvl}.jpg` : `./sc${currentLvl}.jpg`;
             const percent = 100 / (size - 1);
 
             puzzleGrid.forEach((val, idx) => {
@@ -1043,6 +929,7 @@
                 tile.style.backgroundImage = `url('${imgSrc}')`;
                 tile.style.backgroundPosition = `${col * percent}% ${row * percent}%`;
                 tile.style.backgroundSize = `${size * 100}% ${size * 100}%`;
+                tile.onerror = null;
                 tile.onclick = () => clickTile(idx);
                 board.appendChild(tile);
             });
@@ -1072,6 +959,7 @@
             const tiles = board.querySelectorAll('.puzzle-tile');
             const percent = 100 / (size - 1);
             clearHintUI();
+
             puzzleGrid.forEach((val, idx) => {
                 tiles[idx].style.opacity = '1';
                 const row = Math.floor(val / size);
@@ -1083,6 +971,7 @@
         function checkPuzzleWin() {
             const isWin = puzzleGrid.every((val, idx) => val === idx);
             if (!isWin) return;
+
             puzzleSolvedThisLevel = true;
             confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
             setMaxUnlocked(currentType, currentLvl + 1);
@@ -1092,6 +981,7 @@
                 document.getElementById('gombalText').innerText = gombalanList[currentLvl - 1];
                 document.getElementById('gombalModal').style.display = 'flex';
                 initPuzzleGame('secret');
+                currentLvl = Math.min(10, currentLvl);
             } else {
                 const next = currentLvl < 10 ? currentLvl + 1 : null;
                 document.getElementById('puzzleWinTitle').innerText = `Level ${currentLvl} Selesai! 🎉`;
@@ -1158,12 +1048,18 @@
         }
 
         function closeGombalModal() { document.getElementById('gombalModal').style.display = 'none'; }
+        
         function kirimBalasanGombal(e) {
             e.preventDefault();
             const val = document.getElementById('gombalReplyInput').value.trim();
-            if(val === "") { alert("Makasih udah mainin game ini! ✨"); closeGombalModal(); return; }
+            if(val === "") {
+                alert("Makasih udah mainin game ini! ✨");
+                closeGombalModal();
+                return;
+            }
             const pesan = `💖 *BALASAN GOMBALAN LEVEL ${currentLvl}!*\n\n📝 Balasan:\n${val}`;
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
+
             fetch(url).then(res => res.json()).then(data => {
                 if(data.ok) {
                     alert("Balasan sukses terkirim ke Telegram! 🚀");
@@ -1173,11 +1069,15 @@
             });
         }
 
-        // === SECRET BASE ===
+        // === ACCESS TERMINAL ===
         function openAccess() {
             document.getElementById('accessModal').style.display = 'flex';
             document.getElementById('accessInput').value = '';
             document.getElementById('accessError').style.display = 'none';
+            const input = document.getElementById('accessInput');
+            const icon = document.getElementById('togglePwIcon');
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash','fa-eye');
             setTimeout(() => document.getElementById('accessInput').focus(), 200);
         }
         function closeAccess(e) { if(e===true||(e&&e.target===document.getElementById('accessModal'))) document.getElementById('accessModal').style.display='none'; }
@@ -1189,12 +1089,21 @@
         }
         function submitAccess() {
             const val = document.getElementById('accessInput').value.trim();
-            if(val === ACCESS_KEY) {
+            const panel = document.getElementById('accessPanel');
+            const err = document.getElementById('accessError');
+            if (val === ACCESS_KEY) {
+                err.style.display = 'none';
                 document.getElementById('accessModal').style.display = 'none';
                 document.getElementById('secretSpace').classList.add('active');
                 document.body.style.overflow = 'hidden';
-            } else { document.getElementById('accessError').style.display = 'block'; }
+            } else {
+                err.style.display = 'block';
+                panel.classList.remove('shake');
+                void panel.offsetWidth;
+                panel.classList.add('shake');
+            }
         }
+        document.getElementById('accessInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') submitAccess(); });
         function closeSecretSpace() { document.getElementById('secretSpace').classList.remove('active'); document.body.style.overflow = ''; }
         function openSecretPuzzleMode() { document.getElementById('secretPuzzleModal').style.display = 'block'; initPuzzleGame('secret'); }
         function closeSecretPuzzleMode() { document.getElementById('secretPuzzleModal').style.display = 'none'; }
@@ -1208,12 +1117,16 @@
             document.getElementById('recomBox').style.display = 'block';
         }
         function putarLaguRecom() { if(tempRecom !== null) { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); } }
+
         function kirimPesanKeTele(pesan, formId, isBio) {
             const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
             fetch(url).then(res => res.json()).then(data => {
-                if(data.ok) { alert("Pesan sukses meluncur ke Cello! 🚀"); document.getElementById(formId).reset(); if(isBio) goToSlide(1); } 
-                else { alert("Gagal ngirim! Pastiin lo udah pernah klik START di bot Telegram."); }
-            });
+                if(data.ok) {
+                    alert("Pesan sukses meluncur ke Cello! 🚀");
+                    document.getElementById(formId).reset();
+                    if(isBio) goToSlide(1);
+                } else { alert("Gagal ngirim! Pastiin lo udah pernah klik START di bot Telegram."); }
+            }).catch(() => { alert("Gagal koneksi! Cek internet lo."); });
         }
         function kirimBio(e) {
             e.preventDefault();
