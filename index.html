@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
-        /* === TEMA SIANG (LIGHT MODE) === */
+        /* === TEMA SIANG SORE (LIGHT MODE) === */
         :root {
             --primary: #e07a5f;
             --secondary: #f2a07b;
@@ -20,7 +20,7 @@
             --card-shadow: 0 16px 40px rgba(80, 40, 60, 0.12);
         }
 
-        /* === TEMA MALAM (DARK MODE) === */
+        /* === TEMA MALAM (DARK MODE AVIONIC) === */
         .dark-mode {
             --primary: #00f3ff;
             --secondary: #0055ff;
@@ -34,8 +34,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif; color: var(--text-dark);
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; padding: 20px 15px 80px 15px;
             transition: background 0.6s ease; position: relative; overflow-x: hidden;
@@ -47,12 +46,12 @@
         /* DEKORASI SIANG */
         .day-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
         .dark-mode .day-decor { display: none !important; }
-        
-        /* MATAHARI (DITURUNIN BIAR NGGA NUMPUK TOMBOL MOON) */
+
+        /* MATAHARI */
         .day-sun {
-            position: absolute; top: 75px; right: 25px; width: 75px; height: 75px; border-radius: 50%;
+            position: absolute; top: 28px; right: 28px; width: 88px; height: 88px; border-radius: 50%;
             background: radial-gradient(circle at 35% 35%, #fff7d6 0%, #ffe566 35%, #ffb347 70%, rgba(255, 140, 66, 0.3) 100%);
-            box-shadow: 0 0 35px 10px rgba(255, 200, 80, 0.75), 0 0 80px 25px rgba(255, 160, 60, 0.35);
+            box-shadow: 0 0 40px 12px rgba(255, 200, 80, 0.75), 0 0 90px 30px rgba(255, 160, 60, 0.35), 0 0 140px 50px rgba(255, 120, 80, 0.2);
             animation: sunPulse 5s ease-in-out infinite alternate;
         }
         @keyframes sunPulse { 0% { transform: scale(1); filter: brightness(1); } 100% { transform: scale(1.06); filter: brightness(1.08); } }
@@ -69,7 +68,7 @@
         .day-cloud.c4::before { width: 60px; height: 60px; top: -28px; left: 20px; } .day-cloud.c4::after  { width: 75px; height: 75px; top: -36px; left: 60px; }
         @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(40px); } }
 
-        /* GUNUNG UNIVERSAL */
+        /* GUNUNG */
         .mountains-bg {
             position: fixed; left: 0; right: 0; bottom: 0; height: 42vh; max-height: 380px; z-index: 0; pointer-events: none;
             background: radial-gradient(ellipse 80% 60% at 15% 100%, rgba(107,79,107,0.7) 0%, transparent 70%),
@@ -91,12 +90,11 @@
             background: radial-gradient(ellipse 80% 60% at 15% 100%, rgba(15,23,42,0.8) 0%, transparent 70%),
                         radial-gradient(ellipse 90% 70% at 50% 100%, rgba(2,6,23,0.8) 0%, transparent 72%);
         }
-        .dark-mode .mountains-bg::before { background: rgba(8,12,25,0.8); }
-        .dark-mode .mountains-bg::after { background: rgba(0,0,0,0.9); }
+        .dark-mode .mountains-bg::before { background: rgba(8,12,25,0.8); } .dark-mode .mountains-bg::after { background: rgba(0,0,0,0.9); }
 
-        /* DEKORASI MALAM */
+        /* BULAN & BINTANG (DARK MODE) */
         body.dark-mode::after {
-            content: ''; position: fixed; top: 25px; right: 25px; width: 85px; height: 85px; border-radius: 50%; z-index: -2; pointer-events: none;
+            content: ''; position: fixed; top: 25px; right: 25px; width: 90px; height: 90px; border-radius: 50%; z-index: -2; pointer-events: none;
             background: radial-gradient(circle at 35% 35%, #ffffff 15%, #cbd5e1 55%, #94a3b8 90%);
             box-shadow: 0 0 50px rgba(255,255,255,0.6), 0 0 100px rgba(0,243,255,0.3); animation: floatMoon 6s ease-in-out infinite alternate;
         }
@@ -119,8 +117,7 @@
 
         /* Z-INDEX LAYERING */
         .theme-btn, .glass-card, .nav-menu, .footer, .cat-mascot, .cat-bubble { position: relative; z-index: 5; }
-        .theme-btn { z-index: 100; }
-        .cat-mascot, .cat-bubble { z-index: 99; }
+        .theme-btn { z-index: 100; } .cat-mascot, .cat-bubble { z-index: 99; }
 
         .theme-btn {
             position: fixed; top: 15px; right: 15px; background: var(--glass-bg); border: 2px solid var(--glass-border);
@@ -130,10 +127,11 @@
         .theme-btn:hover { transform: rotate(25deg) scale(1.1); }
         .dark-mode .theme-btn { box-shadow: 0 0 18px var(--primary); }
 
+        /* KARTU KACA UTAMA */
         .glass-card {
             background: var(--glass-bg); backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px); border: 1.5px solid var(--glass-border);
-            border-radius: 28px; box-shadow: var(--card-shadow); width: 100%; max-width: 500px;
+            border: 1.5px solid var(--glass-border); border-radius: 28px;
+            box-shadow: var(--card-shadow); width: 100%; max-width: 500px;
             padding: 24px; text-align: center; margin-bottom: 18px; transition: all 0.45s ease;
         }
 
@@ -227,7 +225,7 @@
         .polaroid::after { content: '🔍 Tap buat Zoom'; position: absolute; bottom: 6px; left: 0; width: 100%; font-size: 0.65rem; color: #777; font-weight: 600; text-align: center; }
         .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 12px rgba(0, 243, 255, 0.22); } .dark-mode .polaroid::after { color: #94a3b8; }
 
-        /* FUN ZONE */
+        /* FUN ZONE LOBBY */
         .fun-cards { display: grid; grid-template-columns: repeat(1, 1fr); gap: 14px; margin-top: 15px; }
         .fun-card {
             background: rgba(255,255,255,0.45); border: 1.5px solid var(--glass-border); border-radius: 20px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 15px;
@@ -249,16 +247,8 @@
         .puzzle-tile.hint-to { outline: 3px dashed #00e676; outline-offset: -2px; box-shadow: 0 0 12px rgba(0, 230, 118, 0.7); animation: hintPulse 0.8s ease infinite alternate; }
         @keyframes hintPulse { from { opacity: 0.7; } to { opacity: 1; } }
 
-        /* LEVEL SELECTOR HP FIX (SCROLL SANGAT MULUS) */
-        .level-select {
-            display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 10px;
-            width: 100%; -webkit-overflow-scrolling: touch; touch-action: pan-x; scrollbar-width: thin;
-        }
-        .lvl-btn {
-            flex-shrink: 0; padding: 8px 14px; border-radius: 12px; border: 1px solid var(--primary);
-            background: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 600;
-            cursor: pointer; white-space: nowrap; color: var(--text-dark); transition: 0.2s;
-        }
+        .level-select { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 10px; width: 100%; -webkit-overflow-scrolling: touch; touch-action: pan-x; scrollbar-width: thin; }
+        .lvl-btn { flex-shrink: 0; padding: 8px 14px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--text-dark); transition: 0.2s; }
         .dark-mode .lvl-btn { background: rgba(15,23,42,0.6); color: #fff; }
         .lvl-btn.active { background: var(--primary); color: white; }
         .lvl-btn.locked { opacity: 0.4; filter: grayscale(0.5); } .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
@@ -276,7 +266,7 @@
         .secret-icon { cursor: pointer; transition: 0.3s; display: inline-block; }
         .secret-icon:hover { transform: scale(1.35) translateY(-3px); }
 
-        /* MODAL POPUP ESTETIK */
+        /* MODAL POPUP ESTETIK UMUM */
         .custom-modal { display: none; position: fixed; inset: 0; z-index: 1100; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s ease; }
         .custom-panel { width: 100%; max-width: 360px; background: rgba(255, 255, 255, 0.9); border-radius: 20px; padding: 35px 25px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         .dark-mode .custom-panel { background: rgba(10, 15, 30, 0.9); border: 1px solid rgba(0, 243, 255, 0.4); }
@@ -285,7 +275,6 @@
         .access-title { font-family: 'Fredoka', cursive; font-size: 1.5rem; color: var(--text-dark); margin-bottom: 8px; }
         .dark-mode .access-title { color: #00f3ff; }
         .access-sub { font-size: 0.85rem; opacity: 0.8; margin-bottom: 25px; }
-
         .input-wrapper { position: relative; width: 100%; }
         .access-input { width: 100%; padding: 14px 45px 14px 16px; border-radius: 12px; border: 2px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); font-family: 'Poppins'; font-size: 1rem; color: var(--text-dark); outline: none; }
         .dark-mode .access-input { background: rgba(0,0,0,0.4); border-color: rgba(0,243,255,0.3); color: #00f3ff; }
@@ -294,41 +283,84 @@
         .access-error { display: none; margin-top: 12px; font-size: 0.85rem; color: #ff4d6d; font-weight: 600; }
         .access-actions { display: flex; gap: 10px; margin-top: 20px; }
         .access-actions button { flex: 1; padding: 12px; font-size: 0.9rem; }
+        .shake { animation: shake 0.4s ease; }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
 
-        /* SECRET SPACE */
+        /* ========== SECRET SPACE (DEEP SPACE BASE) ========== */
         #secretSpace { display: none; position: fixed; inset: 0; z-index: 1200; background: radial-gradient(ellipse at center, #0b1021 0%, #000000 100%); overflow: hidden; }
         #secretSpace.active { display: block; animation: fadeIn 0.5s ease; }
+        
         .space-galaxy { position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 500px; border-radius: 50%; background: radial-gradient(ellipse, rgba(138,43,226,0.15) 0%, transparent 60%); pointer-events: none; filter: blur(30px); }
         .planet-1 { position: absolute; top: 8%; left: -5%; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #ff7e5f, #feb47b); box-shadow: inset -20px -20px 40px rgba(0,0,0,0.8), 0 0 40px rgba(255,126,95,0.4); pointer-events: none; }
         .planet-2 { position: absolute; bottom: 12%; right: -8%; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle at 40% 20%, #1cb5e0, #000046); box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9), 0 0 50px rgba(28,181,224,0.3); pointer-events: none; }
         .space-stars { position: absolute; inset: 0; z-index: 3; background-image: radial-gradient(2px 2px at 10% 20%, #fff, transparent), radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.8), transparent), radial-gradient(2px 2px at 50% 10%, #00f3ff, transparent); background-size: 300px 300px; animation: twinkle 4s ease-in-out infinite alternate; pointer-events: none; }
+        
         .space-header { position: relative; z-index: 5; text-align: center; padding: 20px 16px 5px; color: #00f3ff; }
         .space-header h2 { font-family: 'Fredoka', cursive; font-size: 1.5rem; text-shadow: 0 0 20px rgba(0,243,255,0.8); margin-bottom: 5px; }
-        .hanging-area { position: relative; z-index: 10; height: calc(100vh - 220px); width: 100%; max-width: 900px; margin: 0 auto; }
+        
+        .hanging-area { position: relative; z-index: 10; height: 45vh; width: 100%; max-width: 900px; margin: 0 auto; overflow: hidden; }
         .hang-item { position: absolute; width: 110px; cursor: pointer; animation: floatY 5s ease-in-out infinite; }
         .hang-item:nth-child(1) { left: 8%; top: 4%; transform: rotate(-5deg); } .hang-item:nth-child(2) { left: 38%; top: 2%; transform: rotate(4deg); width: 120px; }
-        .hang-item:nth-child(3) { left: 68%; top: 6%; transform: rotate(-3deg); } .hang-item:nth-child(4) { left: 15%; top: 25%; transform: rotate(5deg); width: 110px; }
-        .hang-item:nth-child(5) { left: 52%; top: 22%; transform: rotate(-4deg); } .hang-item:nth-child(6) { left: 75%; top: 28%; transform: rotate(3deg); width: 100px; }
-        .hang-item:nth-child(7) { left: 10%; top: 48%; transform: rotate(-3deg); } .hang-item:nth-child(8) { left: 45%; top: 46%; transform: rotate(6deg); width: 112px; }
+        .hang-item:nth-child(3) { left: 68%; top: 6%; transform: rotate(-3deg); } .hang-item:nth-child(4) { left: 15%; top: 45%; transform: rotate(5deg); width: 110px; }
+        .hang-item:nth-child(5) { left: 52%; top: 42%; transform: rotate(-4deg); } .hang-item:nth-child(6) { left: 75%; top: 48%; transform: rotate(3deg); width: 100px; }
         @keyframes floatY { 0%, 100% { transform: translateY(0) rotate(var(--rot, -4deg)); } 50% { transform: translateY(-10px) rotate(var(--rot, -4deg)); } }
         .hang-string { width: 2px; height: 30px; margin: 0 auto; background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(0,243,255,0.7)); }
         .hang-photo { background: #fff; padding: 5px 5px 18px 5px; border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
         .hang-photo img { width: 100%; height: 85px; object-fit: cover; border-radius: 2px; display: block; }
-        .space-actions { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; gap: 12px; width: 90%; max-width: 400px; }
 
-        /* PUZZLE MODAL (SECRET - RUANG ANGKASA) */
-        #secretPuzzleModal { 
-            display: none; position: fixed; inset: 0; z-index: 1500; 
+        /* MENU SECRET FUN ZONE BARU */
+        .secret-menu-grid {
+            position: relative; z-index: 20; width: 95%; max-width: 420px; margin: 5px auto 0;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+        }
+        .secret-card-btn {
+            background: rgba(15,23,42,0.65); border: 1px solid rgba(0, 243, 255, 0.4);
+            color: #00f3ff; padding: 15px 10px; border-radius: 16px; text-align: center;
+            cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-family: 'Fredoka', cursive; font-size: 0.9rem;
+        }
+        .secret-card-btn:hover { background: rgba(0, 243, 255, 0.15); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,243,255,0.25); }
+        .secret-card-btn i { display: block; font-size: 1.6rem; margin-bottom: 8px; color: #fff; }
+
+        .space-actions { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 50; width: 90%; max-width: 300px; }
+
+        /* MODAL SECRET FEATURES */
+        .secret-feature-modal {
+            display: none; position: fixed; inset: 0; z-index: 1500;
             background: radial-gradient(ellipse at center, #0b1021 0%, #000000 100%);
             padding: 20px; text-align: center; overflow-y: auto; overflow-x: hidden;
+            animation: fadeIn 0.3s ease;
         }
-        .puzzle-nebula {
-            position: absolute; top: 5%; left: 50%; transform: translateX(-50%);
-            width: 120vw; height: 450px; border-radius: 50%;
-            background: radial-gradient(ellipse, rgba(0, 243, 255, 0.15) 0%, rgba(138, 43, 226, 0.15) 40%, transparent 70%);
-            pointer-events: none; filter: blur(45px); z-index: 1;
+        .sf-header h2 { color: #00f3ff; font-family: 'Fredoka'; text-shadow: 0 0 15px rgba(0,243,255,0.8); margin: 10px 0; }
+        .sf-header p { color: #a5f3fc; font-size: 0.85rem; margin-bottom: 20px; }
+        
+        /* 🎟️ BOARDING PASS */
+        .ticket-wrapper {
+            background: rgba(255,255,255,0.95); border-radius: 15px; padding: 20px; margin: 20px auto;
+            max-width: 320px; color: #111; text-align: left; position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5); border-left: 8px solid #00f3ff;
+            background-image: radial-gradient(circle at 0 50%, transparent 10px, rgba(255,255,255,0.95) 11px);
         }
-        .puzzle-content { position: relative; z-index: 10; }
+        .ticket-header { display: flex; justify-content: space-between; border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px; font-weight: bold; }
+        .ticket-body { display: flex; flex-direction: column; gap: 8px; font-family: monospace; font-size: 0.9rem; }
+        .ticket-footer { text-align: center; margin-top: 15px; font-size: 2rem; color: #333; letter-spacing: -2px; }
+        
+        /* ⭐ BOTOL BINTANG */
+        .jar-container { font-size: 6rem; margin: 10px auto 20px; filter: drop-shadow(0 0 20px rgba(255, 236, 179, 0.5)); position: relative; }
+        .flying-star { position: absolute; left: 50%; font-size: 1.5rem; animation: flyStar 1.5s ease forwards; opacity: 0; pointer-events: none; }
+        @keyframes flyStar { 0% { transform: translate(-50%, 50px) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -50px) scale(1.5); opacity: 0; } }
+
+        /* 🧃 VENDING MACHINE */
+        .vending-machine {
+            background: rgba(15,23,42,0.8); border: 2px solid #00f3ff; border-radius: 15px; padding: 20px;
+            width: 100%; max-width: 300px; margin: 0 auto 20px;
+        }
+        .vending-row { display: flex; justify-content: space-around; margin-bottom: 20px; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 10px; }
+        .vend-can { font-size: 2.5rem; cursor: pointer; transition: 0.3s; background: none; border: none; }
+        .vend-can:hover { transform: scale(1.2); filter: drop-shadow(0 0 10px #fff); }
+        .vending-drop { height: 60px; background: #000; border-radius: 5px; position: relative; overflow: hidden; margin-top: 10px; }
+        .dropped-can { position: absolute; left: 50%; transform: translateX(-50%); font-size: 2rem; bottom: -50px; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .dropped-can.show { bottom: 10px; }
 
         /* MODAL GOMBALAN / WIN */
         #gombalModal, #puzzleWinModal { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s; }
@@ -342,13 +374,13 @@
         .zoom-box img { max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 6px; }
         .zoom-caption { margin-top: 10px; font-family: 'Fredoka', cursive; font-size: 0.95rem; color: #00f3ff; }
         .close-zoom { position: absolute; top: -15px; right: -15px; background: #00f3ff; color: #0f172a; width: 35px; height: 35px; border-radius: 50%; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        
         @keyframes popZoom { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <!-- DEKORASI SIANG (Gunung + Matahari + Awan) -->
     <div class="mountains-bg"></div>
     <div class="day-decor" aria-hidden="true">
         <div class="day-sun"></div>
@@ -358,7 +390,6 @@
 
     <button class="theme-btn" onclick="toggleTheme()" id="themeIcon"><i class="fas fa-moon"></i></button>
 
-    <!-- 🎵 MUSIC PLAYER -->
     <div class="glass-card music-player">
         <h3><i class="fas fa-headphones"></i> pilih lagu yang lo suka</h3>
         <audio id="audioPlayer"></audio>
@@ -382,7 +413,6 @@
         <button class="btn-mode" onclick="toggleMode()" id="modeBtn">Mode: Urut ➡️</button>
     </div>
 
-    <!-- 📌 NAVIGASI -->
     <div class="nav-menu">
         <button class="nav-btn active" id="nav-about" onclick="switchMenu('about')">🙋‍♂️ About</button>
         <button class="nav-btn" id="nav-curhat" onclick="switchMenu('curhat')">💭 Cerita</button>
@@ -390,12 +420,9 @@
         <button class="nav-btn" id="nav-funzone" onclick="switchMenu('funzone')">🎮 Fun Zone</button>
     </div>
 
-    <!-- 🙋‍♂️ MENU 1: ABOUT -->
     <div id="sec-about" class="glass-card content-section active">
         <div id="slide-1" class="slide active">
-            <div class="img-wrapper">
-                <img src="./foto-cello.jpg" alt="Foto Cello" class="profile-img" onerror="this.onerror=null; this.src='./foto-cello.jpeg';">
-            </div>
+            <div class="img-wrapper"><img src="./foto-cello.jpg" alt="Foto" class="profile-img" onerror="this.onerror=null; this.src='./foto-cello.jpeg';"></div>
             <h2>Hai, nama gua Cello ✨</h2>
             <p>Welcome to my space! Santai dulu aja sambil dengerin lagu.</p>
             <button class="btn-action" onclick="goToSlide(2)">Liat Fakta Gua ➡️</button>
@@ -409,10 +436,7 @@
                 <div class="fact-item">✈️ <b>Cita-cita:</b> Kerja di sektor Avionic.</div>
                 <div class="fact-item">🎂 <b>Lahir:</b> Ngawi, 05 Maret 2009.</div>
             </div>
-            <div class="btn-flex">
-                <button class="btn-action" onclick="goToSlide(3)">mau kenalin diri juga?</button>
-                <button class="btn-action btn-secondary" onclick="goToSlide(1)">⬅️ Back</button>
-            </div>
+            <div class="btn-flex"><button class="btn-action" onclick="goToSlide(3)">mau kenalin diri juga?</button><button class="btn-action btn-secondary" onclick="goToSlide(1)">⬅️ Back</button></div>
         </div>
         <div id="slide-3" class="slide">
             <h2>Tentang Lo 🫵</h2>
@@ -433,7 +457,6 @@
         </div>
     </div>
 
-    <!-- 💭 MENU 2: CERITA -->
     <div id="sec-curhat" class="glass-card content-section">
         <h2>How is your day? ☁️</h2>
         <div class="mood-container">
@@ -452,7 +475,6 @@
         </form>
     </div>
 
-    <!-- 📸 MENU 3: GALERI -->
     <div id="sec-gallery" class="glass-card content-section">
         <h2>Aesthetic Gallery 📸</h2>
         <p>Tap foto mana saja buat liat ukuran gede ✨</p>
@@ -466,24 +488,14 @@
         </div>
     </div>
 
-    <!-- 🎮 MENU 4: FUN ZONE -->
     <div id="sec-funzone" class="glass-card content-section">
         <div id="fun-lobby">
             <h2>Fun Zone 🎮</h2>
             <p>Pilih arena yang mau lo cobain!</p>
             <div class="fun-cards">
-                <div class="fun-card" onclick="openFunGame('cookie')">
-                    <div class="fun-card-icon">🥠</div>
-                    <div class="fun-card-info"><h4>Fortune Cookie</h4><p>Pecahin kue buat tau pesan ramalan unik lo hari ini.</p></div>
-                </div>
-                <div class="fun-card" onclick="openFunGame('flower')">
-                    <div class="fun-card-icon">🌸</div>
-                    <div class="fun-card-info"><h4>Flower Vibe Quiz</h4><p>3 pertanyaan simpel buat tau vibe bunga lo.</p></div>
-                </div>
-                <div class="fun-card" onclick="openFunGame('puzzle')">
-                    <div class="fun-card-icon">🧩</div>
-                    <div class="fun-card-info"><h4>Photo Puzzle (Easy)</h4><p>Game susun foto santai dari Level 1 - 10.</p></div>
-                </div>
+                <div class="fun-card" onclick="openFunGame('cookie')"><div class="fun-card-icon">🥠</div><div class="fun-card-info"><h4>Fortune Cookie</h4><p>Pecahin kue buat tau pesan ramalan unik lo hari ini.</p></div></div>
+                <div class="fun-card" onclick="openFunGame('flower')"><div class="fun-card-icon">🌸</div><div class="fun-card-info"><h4>Flower Vibe Quiz</h4><p>3 pertanyaan simpel buat tau vibe bunga lo.</p></div></div>
+                <div class="fun-card" onclick="openFunGame('puzzle')"><div class="fun-card-icon">🧩</div><div class="fun-card-info"><h4>Photo Puzzle</h4><p>Game susun foto santai dari Level 1 - 10.</p></div></div>
             </div>
         </div>
 
@@ -494,7 +506,7 @@
                 <div class="cookie-img" onclick="crackCookie()">🥠</div>
                 <div id="cookiePaper" class="cookie-paper"></div>
             </div>
-            <button class="btn-action btn-secondary" onclick="backToFunLobby()">⬅️ Kembali ke Fun Zone</button>
+            <button class="btn-action btn-secondary" onclick="backToFunLobby()">⬅️ Kembali</button>
         </div>
 
         <div id="fun-flower" style="display:none;">
@@ -507,9 +519,9 @@
                 <div id="flowerEmoji" style="font-size:3.5rem;">🌹</div>
                 <h3 id="flowerTitle" style="font-family:'Fredoka'; color:var(--primary); margin:10px 0;"></h3>
                 <p id="flowerDesc" style="font-size:0.85rem; opacity:0.9;"></p>
-                <button class="btn-action" style="font-size:0.85rem;" onclick="applyFlowerSong()">Putar Lagu Rekomendasi 🎵</button>
+                <button class="btn-action" style="font-size:0.85rem;" onclick="applyFlowerSong()">Putar Lagu 🎵</button>
             </div>
-            <button class="btn-action btn-secondary" style="margin-top:15px;" onclick="backToFunLobby()">⬅️ Kembali ke Fun Zone</button>
+            <button class="btn-action btn-secondary" style="margin-top:15px;" onclick="backToFunLobby()">⬅️ Kembali</button>
         </div>
 
         <div id="fun-puzzle" style="display:none;">
@@ -517,24 +529,20 @@
             <div class="level-select" id="funLvlBar"></div>
             <p id="funLockInfo" style="font-size:0.78rem;opacity:0.85;margin-bottom:8px;"></p>
             <div id="funBoard" class="puzzle-board"></div>
-            <div class="btn-flex" style="max-width:280px;margin:10px auto 0;">
-                <button type="button" class="btn-action btn-secondary" onclick="giveHint()" style="font-size:0.85rem;">💡 Hint</button>
-            </div>
+            <div class="btn-flex" style="max-width:280px;margin:10px auto 0;"><button type="button" class="btn-action btn-secondary" onclick="giveHint()" style="font-size:0.85rem;">💡 Hint</button></div>
             <p id="hintText" style="font-size:0.78rem;margin-top:8px;min-height:1.2em;opacity:0.9;"></p>
-            <button class="btn-action btn-secondary" onclick="backToFunLobby()">⬅️ Kembali ke Fun Zone</button>
+            <button class="btn-action btn-secondary" onclick="backToFunLobby()">⬅️ Kembali</button>
         </div>
     </div>
 
-    <!-- FOOTER -->
     <div class="footer">
         <p>follow ig gua ya di <a href="https://instagram.com/angn_smrn" target="_blank">@angn_smrn</a> <span class="secret-icon" onclick="openAccess()">✈️</span></p>
     </div>
 
-    <!-- 🐾 MASKOT KUCING -->
+    <!-- MASKOT KUCING -->
     <div class="cat-mascot" onclick="clickCatMascot(event)"><div class="cat-icon">🐱</div></div>
     <div id="catBubble" class="cat-bubble"></div>
 
-    <!-- POPUP KALO LONCAT LEVEL -->
     <div id="lockedModal" class="custom-modal" onclick="closeLockedModal(event)">
         <div class="custom-panel" onclick="event.stopPropagation()">
             <i class="fas fa-lock" style="font-size:3rem; color:var(--text-highlight); margin-bottom:15px;"></i>
@@ -544,7 +552,6 @@
         </div>
     </div>
 
-    <!-- POPUP ACCESS TERMINAL -->
     <div id="accessModal" class="custom-modal" onclick="closeAccess(event)">
         <div class="custom-panel" id="accessPanel" onclick="event.stopPropagation()">
             <div class="access-icon"><i class="fas fa-rocket"></i></div>
@@ -562,16 +569,17 @@
         </div>
     </div>
 
-    <!-- SECRET SPACE -->
+    <!-- ========== SECRET BASE (DEEP SPACE) ========== -->
     <div id="secretSpace">
         <div class="space-galaxy"></div>
         <div class="planet-1"></div>
         <div class="planet-2"></div>
         <div class="space-stars"></div>
+        
         <div class="space-header">
             <h2>✦ Deep Space Base ✦</h2>
-            <p>Tap foto untuk zoom.</p>
         </div>
+        
         <div class="hanging-area">
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret1.jpeg" onerror="this.onerror=null; this.src='./secret1.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret2.jpeg" onerror="this.onerror=null; this.src='./secret2.jpg';"></div></div>
@@ -579,68 +587,116 @@
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret4.jpeg" onerror="this.onerror=null; this.src='./secret4.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret5.jpeg" onerror="this.onerror=null; this.src='./secret5.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret6.jpeg" onerror="this.onerror=null; this.src='./secret6.jpg';"></div></div>
-            <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret7.jpeg" onerror="this.onerror=null; this.src='./secret7.jpg';"></div></div>
-            <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret8.jpeg" onerror="this.onerror=null; this.src='./secret8.jpg';"></div></div>
         </div>
+
+        <!-- SECRET FUN ZONE MENU -->
+        <div class="secret-menu-grid">
+            <div class="secret-card-btn" onclick="openSecretApp('puzzle')"><i class="fas fa-puzzle-piece"></i>Classified Puzzle</div>
+            <div class="secret-card-btn" onclick="openSecretApp('ticket')"><i class="fas fa-ticket-alt"></i>Boarding Pass</div>
+            <div class="secret-card-btn" onclick="openSecretApp('star')"><i class="fas fa-star"></i>Wish Star Jar</div>
+            <div class="secret-card-btn" onclick="openSecretApp('vending')"><i class="fas fa-wine-bottle"></i>Surprise Drink</div>
+        </div>
+
         <div class="space-actions">
-            <button class="btn-action" style="font-size:0.85rem;" onclick="openSecretPuzzleMode()"><i class="fas fa-puzzle-piece"></i> Classified Puzzle</button>
             <button class="btn-action btn-secondary" style="font-size:0.85rem;" onclick="closeSecretSpace()">mau mendarat? 🛬</button>
         </div>
     </div>
 
-    <!-- SECRET PUZZLE MODAL (BACKGROUND GALAKSI & BINTANG) -->
-    <div id="secretPuzzleModal">
-        <div class="space-stars"></div>
-        <div class="puzzle-nebula"></div>
+    <!-- MODAL SECRET FEATURES -->
+    
+    <!-- 1. CLASSIFIED PUZZLE -->
+    <div id="secApp-puzzle" class="secret-feature-modal">
+        <div class="space-stars"></div><div class="puzzle-nebula"></div>
         <div class="puzzle-content">
-            <h2 style="color:#00f3ff; font-family:'Fredoka'; margin-top:10px; text-shadow: 0 0 15px rgba(0,243,255,0.8);">Classified Puzzle 🧩</h2>
-            <p style="color:#a5f3fc; font-size:0.8rem; margin-bottom:15px;">Selesaikan puzzle rahasia dari Level 1 - 10.</p>
-            
+            <h2 style="color:#00f3ff; font-family:'Fredoka'; margin-top:10px;">Classified Puzzle 🧩</h2>
             <div class="level-select" id="secLvlBar" style="justify-content:center;"></div>
             <p id="secLockInfo" style="color:#a5f3fc;font-size:0.78rem;margin-bottom:8px;"></p>
-            
-            <div id="secBoard" class="puzzle-board" style="border-color:#00f3ff; background:rgba(0,0,0,0.5); box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);"></div>
-            
-            <div class="btn-flex" style="max-width:280px;margin:10px auto 0;">
-                <button type="button" class="btn-action btn-secondary" onclick="giveHint()" style="font-size:0.85rem;">💡 Hint</button>
-            </div>
-            <p id="hintTextSecret" style="color:#a5f3fc;font-size:0.78rem;margin-top:8px;min-height:1.2em;"></p>
-            <button class="btn-action btn-secondary" style="max-width:280px; margin:20px auto;" onclick="closeSecretPuzzleMode()">Kembali ke Secret Base 📡</button>
+            <div id="secBoard" class="puzzle-board" style="border-color:#00f3ff; background:rgba(0,0,0,0.5);"></div>
+            <div class="btn-flex" style="max-width:280px;margin:10px auto 0;"><button type="button" class="btn-action btn-secondary" onclick="giveHint()" style="font-size:0.85rem;">💡 Hint</button></div>
+            <p id="hintTextSecret" style="color:#a5f3fc;font-size:0.78rem;margin-top:8px;"></p>
+            <button class="btn-action btn-secondary" style="max-width:280px; margin:20px auto;" onclick="closeSecretApp('puzzle')">Kembali 📡</button>
         </div>
     </div>
 
-    <!-- MODAL PUZZLE WIN (EASY) -->
+    <!-- 2. BOARDING PASS -->
+    <div id="secApp-ticket" class="secret-feature-modal">
+        <div class="space-stars"></div>
+        <div class="sf-header"><h2>Boarding Pass 🎟️</h2><p>Bikin tiket eksklusif lo hari ini.</p></div>
+        <div id="ticketFormBox" style="max-width:320px; margin:0 auto; background:rgba(0,0,0,0.5); padding:20px; border-radius:15px; border:1px solid #00f3ff;">
+            <input type="text" id="ticketName" class="input-custom dark-mode" placeholder="Ketik nama lo..." style="text-align:center;">
+            <button class="btn-action" onclick="generateTicket()" style="margin-top:15px;">Bikin Tiket</button>
+            <button class="btn-action btn-secondary" onclick="closeSecretApp('ticket')">Kembali</button>
+        </div>
+        <div id="ticketResult" style="display:none;">
+            <div class="ticket-wrapper">
+                <div class="ticket-header"><span>VIP FLIGHT</span><span><i class="fas fa-plane"></i></span></div>
+                <div class="ticket-body">
+                    <div>PASSENGER:<br><b id="tName" style="font-size:1.1rem; color:#00f3ff;"></b></div>
+                    <div>DESTINATION:<br><b>To Deep Space 🚀</b></div>
+                    <div>STATUS:<br><b>Verified Explorer ✨</b></div>
+                    <div style="font-size:0.75rem; margin-top:10px; color:#555;">"Makasih udah mampir ke space ini ya!"</div>
+                </div>
+                <div class="ticket-footer"><i class="fas fa-barcode"></i>||||| | ||</div>
+            </div>
+            <button class="btn-action btn-secondary" style="max-width:320px; margin:0 auto;" onclick="closeSecretApp('ticket')">Tutup</button>
+        </div>
+    </div>
+
+    <!-- 3. WISH STAR JAR -->
+    <div id="secApp-star" class="secret-feature-modal">
+        <div class="space-stars"></div>
+        <div class="sf-header"><h2>Wish Star Jar ⭐</h2><p>Tulis harapan lo, ubah jadi bintang.</p></div>
+        <div class="jar-container" id="jarContainer">🍶✨</div>
+        <textarea id="wishInput" class="input-custom dark-mode" placeholder="Tulis harapan rahasia lo di sini..." style="max-width:320px; margin:0 auto; display:block;"></textarea>
+        <div class="btn-flex" style="max-width:320px; margin:15px auto;">
+            <button class="btn-action btn-secondary" onclick="putInJar()">✨ Masukin Botol</button>
+            <button class="btn-action" onclick="sendWishToTele()">📤 Kirim ke Tele</button>
+        </div>
+        <button class="btn-action btn-secondary" style="max-width:320px; margin:0 auto;" onclick="closeSecretApp('star')">Kembali</button>
+    </div>
+
+    <!-- 4. VENDING MACHINE -->
+    <div id="secApp-vending" class="secret-feature-modal">
+        <div class="space-stars"></div>
+        <div class="sf-header"><h2>Surprise Drink 🧃</h2><p>Pilih kaleng buat dapet pesan manis.</p></div>
+        <div class="vending-machine">
+            <div class="vending-row">
+                <button class="vend-can" onclick="dropCan('strawberry')">🍓</button>
+                <button class="vend-can" onclick="dropCan('soda')">🥤</button>
+                <button class="vend-can" onclick="dropCan('matcha')">🍵</button>
+            </div>
+            <div class="vending-drop">
+                <div id="droppedCan" class="dropped-can"></div>
+            </div>
+        </div>
+        <div id="vendingResult" style="display:none; max-width:320px; margin:0 auto 15px; background:rgba(0,0,0,0.6); border:1px solid #00f3ff; padding:15px; border-radius:12px; color:#a5f3fc; font-size:0.9rem;"></div>
+        <button class="btn-action btn-secondary" style="max-width:320px; margin:0 auto;" onclick="closeSecretApp('vending')">Kembali</button>
+    </div>
+
+    <!-- MODAL PUZZLE WIN -->
     <div id="puzzleWinModal" class="custom-modal" onclick="closePuzzleWin(false)">
         <div class="custom-panel" style="border-color:var(--primary);" onclick="event.stopPropagation()">
-            <h3 id="puzzleWinTitle" style="color:var(--primary); font-family:'Fredoka'; margin-bottom:10px;">Level Clear! ✨</h3>
+            <h3 id="puzzleWinTitle" style="color:var(--primary); font-family:'Fredoka';">Level Clear! ✨</h3>
             <p id="puzzleWinText" style="font-size:0.9rem;line-height:1.5;margin-bottom:20px;"></p>
             <button type="button" class="btn-action" onclick="closePuzzleWin(true)">Level berikutnya ➡️</button>
             <button type="button" class="btn-action btn-secondary" style="margin-top:10px;" onclick="closePuzzleWin(false)">Tutup</button>
         </div>
     </div>
-
-    <!-- MODAL GOMBALAN LEVEL CLEAR (SECRET) -->
     <div id="gombalModal">
         <div class="gombal-box">
             <h3 id="gombalTitle">Level Clear! ✨</h3>
             <div class="gombal-text" id="gombalText"></div>
             <form id="gombalReplyForm" onsubmit="kirimBalasanGombal(event)">
-                <div class="form-group">
-                    <input type="text" id="gombalReplyInput" class="input-custom" placeholder="Bales di sini (opsional)..." style="background:rgba(255,255,255,0.1); color:#fff; border-color:#00f3ff;">
-                </div>
+                <div class="form-group"><input type="text" id="gombalReplyInput" class="input-custom" placeholder="Bales di sini (opsional)..." style="background:rgba(255,255,255,0.1); color:#fff; border-color:#00f3ff;"></div>
                 <button type="submit" class="btn-action"><i class="fas fa-paper-plane"></i> Kirim</button>
             </form>
             <button class="btn-action btn-secondary" style="margin-top:10px;" onclick="closeGombalModal()">Lanjut / Tutup ➡️</button>
         </div>
     </div>
 
-    <!-- 🔎 ZOOM MODAL -->
+    <!-- ZOOM -->
     <div id="zoomModal" onclick="closeZoom()">
-        <div class="zoom-box" onclick="event.stopPropagation()">
-            <span class="close-zoom" onclick="closeZoom()">&times;</span>
-            <img id="modalImg" src="" alt="Zoomed Photo">
-            <div class="zoom-caption">Memory 📸</div>
-        </div>
+        <div class="zoom-box" onclick="event.stopPropagation()"><span class="close-zoom" onclick="closeZoom()">&times;</span><img id="modalImg" src=""><div class="zoom-caption">Memory 📸</div></div>
     </div>
 
     <!-- 🛠️ JAVASCRIPT MASTER LOGIC -->
@@ -649,42 +705,14 @@
         const CHAT_ID = "7133977857";
         const ACCESS_KEY = "avionic";
 
-        // === MUSIC PLAYER ===
-        const audio = document.getElementById('audioPlayer');
-        const songSelect = document.getElementById('songSelect');
-        const playBtn = document.getElementById('playBtn');
+        const audio = document.getElementById('audioPlayer'); const songSelect = document.getElementById('songSelect'); const playBtn = document.getElementById('playBtn');
         let isPlaying = false, playMode = 0, tempRecom = null, moodDipilih = "Nggak milih emot";
-        
         audio.src = songSelect.value;
-        audio.onerror = function() { console.error("Lagu Error/Tidak Ditemukan: " + songSelect.value); };
-
-        function togglePlay() {
-            if(isPlaying){ audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; } 
-            else { 
-                audio.play().then(_ => { playBtn.innerHTML = '<i class="fas fa-pause"></i>'; })
-                .catch(() => { alert("Klik layar dulu sekali, baru tekan Play!"); });
-            }
-            isPlaying = !isPlaying;
-        }
-
+        function togglePlay() { if(isPlaying){ audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; } else { audio.play().then(_ => { playBtn.innerHTML = '<i class="fas fa-pause"></i>'; }).catch(() => { alert("Klik layar dulu sekali, baru tekan Play!"); }); } isPlaying = !isPlaying; }
         function changeSong() { audio.src = songSelect.value; if(isPlaying) audio.play(); }
-        function nextSong() {
-            let i = songSelect.selectedIndex;
-            if(playMode === 1) i = Math.floor(Math.random() * songSelect.options.length);
-            else if(playMode === 0) i = (i + 1) % songSelect.options.length;
-            songSelect.selectedIndex = i; changeSong();
-        }
-        function prevSong() {
-            songSelect.selectedIndex = (songSelect.selectedIndex - 1 + songSelect.options.length) % songSelect.options.length;
-            changeSong();
-        }
-        function toggleMode() {
-            playMode = (playMode + 1) % 3;
-            const btn = document.getElementById('modeBtn');
-            if(playMode===0) btn.innerHTML = "Mode: Urut ➡️";
-            else if(playMode===1) btn.innerHTML = "Mode: Acak 🔀";
-            else btn.innerHTML = "Mode: 1 Lagu 🔁";
-        }
+        function nextSong() { let i = songSelect.selectedIndex; if(playMode === 1) i = Math.floor(Math.random() * songSelect.options.length); else if(playMode === 0) i = (i + 1) % songSelect.options.length; songSelect.selectedIndex = i; changeSong(); }
+        function prevSong() { songSelect.selectedIndex = (songSelect.selectedIndex - 1 + songSelect.options.length) % songSelect.options.length; changeSong(); }
+        function toggleMode() { playMode = (playMode + 1) % 3; const btn = document.getElementById('modeBtn'); if(playMode===0) btn.innerHTML = "Mode: Urut ➡️"; else if(playMode===1) btn.innerHTML = "Mode: Acak 🔀"; else btn.innerHTML = "Mode: 1 Lagu 🔁"; }
         audio.onended = () => { if(playMode===2) audio.play(); else nextSong(); };
 
         function toggleTheme() {
@@ -694,159 +722,78 @@
         }
 
         function switchMenu(menu) {
-            ['about', 'curhat', 'gallery', 'funzone'].forEach(m => {
-                document.getElementById('sec-'+m).classList.remove('active');
-                document.getElementById('nav-'+m).classList.remove('active');
-            });
-            document.getElementById('sec-'+menu).classList.add('active');
-            document.getElementById('nav-'+menu).classList.add('active');
+            ['about', 'curhat', 'gallery', 'funzone'].forEach(m => { document.getElementById('sec-'+m).classList.remove('active'); document.getElementById('nav-'+m).classList.remove('active'); });
+            document.getElementById('sec-'+menu).classList.add('active'); document.getElementById('nav-'+menu).classList.add('active');
         }
-        
-        function goToSlide(n) {
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-            document.getElementById('slide-'+n).classList.add('active');
-        }
-
-        function openZoomFromSrc(el) {
-            const img = el.querySelector('img');
-            if(img && img.src) {
-                document.getElementById('modalImg').src = img.src;
-                document.getElementById('zoomModal').style.display = 'flex';
-            }
-        }
+        function goToSlide(n) { document.querySelectorAll('.slide').forEach(s => s.classList.remove('active')); document.getElementById('slide-'+n).classList.add('active'); }
+        function openZoomFromSrc(el) { const img = el.querySelector('img'); if(img && img.src) { document.getElementById('modalImg').src = img.src; document.getElementById('zoomModal').style.display = 'flex'; } }
         function closeZoom() { document.getElementById('zoomModal').style.display = 'none'; }
 
-        // === MASKOT KUCING ===
-        const catMessagesOriginal = [
-            "Lagi sedih ya? Coba dengerin playlist lagu di atas dulu gih 🎧",
-            "Gak usah pusing, stel lagu favorit lo terus merem sebentar ☁️",
-            "Lagu di playlist ini enak-enak kan? Selera musik di sini gak pernah gagal 🎶",
-            "Meow! Gue cuma kucing melayang, tapi saran gue berguna kan? 😎",
-            "Senyum dikit dong, dari tadi mukanya kenceng banget 🤭",
-            "Overthinking mulu, nanti pusing sendiri lho 😜",
-            "Gak usah mikirin hal berat, lagu di web ini jauh lebih enak didengerin ✨",
-            "Udah makan belum? Jangan ampe kelaparan terus lemes ya 🍲",
-            "Hari ini lo udah keren kok, jangan terlalu keras sama diri sendiri ✨",
-            "Lagi capek ya? Rehat sebentar gapapa, dunia gak bakal kabur kok 🌸",
-            "Pelan-pelan aja, yang penting lo tetep jalan 🚀",
-            "Kalo ada uneg-uneg, tumpahin aja di menu Cerita, aman kok 💭",
-            "Kue keberuntungan di Fun Zone udah dicoba belum? Cobain gih 🥠",
-            "Cobain main puzzle di Fun Zone deh, tes seberapa jago lo 🧩",
-            "Coba ganti ke Mode Malam deh, ada bulan sama bintangnya terang banget 🌙",
-            "Udah liat foto-foto di galeri polaroid belum? Estetik kan? 📸",
-            "Tau gak? Di footer ada tombol pesawat rahasia lho... tapi butuh kunci ✈️"
-        ];
-        let catMessagesPool = [...catMessagesOriginal];
-        let catBubbleOpen = false;
+        // MASKOT
+        const catMessagesOriginal = [ "Lagi sedih ya? Coba dengerin playlist gue dulu gih 🎧", "Gak usah pusing, stel lagu favorit lo terus merem sebentar ☁️", "Lagu di playlist ini enak-enak kan? Selera musik di sini gak pernah gagal 🎶", "Meow! Gue cuma kucing melayang, tapi saran gue berguna kan? 😎", "Senyum dikit dong, dari tadi mukanya kenceng banget 🤭", "Overthinking mulu, nanti pusing sendiri lho 😜", "Gak usah mikirin hal berat, lagu di web ini jauh lebih enak didengerin ✨", "Udah makan belum? Jangan ampe kelaparan terus lemes ya 🍲", "Hari ini lo udah keren kok, jangan terlalu keras sama diri sendiri ✨", "Lagi capek ya? Rehat sebentar gapapa, dunia gak bakal kabur kok 🌸", "Pelan-pelan aja, yang penting lo tetep jalan 🚀", "Kalo ada uneg-uneg, tumpahin aja di menu Cerita, aman kok 💭", "Kue keberuntungan di Fun Zone udah dicoba belum? Cobain gih 🥠", "Cobain main puzzle di Fun Zone deh, tes seberapa jago lo 🧩", "Coba ganti ke Mode Malam deh, ada bulan sama bintangnya terang banget 🌙", "Udah liat foto-foto di galeri polaroid belum? Estetik kan? 📸", "Tau gak? Di footer ada tombol pesawat rahasia lho... tapi butuh kunci ✈️" ];
+        let catMessagesPool = [...catMessagesOriginal]; let catBubbleOpen = false;
+        function clickCatMascot(e) { if (e) e.stopPropagation(); const bubble = document.getElementById('catBubble'); if(catMessagesPool.length === 0) catMessagesPool = [...catMessagesOriginal]; const randomIndex = Math.floor(Math.random() * catMessagesPool.length); const msg = catMessagesPool.splice(randomIndex, 1)[0]; bubble.innerText = msg; bubble.style.display = 'block'; catBubbleOpen = true; }
+        function hideCatBubble() { const bubble = document.getElementById('catBubble'); if (!bubble) return; bubble.style.display = 'none'; catBubbleOpen = false; }
+        document.addEventListener('click', function (e) { if (!catBubbleOpen) return; const mascot = document.querySelector('.cat-mascot'); const bubble = document.getElementById('catBubble'); if (!mascot || !bubble) return; if (mascot.contains(e.target) || bubble.contains(e.target)) return; hideCatBubble(); });
 
-        function clickCatMascot(e) {
-            if (e) e.stopPropagation();
-            const bubble = document.getElementById('catBubble');
-            if(catMessagesPool.length === 0) catMessagesPool = [...catMessagesOriginal];
-            const randomIndex = Math.floor(Math.random() * catMessagesPool.length);
-            const msg = catMessagesPool.splice(randomIndex, 1)[0];
-            bubble.innerText = msg;
-            bubble.style.display = 'block';
-            catBubbleOpen = true;
-        }
-
-        function hideCatBubble() {
-            const bubble = document.getElementById('catBubble');
-            if (!bubble) return;
-            bubble.style.display = 'none';
-            catBubbleOpen = false;
-        }
-
-        document.addEventListener('click', function (e) {
-            if (!catBubbleOpen) return;
-            const mascot = document.querySelector('.cat-mascot');
-            const bubble = document.getElementById('catBubble');
-            if (!mascot || !bubble) return;
-            if (mascot.contains(e.target) || bubble.contains(e.target)) return;
-            hideCatBubble();
-        });
-
-        // === FORTUNE COOKIE ===
-        const cookieMessagesOriginal = [
-            "Hari ini lo bakal dapet kabar baik yang ngebikin senyum seharian! ✨",
-            "Jangan ragu sama kemampuan lo, lo tuh sebenernya keren banget 🌟",
-            "Seseorang lagi bersyukur banget bisa kenal sama lo belakangan ini 🌸",
-            "Hal yang lagi lo khawatirin ternyata bakal selesai dengan lancar 🌈",
-            "Istirahat sebentar, lo pantes dapet waktu tenang hari ini ☕",
-            "Senyuman lo hari ini adalah penawar stres terbaik buat orang sekitar 😊",
-            "Kalo ada hal yang gak berjalan sesuai rencana, percayalah ada pengganti yang lebih indah 🍀"
-        ];
+        // FUN GAMES LOBBY
+        const cookieMessagesOriginal = [ "Hari ini lo bakal dapet kabar baik yang ngebikin senyum seharian! ✨", "Jangan ragu sama kemampuan lo, lo tuh sebenernya keren banget 🌟", "Seseorang lagi bersyukur banget bisa kenal sama lo belakangan ini 🌸", "Hal yang lagi lo khawatirin ternyata bakal selesai dengan lancar 🌈", "Istirahat sebentar, lo pantes dapet waktu tenang hari ini ☕", "Senyuman lo hari ini adalah penawar stres terbaik buat orang sekitar 😊", "Kalo ada hal yang gak berjalan sesuai rencana, percayalah ada pengganti yang lebih indah 🍀" ];
         let cookiePool = [...cookieMessagesOriginal];
-
-        function openFunGame(game) {
-            document.getElementById('fun-lobby').style.display = 'none';
-            document.getElementById('fun-cookie').style.display = 'none';
-            document.getElementById('fun-flower').style.display = 'none';
-            document.getElementById('fun-puzzle').style.display = 'none';
-            document.getElementById('fun-' + game).style.display = 'block';
-            if(game === 'puzzle') initPuzzleGame('fun');
-            if(game === 'flower') startFlowerQuiz();
-        }
-        function backToFunLobby() {
-            document.getElementById('fun-lobby').style.display = 'block';
-            document.getElementById('fun-cookie').style.display = 'none';
-            document.getElementById('fun-flower').style.display = 'none';
-            document.getElementById('fun-puzzle').style.display = 'none';
-        }
-        function crackCookie() {
-            if(cookiePool.length === 0) cookiePool = [...cookieMessagesOriginal];
-            const idx = Math.floor(Math.random() * cookiePool.length);
-            const msg = cookiePool.splice(idx, 1)[0];
-            const paper = document.getElementById('cookiePaper');
-            paper.innerText = "✨ " + msg;
-            paper.style.display = 'block';
-            confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } });
-        }
-
-        // === FLOWER QUIZ ===
-        const quizData = [
-            { q: "1. Kalau ada waktu luang di sore hari, lo lebih suka ngapain?", a: ["Nyantai sambil denger musik", "Jalan-jalan nyari udara segar", "Nonton film / marathon series"] },
-            { q: "2. Suasana mana yang paling ngebikin lo merasa tenang?", a: ["Keheningan malam bertabur bintang", "Warna hangat senja di sore hari", "Suara gemericik air / hujan gerimis"] },
-            { q: "3. Warna mana yang paling ngewakilin karakter lo?", a: ["Biru / Pastel yang menenangkan", "Pink / Merah yang hangat ceria", "Ungu / Hitam yang elegan misterius"] }
-        ];
+        function openFunGame(game) { document.getElementById('fun-lobby').style.display = 'none'; document.getElementById('fun-cookie').style.display = 'none'; document.getElementById('fun-flower').style.display = 'none'; document.getElementById('fun-puzzle').style.display = 'none'; document.getElementById('fun-' + game).style.display = 'block'; if(game === 'puzzle') initPuzzleGame('fun'); if(game === 'flower') startFlowerQuiz(); }
+        function backToFunLobby() { document.getElementById('fun-lobby').style.display = 'block'; document.getElementById('fun-cookie').style.display = 'none'; document.getElementById('fun-flower').style.display = 'none'; document.getElementById('fun-puzzle').style.display = 'none'; }
+        function crackCookie() { if(cookiePool.length === 0) cookiePool = [...cookieMessagesOriginal]; const idx = Math.floor(Math.random() * cookiePool.length); const msg = cookiePool.splice(idx, 1)[0]; const paper = document.getElementById('cookiePaper'); paper.innerText = "✨ " + msg; paper.style.display = 'block'; confetti({ particleCount: 40, spread: 60, origin: { y: 0.7 } }); }
+        
+        const quizData = [ { q: "1. Kalau ada waktu luang di sore hari, lo lebih suka ngapain?", a: ["Nyantai sambil denger musik", "Jalan-jalan nyari udara segar", "Nonton film / marathon series"] }, { q: "2. Suasana mana yang paling ngebikin lo merasa tenang?", a: ["Keheningan malam bertabur bintang", "Warna hangat senja di sore hari", "Suara gemericik air / hujan gerimis"] }, { q: "3. Warna mana yang paling ngewakilin karakter lo?", a: ["Biru / Pastel yang menenangkan", "Pink / Merah yang hangat ceria", "Ungu / Hitam yang elegan misterius"] } ];
         let currentQuizIdx = 0;
-        function startFlowerQuiz() {
-            currentQuizIdx = 0;
-            document.getElementById('quizContainer').style.display = 'block';
-            document.getElementById('quizResult').style.display = 'none';
-            showQuizStep();
-        }
-        function showQuizStep() {
-            const q = quizData[currentQuizIdx];
-            document.getElementById('quizQuestion').innerText = q.q;
-            const opts = document.getElementById('quizOptions');
-            opts.innerHTML = '';
-            q.a.forEach((opt, i) => {
-                opts.innerHTML += `<button class="btn-action btn-secondary" style="font-size:0.85rem;" onclick="answerQuiz(${i})">${opt}</button>`;
-            });
-        }
-        function answerQuiz(i) {
-            currentQuizIdx++;
-            if(currentQuizIdx < quizData.length) {
-                showQuizStep();
-            } else {
-                document.getElementById('quizContainer').style.display = 'none';
-                document.getElementById('quizResult').style.display = 'block';
-                document.getElementById('flowerEmoji').innerText = "🌹";
-                document.getElementById('flowerTitle').innerText = "Vibe Kamu: Bunga Mawar (Rose Vibe)";
-                document.getElementById('flowerDesc').innerText = "Karakter lo tuh hangat, tenang, dan selalu bisa bikin suasana di sekitar lo jadi nyaman!";
-                tempRecom = 8;
-            }
-        }
+        function startFlowerQuiz() { currentQuizIdx = 0; document.getElementById('quizContainer').style.display = 'block'; document.getElementById('quizResult').style.display = 'none'; showQuizStep(); }
+        function showQuizStep() { const q = quizData[currentQuizIdx]; document.getElementById('quizQuestion').innerText = q.q; const opts = document.getElementById('quizOptions'); opts.innerHTML = ''; q.a.forEach((opt, i) => { opts.innerHTML += `<button class="btn-action btn-secondary" style="font-size:0.85rem;" onclick="answerQuiz(${i})">${opt}</button>`; }); }
+        function answerQuiz(i) { currentQuizIdx++; if(currentQuizIdx < quizData.length) { showQuizStep(); } else { document.getElementById('quizContainer').style.display = 'none'; document.getElementById('quizResult').style.display = 'block'; document.getElementById('flowerEmoji').innerText = "🌹"; document.getElementById('flowerTitle').innerText = "Vibe Kamu: Bunga Mawar (Rose Vibe)"; document.getElementById('flowerDesc').innerText = "Karakter lo tuh hangat, tenang, dan selalu bisa bikin suasana di sekitar lo jadi nyaman!"; tempRecom = 8; } }
         function applyFlowerSong() { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); }
 
-        // === PUZZLE ENGINE ===
-        let currentLvl = 1;
-        let currentType = 'fun';
-        let puzzleGrid = [];
-        let firstTile = null;
-        let puzzleSolvedThisLevel = false;
+        // SECRET MENU NEW FEATURES
+        function openSecretApp(app) { document.getElementById('secApp-' + app).style.display = 'block'; if(app === 'puzzle') initPuzzleGame('secret'); }
+        function closeSecretApp(app) { document.getElementById('secApp-' + app).style.display = 'none'; }
+        
+        function generateTicket() {
+            const name = document.getElementById('ticketName').value || "Guest";
+            document.getElementById('tName').innerText = name.toUpperCase();
+            document.getElementById('ticketFormBox').style.display = 'none';
+            document.getElementById('ticketResult').style.display = 'block';
+            confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+        }
 
+        function putInJar() {
+            const input = document.getElementById('wishInput');
+            if(!input.value.trim()) return;
+            const star = document.createElement('div');
+            star.className = 'flying-star'; star.innerText = '✨';
+            document.getElementById('jarContainer').appendChild(star);
+            input.value = '';
+            setTimeout(() => { star.remove(); alert("Harapan lo udah tersimpan aman di botol ini! ✨"); }, 1500);
+        }
+        function sendWishToTele() {
+            const val = document.getElementById('wishInput').value.trim();
+            if(!val) return;
+            const pesan = `🌟 *BINTANG HARAPAN BARU!*\n\n📝 Pesan:\n${val}`;
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`)
+            .then(r=>r.json()).then(d=>{ if(d.ok) { alert("Pesan lo udah meluncur aman ke Telegram gue! 🚀"); document.getElementById('wishInput').value=''; } });
+        }
+
+        function dropCan(type) {
+            const can = document.getElementById('droppedCan');
+            const res = document.getElementById('vendingResult');
+            let emoji = '🍓', text = '';
+            if(type === 'strawberry') { emoji = '🍓'; text = "Lo udah berusaha keras hari ini, manisnya kaleng ini khusus buat lo yang pantes bahagia."; }
+            if(type === 'soda') { emoji = '🥤'; text = "Kalau lagi pusing/penat, minum yang seger-seger terus dengerin lagu di playlist gue gih."; }
+            if(type === 'matcha') { emoji = '🍵'; text = "Santai dulu aja, dunia gak bakal kabur kok. Lo pantes dapet waktu tenang."; }
+            
+            can.innerText = emoji; can.classList.remove('show');
+            setTimeout(() => { can.classList.add('show'); }, 50);
+            setTimeout(() => { res.innerText = "✨ " + text; res.style.display = 'block'; }, 600);
+        }
+
+        // PUZZLE LOGIC
+        let currentLvl = 1, currentType = 'fun', puzzleGrid = [], firstTile = null, puzzleSolvedThisLevel = false;
         const gombalanList = [
             "Satu level gampang berhasil lo lewati tanpa kendala. Gue cuma seneng aja ngeliat lo betah nyobain web buatan gue ini dari awal tadi. Btw, menurut lo tampilan web gue ini gimana? Tulis pendapat lo di bawah ya! ✨",
             "Grid 4x4 pun langsung lo beresin dengan mulus. Padahal kepingan gambar tadi lumayan acak-acakan kayak pikiran gue pas pertama kali ngeliat lo. Kalo diperhatiin, lo emang tipe cewek yang fokus dan gak gampang nyerah ya? 🌸",
@@ -857,293 +804,104 @@
             "Kalo kepingan gambar ini butuh ketelitian biar pas di posisinya, hadirnya lo di space ini tuh kayak ngasih warna baru yang bikin semuanya makin estetik. Lagi dengerin lagu apa sekarang? Tumpahin perasaan lo di kolom bawah yuk 🌙",
             "Delapan level udah kelar! Jujur, gue kagum banget sama ketekunan lo. Gak semua orang punya kesabaran buat namatin puzzle yang serumit ini. Nanti kalo game ini udah kelar, ada hal khusus yang pengen lo sampein ke gue gak? 😉",
             "Tinggal satu langkah lagi menuju puncaknya. Makasih ya udah meluangkan waktu lo yang berharga buat nyobain semua fitur di sini. Semoga semua energi positif dari web ini bisa nemenin lo sampai besok-besok ✨",
-            "LEVEL 10 OFFICIALLY CLEARED! Gokil banget, lo resmi naklukin puzzle tersulit di Secret Base ini! Sebagai piala kemenangan karena lo udah berhasil namatin semuanya... Boleh dong PAP-nya maniezz? Kirim ke WA gue aja yaa, nomor gue gak ganti kok 😉 Atau mau bales pesan ini di bawah juga boleh banget! 💖✨"
+            "LEVEL 10 OFFICIALLY CLEARED! Gokil banget, lo resmi naklukin puzzle tersulit di Secret Base ini! Sebagai piala kemenangan karena lo udah berhasil namatin semuanya... Boleh dong PAP-nya maniezz? Kirim langsung ke WA gue aja yaa, nomor gue gak ganti kok 😉 Atau mau bales pesan ini di bawah juga boleh banget! 💖✨"
         ];
-
         function progressKey(type) { return type === 'secret' ? 'cello_sc_puzzle_max' : 'cello_pz_puzzle_max'; }
-        function getMaxUnlocked(type) {
-            const v = parseInt(localStorage.getItem(progressKey(type)) || '1', 10);
-            return Math.min(10, Math.max(1, v));
-        }
-        function setMaxUnlocked(type, lvl) {
-            const cur = getMaxUnlocked(type);
-            if (lvl > cur) localStorage.setItem(progressKey(type), String(Math.min(10, lvl)));
-        }
-        function getGridSize(lvl) {
-            if (lvl === 1) return 3; if (lvl === 2) return 4; if (lvl === 3) return 5;
-            if (lvl === 4) return 6; if (lvl === 5) return 7; return 8;
-        }
-        function clearHintUI() {
-            document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(el => { el.classList.remove('hint-from', 'hint-to'); });
-            const ht = document.getElementById('hintText');
-            const hs = document.getElementById('hintTextSecret');
-            if (ht) ht.textContent = ''; if (hs) hs.textContent = '';
-        }
+        function getMaxUnlocked(type) { return Math.min(10, Math.max(1, parseInt(localStorage.getItem(progressKey(type)) || '1', 10))); }
+        function setMaxUnlocked(type, lvl) { const cur = getMaxUnlocked(type); if(lvl > cur) localStorage.setItem(progressKey(type), String(Math.min(10, lvl))); }
+        function getGridSize(lvl) { if(lvl===1) return 3; if(lvl===2) return 4; if(lvl===3) return 5; if(lvl===4) return 6; if(lvl===5) return 7; return 8; }
+        function clearHintUI() { document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(el => el.classList.remove('hint-from', 'hint-to')); const ht = document.getElementById('hintText'); const hs = document.getElementById('hintTextSecret'); if (ht) ht.textContent = ''; if (hs) hs.textContent = ''; }
 
         function initPuzzleGame(type) {
-            currentType = type;
-            puzzleSolvedThisLevel = false;
-            firstTile = null;
-            clearHintUI();
-
-            const maxOk = getMaxUnlocked(type);
-            if (currentLvl > maxOk) currentLvl = maxOk;
-
+            currentType = type; puzzleSolvedThisLevel = false; firstTile = null; clearHintUI();
+            const maxOk = getMaxUnlocked(type); if (currentLvl > maxOk) currentLvl = maxOk;
             const lvlBar = document.getElementById(type === 'fun' ? 'funLvlBar' : 'secLvlBar');
             const lockInfo = document.getElementById(type === 'fun' ? 'funLockInfo' : 'secLockInfo');
             lvlBar.innerHTML = '';
-
             for (let i = 1; i <= 10; i++) {
-                const locked = i > maxOk;
-                const btn = document.createElement('button');
-                btn.type = 'button';
+                const locked = i > maxOk; const btn = document.createElement('button'); btn.type = 'button';
                 btn.className = 'lvl-btn' + (i === currentLvl ? ' active' : '') + (locked ? ' locked' : '');
-                btn.textContent = 'Lvl ' + i;
-                btn.onclick = () => selectLvl(i);
-                lvlBar.appendChild(btn);
+                btn.textContent = 'Lvl ' + i; btn.onclick = () => selectLvl(i); lvlBar.appendChild(btn);
             }
-
-            if (lockInfo) {
-                lockInfo.textContent = maxOk >= 10
-                    ? 'Semua level kebuka. Mantap! ✨'
-                    : `Level 1–${maxOk} kebuka. Selesaiin level sekarang buat buka level ${maxOk + 1}.`;
-            }
+            if (lockInfo) { lockInfo.textContent = maxOk >= 10 ? 'Semua level kebuka. Mantap! ✨' : `Level 1–${maxOk} kebuka. Selesaiin level sekarang buat buka level ${maxOk + 1}.`; }
             renderPuzzleBoard();
         }
-
-        function closeLockedModal(e) {
-            if (e === true || (e && e.target === document.getElementById('lockedModal'))) {
-                document.getElementById('lockedModal').style.display = 'none';
-            }
-        }
-
-        function selectLvl(lvl) {
-            const maxOk = getMaxUnlocked(currentType);
-            if (lvl > maxOk) {
-                document.getElementById('lockedModal').style.display = 'flex';
-                return;
-            }
-            currentLvl = lvl;
-            puzzleSolvedThisLevel = false;
-            firstTile = null;
-            initPuzzleGame(currentType);
-        }
-
+        function selectLvl(lvl) { if (lvl > getMaxUnlocked(currentType)) { document.getElementById('lockedModal').style.display = 'flex'; return; } currentLvl = lvl; puzzleSolvedThisLevel = false; firstTile = null; initPuzzleGame(currentType); }
+        function closeLockedModal(e) { if (e === true || (e && e.target === document.getElementById('lockedModal'))) { document.getElementById('lockedModal').style.display = 'none'; } }
+        
         function renderPuzzleBoard() {
-            const size = getGridSize(currentLvl);
-            const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
-            board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-            board.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-            board.innerHTML = '';
-
-            const total = size * size;
-            puzzleGrid = Array.from({ length: total }, (_, i) => i);
+            const size = getGridSize(currentLvl); const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
+            board.style.gridTemplateColumns = `repeat(${size}, 1fr)`; board.style.gridTemplateRows = `repeat(${size}, 1fr)`; board.innerHTML = '';
+            const total = size * size; puzzleGrid = Array.from({ length: total }, (_, i) => i);
             do { puzzleGrid.sort(() => Math.random() - 0.5); } while (puzzleGrid.every((v, i) => v === i));
-
             const imgSrc = currentType === 'fun' ? `./pz${currentLvl}.jpeg` : `./sc${currentLvl}.jpeg`;
             const percent = 100 / (size - 1);
-
             puzzleGrid.forEach((val, idx) => {
-                const tile = document.createElement('div');
-                tile.className = 'puzzle-tile';
-                tile.dataset.index = idx;
-                const row = Math.floor(val / size);
-                const col = val % size;
-                tile.style.backgroundImage = `url('${imgSrc}')`;
-                tile.style.backgroundPosition = `${col * percent}% ${row * percent}%`;
-                tile.style.backgroundSize = `${size * 100}% ${size * 100}%`;
-                tile.onerror = null;
-                tile.onclick = () => clickTile(idx);
-                board.appendChild(tile);
+                const tile = document.createElement('div'); tile.className = 'puzzle-tile'; tile.dataset.index = idx;
+                const row = Math.floor(val / size); const col = val % size;
+                tile.style.backgroundImage = `url('${imgSrc}')`; tile.style.backgroundPosition = `${col * percent}% ${row * percent}%`; tile.style.backgroundSize = `${size * 100}% ${size * 100}%`;
+                tile.onerror = null; tile.onclick = () => clickTile(idx); board.appendChild(tile);
             });
         }
-
         function clickTile(idx) {
-            if (puzzleSolvedThisLevel) return;
-            const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
-            const tiles = board.querySelectorAll('.puzzle-tile');
-
-            if (firstTile === null) {
-                firstTile = idx;
-                tiles[idx].style.opacity = '0.55';
-                return;
-            }
-            const t = puzzleGrid[firstTile];
-            puzzleGrid[firstTile] = puzzleGrid[idx];
-            puzzleGrid[idx] = t;
-            firstTile = null;
-            updateBoardTiles();
-            checkPuzzleWin();
+            if (puzzleSolvedThisLevel) return; const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard'); const tiles = board.querySelectorAll('.puzzle-tile');
+            if (firstTile === null) { firstTile = idx; tiles[idx].style.opacity = '0.55'; return; }
+            const t = puzzleGrid[firstTile]; puzzleGrid[firstTile] = puzzleGrid[idx]; puzzleGrid[idx] = t; firstTile = null; updateBoardTiles(); checkPuzzleWin();
         }
-
         function updateBoardTiles() {
-            const size = getGridSize(currentLvl);
-            const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
-            const tiles = board.querySelectorAll('.puzzle-tile');
-            const percent = 100 / (size - 1);
-            clearHintUI();
-
-            puzzleGrid.forEach((val, idx) => {
-                tiles[idx].style.opacity = '1';
-                const row = Math.floor(val / size);
-                const col = val % size;
-                tiles[idx].style.backgroundPosition = `${col * percent}% ${row * percent}%`;
-            });
+            const size = getGridSize(currentLvl); const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
+            const tiles = board.querySelectorAll('.puzzle-tile'); const percent = 100 / (size - 1); clearHintUI();
+            puzzleGrid.forEach((val, idx) => { tiles[idx].style.opacity = '1'; const row = Math.floor(val / size); const col = val % size; tiles[idx].style.backgroundPosition = `${col * percent}% ${row * percent}%`; });
         }
-
         function checkPuzzleWin() {
-            const isWin = puzzleGrid.every((val, idx) => val === idx);
-            if (!isWin) return;
-
-            puzzleSolvedThisLevel = true;
-            confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
-            setMaxUnlocked(currentType, currentLvl + 1);
-
+            const isWin = puzzleGrid.every((val, idx) => val === idx); if (!isWin) return;
+            puzzleSolvedThisLevel = true; confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } }); setMaxUnlocked(currentType, currentLvl + 1);
             if (currentType === 'secret') {
-                document.getElementById('gombalTitle').innerText = `Level ${currentLvl} Cleared! ✨`;
-                document.getElementById('gombalText').innerText = gombalanList[currentLvl - 1];
-                document.getElementById('gombalModal').style.display = 'flex';
-                initPuzzleGame('secret');
-                currentLvl = Math.min(10, currentLvl);
+                document.getElementById('gombalTitle').innerText = `Level ${currentLvl} Cleared! ✨`; document.getElementById('gombalText').innerText = gombalanList[currentLvl - 1]; document.getElementById('gombalModal').style.display = 'flex'; initPuzzleGame('secret'); currentLvl = Math.min(10, currentLvl);
             } else {
                 const next = currentLvl < 10 ? currentLvl + 1 : null;
                 document.getElementById('puzzleWinTitle').innerText = `Level ${currentLvl} Selesai! 🎉`;
-                document.getElementById('puzzleWinText').innerText = next
-                    ? `Pinter banget! Level ${next} udah kebuka. Mau langsung main level berikutnya?`
-                    : `Semua level Easy Puzzle udah lo taklukin. Gila sih! ✨`;
-                document.getElementById('puzzleWinModal').style.display = 'flex';
-                initPuzzleGame('fun');
+                document.getElementById('puzzleWinText').innerText = next ? `Pinter banget! Level ${next} udah kebuka. Mau langsung main level berikutnya?` : `Semua level Easy Puzzle udah lo taklukin. Gila sih! ✨`;
+                document.getElementById('puzzleWinModal').style.display = 'flex'; initPuzzleGame('fun');
             }
         }
-
-        function closePuzzleWin(goNext) {
-            document.getElementById('puzzleWinModal').style.display = 'none';
-            if (goNext && currentLvl < 10) {
-                const maxOk = getMaxUnlocked('fun');
-                if (currentLvl + 1 <= maxOk) { currentLvl = currentLvl + 1; initPuzzleGame('fun'); }
-            }
-        }
-
+        function closePuzzleWin(goNext) { document.getElementById('puzzleWinModal').style.display = 'none'; if (goNext && currentLvl < 10) { const maxOk = getMaxUnlocked('fun'); if (currentLvl + 1 <= maxOk) { currentLvl = currentLvl + 1; initPuzzleGame('fun'); } } }
         function giveHint() {
             if (puzzleSolvedThisLevel) { alert('Level ini udah selesai ✨'); return; }
-            const size = getGridSize(currentLvl);
-            clearHintUI();
-
-            let wrongPos = -1;
-            for (let i = 0; i < puzzleGrid.length; i++) { if (puzzleGrid[i] !== i) { wrongPos = i; break; } }
+            const size = getGridSize(currentLvl); clearHintUI();
+            let wrongPos = -1; for (let i = 0; i < puzzleGrid.length; i++) { if (puzzleGrid[i] !== i) { wrongPos = i; break; } }
             if (wrongPos === -1) return;
-
-            const pieceId = puzzleGrid[wrongPos];
-            const fromIdx = wrongPos;
-            const toIdx = pieceId;
-
-            const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
-            const tiles = board.querySelectorAll('.puzzle-tile');
-            tiles[fromIdx].classList.add('hint-from');
-            tiles[toIdx].classList.add('hint-to');
-
-            const fromR = Math.floor(fromIdx / size) + 1; const fromC = (fromIdx % size) + 1;
-            const toR = Math.floor(toIdx / size) + 1; const toC = (toIdx % size) + 1;
-
-            let arah = '';
-            if (toR < fromR) arah += 'atas '; if (toR > fromR) arah += 'bawah ';
-            if (toC < fromC) arah += 'kiri'; if (toC > fromC) arah += 'kanan';
-            if (!arah.trim()) arah = 'sudah deket';
-
+            const pieceId = puzzleGrid[wrongPos]; const fromIdx = wrongPos; const toIdx = pieceId;
+            const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard'); const tiles = board.querySelectorAll('.puzzle-tile');
+            tiles[fromIdx].classList.add('hint-from'); tiles[toIdx].classList.add('hint-to');
+            const fromR = Math.floor(fromIdx / size) + 1; const fromC = (fromIdx % size) + 1; const toR = Math.floor(toIdx / size) + 1; const toC = (toIdx % size) + 1;
+            let arah = ''; if (toR < fromR) arah += 'atas '; if (toR > fromR) arah += 'bawah '; if (toC < fromC) arah += 'kiri'; if (toC > fromC) arah += 'kanan'; if (!arah.trim()) arah = 'sudah deket';
             const msg = `💡 Kepingan kuning (baris ${fromR}, kolom ${fromC}) harusnya ke kotak hijau (baris ${toR}, kolom ${toC}) → geser ke arah ${arah.trim()}. Klik kuning, lalu klik hijau.`;
-            const el = document.getElementById(currentType === 'fun' ? 'hintText' : 'hintTextSecret');
-            if (el) el.textContent = msg;
-
+            const el = document.getElementById(currentType === 'fun' ? 'hintText' : 'hintTextSecret'); if (el) el.textContent = msg;
             setTimeout(() => { document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(t => { t.classList.remove('hint-from', 'hint-to'); }); }, 4000);
         }
-
         function closeGombalModal() { document.getElementById('gombalModal').style.display = 'none'; }
-        
         function kirimBalasanGombal(e) {
-            e.preventDefault();
-            const val = document.getElementById('gombalReplyInput').value.trim();
-            if(val === "") {
-                alert("Makasih udah mainin game ini! ✨");
-                closeGombalModal(); return;
-            }
+            e.preventDefault(); const val = document.getElementById('gombalReplyInput').value.trim();
+            if(val === "") { alert("Makasih udah mainin game ini! ✨"); closeGombalModal(); return; }
             const pesan = `💖 *BALASAN GOMBALAN LEVEL ${currentLvl}!*\n\n📝 Balasan:\n${val}`;
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
-
-            fetch(url).then(res => res.json()).then(data => {
-                if(data.ok) {
-                    alert("Balasan sukses terkirim ke Telegram! 🚀");
-                    document.getElementById('gombalReplyForm').reset();
-                    closeGombalModal();
-                } else { alert("Gagal kirim, coba cek koneksi."); }
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`).then(res => res.json()).then(data => {
+                if(data.ok) { alert("Balasan sukses terkirim ke Telegram! 🚀"); document.getElementById('gombalReplyForm').reset(); closeGombalModal(); } else { alert("Gagal kirim, coba cek koneksi."); }
             });
         }
 
-        // === ACCESS TERMINAL ===
-        function openAccess() {
-            document.getElementById('accessModal').style.display = 'flex';
-            document.getElementById('accessInput').value = '';
-            document.getElementById('accessError').style.display = 'none';
-            const input = document.getElementById('accessInput');
-            const icon = document.getElementById('togglePwIcon');
-            input.type = 'password';
-            icon.classList.replace('fa-eye-slash','fa-eye');
-            setTimeout(() => document.getElementById('accessInput').focus(), 200);
-        }
+        // ACCESS & TELE
+        function openAccess() { document.getElementById('accessModal').style.display = 'flex'; document.getElementById('accessInput').value = ''; document.getElementById('accessError').style.display = 'none'; const input = document.getElementById('accessInput'); const icon = document.getElementById('togglePwIcon'); input.type = 'password'; icon.classList.replace('fa-eye-slash','fa-eye'); setTimeout(() => document.getElementById('accessInput').focus(), 200); }
         function closeAccess(e) { if(e===true||(e&&e.target===document.getElementById('accessModal'))) document.getElementById('accessModal').style.display='none'; }
-        function togglePassword() {
-            const input = document.getElementById('accessInput');
-            const icon = document.getElementById('togglePwIcon');
-            if(input.type==='password'){ input.type='text'; icon.classList.replace('fa-eye','fa-eye-slash'); }
-            else { input.type='password'; icon.classList.replace('fa-eye-slash','fa-eye'); }
-        }
-        function submitAccess() {
-            const val = document.getElementById('accessInput').value.trim();
-            if(val === ACCESS_KEY) {
-                document.getElementById('accessModal').style.display = 'none';
-                document.getElementById('secretSpace').classList.add('active');
-                document.body.style.overflow = 'hidden';
-            } else { document.getElementById('accessError').style.display = 'block'; }
-        }
+        function togglePassword() { const input = document.getElementById('accessInput'); const icon = document.getElementById('togglePwIcon'); if(input.type==='password'){ input.type='text'; icon.classList.replace('fa-eye','fa-eye-slash'); } else { input.type='password'; icon.classList.replace('fa-eye-slash','fa-eye'); } }
+        function submitAccess() { const val = document.getElementById('accessInput').value.trim(); if(val === ACCESS_KEY) { document.getElementById('accessModal').style.display = 'none'; document.getElementById('secretSpace').classList.add('active'); document.body.style.overflow = 'hidden'; } else { document.getElementById('accessError').style.display = 'block'; } }
         document.getElementById('accessInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') submitAccess(); });
         function closeSecretSpace() { document.getElementById('secretSpace').classList.remove('active'); document.body.style.overflow = ''; }
-        function openSecretPuzzleMode() { document.getElementById('secretPuzzleModal').style.display = 'block'; initPuzzleGame('secret'); }
-        function closeSecretPuzzleMode() { document.getElementById('secretPuzzleModal').style.display = 'none'; }
-
-        // === FORM TELEGRAM UTAMA ===
-        function pilihMood(nama, laguIdx, judulLagu) {
-            moodDipilih = nama; tempRecom = laguIdx;
-            document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
-            document.getElementById('recomText').innerHTML = `Lagi ngerasa ${nama.split(' ')[0]} ya? Coba dengerin <b>${judulLagu}</b> deh!`;
-            document.getElementById('recomBox').style.display = 'block';
-        }
+        function pilihMood(nama, laguIdx, judulLagu) { moodDipilih = nama; tempRecom = laguIdx; document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected')); event.currentTarget.classList.add('selected'); document.getElementById('recomText').innerHTML = `Lagi ngerasa ${nama.split(' ')[0]} ya? Coba dengerin <b>${judulLagu}</b> deh!`; document.getElementById('recomBox').style.display = 'block'; }
         function putarLaguRecom() { if(tempRecom !== null) { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); } }
-
-        function kirimPesanKeTele(pesan, formId, isBio) {
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`;
-            fetch(url).then(res => res.json()).then(data => {
-                if(data.ok) { alert("Pesan sukses meluncur ke Cello! 🚀"); document.getElementById(formId).reset(); if(isBio) goToSlide(1); } 
-                else { alert("Gagal ngirim! Pastiin lo udah pernah klik START di bot Telegram."); }
-            });
-        }
-        function kirimBio(e) {
-            e.preventDefault();
-            const n = document.getElementById('vName').value || '-';
-            const i = document.getElementById('vIg').value || '-';
-            const cl = document.getElementById('vColor').value || '-';
-            const f = document.getElementById('vFood').value || '-';
-            const h = document.getElementById('vHobby').value || '-';
-            const d = document.getElementById('vDream').value || '-';
-            const b = document.getElementById('vTtl').value || '-';
-            const pesan = `🌟 *BIODATA BARU MASUK!*\n\n👤 Nama: ${n}\n📱 IG: ${i}\n🎨 Warna: ${cl}\n🍲 Makanan: ${f}\n🎣 Hobi: ${h}\n✈️ Cita-cita: ${d}\n🎂 TTL: ${b}`;
-            kirimPesanKeTele(pesan, 'formBio', true);
-        }
-        function kirimCurhat(e) {
-            e.preventDefault();
-            const curhat = document.getElementById('curhatText').value;
-            const pesan = `💭 *CURHATAN BARU MASUK!*\n\n🎭 Mood: ${moodDipilih}\n📝 Cerita:\n${curhat}`;
-            kirimPesanKeTele(pesan, 'formCurhat', false);
-        }
+        function kirimPesanKeTele(pesan, formId, isBio) { fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`).then(res => res.json()).then(data => { if(data.ok) { alert("Pesan sukses meluncur ke Cello! 🚀"); document.getElementById(formId).reset(); if(isBio) goToSlide(1); } else { alert("Gagal ngirim! Pastiin lo udah pernah klik START di bot Telegram."); } }); }
+        function kirimBio(e) { e.preventDefault(); const n = document.getElementById('vName').value || '-'; const i = document.getElementById('vIg').value || '-'; const cl = document.getElementById('vColor').value || '-'; const f = document.getElementById('vFood').value || '-'; const h = document.getElementById('vHobby').value || '-'; const d = document.getElementById('vDream').value || '-'; const b = document.getElementById('vTtl').value || '-'; const pesan = `🌟 *BIODATA BARU MASUK!*\n\n👤 Nama: ${n}\n📱 IG: ${i}\n🎨 Warna: ${cl}\n🍲 Makanan: ${f}\n🎣 Hobi: ${h}\n✈️ Cita-cita: ${d}\n🎂 TTL: ${b}`; kirimPesanKeTele(pesan, 'formBio', true); }
+        function kirimCurhat(e) { e.preventDefault(); const curhat = document.getElementById('curhatText').value; const pesan = `💭 *CURHATAN BARU MASUK!*\n\n🎭 Mood: ${moodDipilih}\n📝 Cerita:\n${curhat}`; kirimPesanKeTele(pesan, 'formCurhat', false); }
     </script>
 </body>
 </html>
