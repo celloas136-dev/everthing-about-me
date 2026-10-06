@@ -95,7 +95,6 @@
         .dark-mode .btn-action { color: #0f172a; box-shadow: 0 0 16px rgba(0, 243, 255, 0.4); } .btn-action:hover { transform: translateY(-3px); }
         .btn-secondary { background: rgba(255,255,255,0.4); color: var(--text-dark); box-shadow: none; border: 1px solid var(--glass-border); }
         .btn-secondary:hover { background: var(--primary); color: white; } .btn-flex { display: flex; gap: 10px; margin-top: 10px; }
-
         .mood-container { display: flex; justify-content: space-around; margin: 18px 0; } .mood-box { text-align: center; }
         .mood-btn { font-size: 1.8rem; background: rgba(255,255,255,0.45); border: 2px solid transparent; width: 54px; height: 54px; border-radius: 50%; cursor: pointer; transition: 0.3s; }
         .mood-btn:hover, .mood-btn.selected { background: rgba(255,255,255,0.8); border-color: var(--primary); transform: scale(1.1); box-shadow: 0 0 12px var(--primary); }
@@ -127,16 +126,16 @@
         .puzzle-tile.hint-to { outline: 3px dashed #00e676; outline-offset: -2px; box-shadow: 0 0 12px rgba(0, 230, 118, 0.7); animation: hintPulse 0.8s ease infinite alternate; }
         @keyframes hintPulse { from { opacity: 0.7; } to { opacity: 1; } }
 
-        /* SCROLL LEVEL FIX BISA DI-DRAG DENGAN MOUSE DI PC & HP */
+        /* SCROLL LEVEL FIX (BISA DRAG MOUSE / SWIPE JEMPOL) */
         .level-select {
-            display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden;
-            flex-wrap: nowrap; padding: 10px 5px; margin-bottom: 10px; width: 100%;
-            -webkit-overflow-scrolling: touch; touch-action: pan-x; cursor: grab; user-select: none;
+            display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; overflow-y: hidden !important;
+            gap: 8px; padding: 10px 5px; margin-bottom: 10px; width: 100% !important; max-width: 100% !important;
+            -webkit-overflow-scrolling: touch !important; touch-action: pan-x !important; cursor: grab; user-select: none;
         }
         .level-select:active { cursor: grabbing; }
         .level-select::-webkit-scrollbar { height: 6px; }
         .level-select::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
-        .lvl-btn { flex: 0 0 auto; padding: 8px 14px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--text-dark); transition: 0.2s; }
+        .lvl-btn { flex: 0 0 auto !important; flex-shrink: 0 !important; padding: 8px 14px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap !important; color: var(--text-dark); transition: 0.2s; }
         .dark-mode .lvl-btn { background: rgba(15,23,42,0.6); color: #fff; }
         .lvl-btn.active { background: var(--primary); color: white; }
         .lvl-btn.locked { opacity: 0.4; filter: grayscale(0.5); cursor: not-allowed; } .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
@@ -154,7 +153,7 @@
         .secret-icon { cursor: pointer; transition: 0.3s; display: inline-block; }
         .secret-icon:hover { transform: scale(1.35) translateY(-3px); }
 
-        /* MODAL POPUP FIX FIXED POSITION */
+        /* MODAL POPUP ESTETIK */
         .custom-modal { display: none; position: fixed; inset: 0; z-index: 15000; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s ease; }
         .custom-panel { width: 100%; max-width: 360px; background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 35px 25px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .dark-mode .custom-panel, #secretSpace.active ~ .custom-modal .custom-panel { background: rgba(10, 15, 30, 0.95); border: 1px solid rgba(0, 243, 255, 0.4); box-shadow: 0 0 30px rgba(0,243,255,0.2); }
@@ -163,6 +162,7 @@
         .access-title { font-family: 'Fredoka', cursive; font-size: 1.5rem; color: var(--text-dark); margin-bottom: 8px; }
         .dark-mode .access-title, #secretSpace.active ~ .custom-modal .access-title { color: #00f3ff; }
         .access-sub { font-size: 0.85rem; opacity: 0.8; margin-bottom: 25px; }
+
         .input-wrapper { position: relative; width: 100%; }
         .access-input { width: 100%; padding: 14px 45px 14px 16px; border-radius: 12px; border: 2px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); font-family: 'Poppins'; font-size: 1rem; color: var(--text-dark); outline: none; }
         .dark-mode .access-input, #secretSpace.active ~ .custom-modal .access-input { background: rgba(0,0,0,0.5); border-color: rgba(0,243,255,0.3); color: #00f3ff; }
@@ -184,11 +184,9 @@
         .space-header { position: relative; z-index: 5; text-align: center; padding: 20px 16px 5px; color: #00f3ff; }
         .space-header h2 { font-family: 'Fredoka', cursive; font-size: 1.5rem; text-shadow: 0 0 20px rgba(0,243,255,0.8); margin-bottom: 5px; }
         
-        /* LAYOUT FOTO GANTUNG (DESKTOP & MOBILE RESPONSIVE FIX) */
+        /* 8 FOTO RESPONSIVE NO OVERLAP */
         .hanging-area { position: relative; z-index: 10; height: 55vh; width: 100%; max-width: 900px; margin: 0 auto; overflow-y: auto; overflow-x: hidden; }
         .hang-item { position: absolute; width: 105px; cursor: pointer; animation: floatY 5s ease-in-out infinite; }
-        
-        /* Position Desktop */
         .hang-item:nth-child(1) { left: 4%; top: 2%; transform: rotate(-5deg); }
         .hang-item:nth-child(2) { left: 28%; top: 4%; transform: rotate(4deg); width: 115px; }
         .hang-item:nth-child(3) { left: 52%; top: 2%; transform: rotate(-3deg); }
@@ -198,19 +196,23 @@
         .hang-item:nth-child(7) { left: 54%; top: 32%; transform: rotate(-3deg); }
         .hang-item:nth-child(8) { left: 78%; top: 34%; transform: rotate(6deg); width: 100px; }
 
-        /* Mobile Layout Fix (Gak bakal tumpang tindih lagi!) */
         @media (max-width: 600px) {
-            .hanging-area { height: 50vh; padding-bottom: 40px; }
-            .hang-item { width: 120px !important; }
-            .hang-photo img { height: 95px !important; }
-            .hang-item:nth-child(1) { left: 5%; top: 5px; }
-            .hang-item:nth-child(2) { left: 52%; top: 20px; }
-            .hang-item:nth-child(3) { left: 8%; top: 160px; }
-            .hang-item:nth-child(4) { left: 54%; top: 180px; }
-            .hang-item:nth-child(5) { left: 5%; top: 320px; }
-            .hang-item:nth-child(6) { left: 50%; top: 340px; }
-            .hang-item:nth-child(7) { left: 8%; top: 480px; }
-            .hang-item:nth-child(8) { left: 53%; top: 500px; }
+            .hanging-area {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 15px !important;
+                height: 50vh !important;
+                overflow-y: auto !important;
+                padding: 10px !important;
+            }
+            .hang-item {
+                position: relative !important;
+                top: auto !important; left: auto !important;
+                width: 100% !important;
+                transform: none !important;
+            }
+            .hang-string { display: none !important; }
+            .hang-photo img { height: 100px !important; }
         }
 
         @keyframes floatY { 0%, 100% { transform: translateY(0) rotate(var(--rot, -4deg)); } 50% { transform: translateY(-10px) rotate(var(--rot, -4deg)); } }
@@ -480,12 +482,17 @@
         </div>
     </div>
 
-    <!-- ========== SECRET SPACE (DEEP SPACE) ========== -->
+    <!-- ========== SECRET SPACE (DEEP SPACE BASE) ========== -->
     <div id="secretSpace">
-        <div class="space-galaxy"></div><div class="planet-1"></div><div class="planet-2"></div><div class="space-stars"></div>
-        <div class="space-header"><h2>✦ Deep Space Base ✦</h2></div>
+        <div class="space-galaxy"></div>
+        <div class="planet-1"></div>
+        <div class="planet-2"></div>
+        <div class="space-stars"></div>
         
-        <!-- 8 FOTO DIPASANG PRESISI PAS 2 BARIS -->
+        <div class="space-header">
+            <h2>✦ Deep Space Base ✦</h2>
+        </div>
+        
         <div class="hanging-area">
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret1.jpeg" onerror="this.onerror=null; this.src='./secret1.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret2.jpeg" onerror="this.onerror=null; this.src='./secret2.jpg';"></div></div>
@@ -665,7 +672,7 @@
             slider.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - slider.offsetLeft; const walk = (x - startX) * 2; slider.scrollLeft = scrollLeft - walk; });
         });
 
-        // MASKOT KUCING
+        // MASKOT
         const catMessagesOriginal = [ "Lagi sedih ya? Coba dengerin playlist gue dulu gih 🎧", "Gak usah pusing, stel lagu favorit lo terus merem sebentar ☁️", "Lagu di playlist ini enak-enak kan? Selera musik di sini gak pernah gagal 🎶", "Meow! Gue cuma kucing melayang, tapi saran gue berguna kan? 😎", "Senyum dikit dong, dari tadi mukanya kenceng banget 🤭", "Overthinking mulu, nanti pusing sendiri lho 😜", "Gak usah mikirin hal berat, lagu di web ini jauh lebih enak didengerin ✨", "Udah makan belum? Jangan ampe kelaparan terus lemes ya 🍲", "Hari ini lo udah keren kok, jangan terlalu keras sama diri sendiri ✨", "Lagi capek ya? Rehat sebentar gapapa, dunia gak bakal kabur kok 🌸", "Pelan-pelan aja, yang penting lo tetep jalan 🚀", "Kalo ada uneg-uneg, tumpahin aja di menu Cerita, aman kok 💭", "Kue keberuntungan di Fun Zone udah dicoba belum? Cobain gih 🥠", "Cobain main puzzle di Fun Zone deh, tes seberapa jago lo 🧩", "Coba ganti ke Mode Malam deh, ada bulan sama bintangnya terang banget 🌙", "Udah liat foto-foto di galeri polaroid belum? Estetik kan? 📸", "Tau gak? Di footer ada tombol pesawat rahasia lho... tapi butuh kunci ✈️" ];
         let catMessagesPool = [...catMessagesOriginal]; let catBubbleOpen = false;
         function clickCatMascot(e) { if (e) e.stopPropagation(); const bubble = document.getElementById('catBubble'); if(catMessagesPool.length === 0) catMessagesPool = [...catMessagesOriginal]; const randomIndex = Math.floor(Math.random() * catMessagesPool.length); const msg = catMessagesPool.splice(randomIndex, 1)[0]; bubble.innerText = msg; bubble.style.display = 'block'; catBubbleOpen = true; }
@@ -699,7 +706,7 @@
             const input = document.getElementById('wishInput'); if(!input || !input.value.trim()) { showCustomAlert('Oops!', 'Tulis harapan lo dulu dong ✨'); return; }
             const jar = document.getElementById('jarContainer'); const star = document.createElement('div'); star.className = 'flying-star'; star.innerText = '✨';
             jar.appendChild(star); void star.offsetWidth; star.classList.add('animate'); input.value = '';
-            setTimeout(() => { star.remove(); showCustomAlert('Botol Bintang ⭐', 'Harapan lo udah tersimpan aman di botol ini! ✨'); }, 1400);
+            setTimeout(() => { star.remove(); showCustomAlert('Botol Bintang ⭐', 'Harapan lo udah tersimpan aman di botol ini! ✨'); }, 1450);
         }
         function sendWishToTele() {
             const val = document.getElementById('wishInput').value.trim(); if(!val) { showCustomAlert('Oops!', 'Tulis harapan lo dulu dong ✨'); return; }
@@ -786,7 +793,8 @@
             renderPuzzleBoard();
         }
         function selectLvl(lvl) { if (lvl > getMaxUnlocked(currentType)) { showCustomAlert("selesai in satu satu lah", "Selesaiin level sebelumnya dulu, baru lo bisa masuk ke level ini ✨"); return; } currentLvl = lvl; puzzleSolvedThisLevel = false; firstTile = null; initPuzzleGame(currentType); }
-        
+        function closeLockedModal(e) { if (e === true || (e && e.target === document.getElementById('lockedModal'))) { document.getElementById('lockedModal').style.display = 'none'; } }
+
         function renderPuzzleBoard() {
             const size = getGridSize(currentLvl); const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
             board.style.gridTemplateColumns = `repeat(${size}, 1fr)`; board.style.gridTemplateRows = `repeat(${size}, 1fr)`; board.innerHTML = '';
@@ -836,6 +844,7 @@
             const el = document.getElementById(currentType === 'fun' ? 'hintText' : 'hintTextSecret'); if (el) el.textContent = msg;
             setTimeout(() => { document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(t => { t.classList.remove('hint-from', 'hint-to'); }); }, 4000);
         }
+
         function closeGombalModal() { document.getElementById('gombalModal').style.display = 'none'; }
         function kirimBalasanGombal(e) {
             e.preventDefault(); const val = document.getElementById('gombalReplyInput').value.trim();
