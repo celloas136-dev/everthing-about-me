@@ -109,7 +109,7 @@
         .polaroid::after { content: '🔍 Tap buat Zoom'; position: absolute; bottom: 6px; left: 0; width: 100%; font-size: 0.65rem; color: #777; font-weight: 600; text-align: center; }
         .dark-mode .polaroid { background: #1e293b; box-shadow: 0 0 12px rgba(0, 243, 255, 0.22); } .dark-mode .polaroid::after { color: #94a3b8; }
 
-        /* FUN ZONE (LUAR) */
+        /* FUN ZONE */
         .fun-cards { display: grid; grid-template-columns: repeat(1, 1fr); gap: 14px; margin-top: 15px; }
         .fun-card { background: rgba(255,255,255,0.45); border: 1.5px solid var(--glass-border); border-radius: 20px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 15px; }
         .dark-mode .fun-card { background: rgba(15,23,42,0.5); } .fun-card:hover { transform: translateY(-4px) scale(1.02); background: rgba(255,255,255,0.7); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
@@ -127,9 +127,16 @@
         .puzzle-tile.hint-to { outline: 3px dashed #00e676; outline-offset: -2px; box-shadow: 0 0 12px rgba(0, 230, 118, 0.7); animation: hintPulse 0.8s ease infinite alternate; }
         @keyframes hintPulse { from { opacity: 0.7; } to { opacity: 1; } }
 
-        /* SCROLL LEVEL MULUS DI PC & HP */
-        .level-select { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 10px; width: 100%; -webkit-overflow-scrolling: touch; touch-action: pan-x; scrollbar-width: thin; }
-        .lvl-btn { flex-shrink: 0; padding: 8px 14px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--text-dark); transition: 0.2s; }
+        /* SCROLL LEVEL FIX BISA DI-DRAG DENGAN MOUSE DI PC & HP */
+        .level-select {
+            display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden;
+            flex-wrap: nowrap; padding: 10px 5px; margin-bottom: 10px; width: 100%;
+            -webkit-overflow-scrolling: touch; touch-action: pan-x; cursor: grab; user-select: none;
+        }
+        .level-select:active { cursor: grabbing; }
+        .level-select::-webkit-scrollbar { height: 6px; }
+        .level-select::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
+        .lvl-btn { flex: 0 0 auto; padding: 8px 14px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap; color: var(--text-dark); transition: 0.2s; }
         .dark-mode .lvl-btn { background: rgba(15,23,42,0.6); color: #fff; }
         .lvl-btn.active { background: var(--primary); color: white; }
         .lvl-btn.locked { opacity: 0.4; filter: grayscale(0.5); cursor: not-allowed; } .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
@@ -147,7 +154,7 @@
         .secret-icon { cursor: pointer; transition: 0.3s; display: inline-block; }
         .secret-icon:hover { transform: scale(1.35) translateY(-3px); }
 
-        /* MODAL POPUP FIX POSITION FIXED */
+        /* MODAL POPUP FIX FIXED POSITION */
         .custom-modal { display: none; position: fixed; inset: 0; z-index: 15000; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); justify-content: center; align-items: center; padding: 20px; animation: fadeIn 0.3s ease; }
         .custom-panel { width: 100%; max-width: 360px; background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 35px 25px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .dark-mode .custom-panel, #secretSpace.active ~ .custom-modal .custom-panel { background: rgba(10, 15, 30, 0.95); border: 1px solid rgba(0, 243, 255, 0.4); box-shadow: 0 0 30px rgba(0,243,255,0.2); }
@@ -156,7 +163,6 @@
         .access-title { font-family: 'Fredoka', cursive; font-size: 1.5rem; color: var(--text-dark); margin-bottom: 8px; }
         .dark-mode .access-title, #secretSpace.active ~ .custom-modal .access-title { color: #00f3ff; }
         .access-sub { font-size: 0.85rem; opacity: 0.8; margin-bottom: 25px; }
-
         .input-wrapper { position: relative; width: 100%; }
         .access-input { width: 100%; padding: 14px 45px 14px 16px; border-radius: 12px; border: 2px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); font-family: 'Poppins'; font-size: 1rem; color: var(--text-dark); outline: none; }
         .dark-mode .access-input, #secretSpace.active ~ .custom-modal .access-input { background: rgba(0,0,0,0.5); border-color: rgba(0,243,255,0.3); color: #00f3ff; }
@@ -178,9 +184,11 @@
         .space-header { position: relative; z-index: 5; text-align: center; padding: 20px 16px 5px; color: #00f3ff; }
         .space-header h2 { font-family: 'Fredoka', cursive; font-size: 1.5rem; text-shadow: 0 0 20px rgba(0,243,255,0.8); margin-bottom: 5px; }
         
-        /* 8 FOTO DIPASANG PRESISI DUA BARIS */
-        .hanging-area { position: relative; z-index: 10; height: 55vh; width: 100%; max-width: 900px; margin: 0 auto; overflow: hidden; }
+        /* LAYOUT FOTO GANTUNG (DESKTOP & MOBILE RESPONSIVE FIX) */
+        .hanging-area { position: relative; z-index: 10; height: 55vh; width: 100%; max-width: 900px; margin: 0 auto; overflow-y: auto; overflow-x: hidden; }
         .hang-item { position: absolute; width: 105px; cursor: pointer; animation: floatY 5s ease-in-out infinite; }
+        
+        /* Position Desktop */
         .hang-item:nth-child(1) { left: 4%; top: 2%; transform: rotate(-5deg); }
         .hang-item:nth-child(2) { left: 28%; top: 4%; transform: rotate(4deg); width: 115px; }
         .hang-item:nth-child(3) { left: 52%; top: 2%; transform: rotate(-3deg); }
@@ -189,14 +197,30 @@
         .hang-item:nth-child(6) { left: 30%; top: 35%; transform: rotate(3deg); }
         .hang-item:nth-child(7) { left: 54%; top: 32%; transform: rotate(-3deg); }
         .hang-item:nth-child(8) { left: 78%; top: 34%; transform: rotate(6deg); width: 100px; }
+
+        /* Mobile Layout Fix (Gak bakal tumpang tindih lagi!) */
+        @media (max-width: 600px) {
+            .hanging-area { height: 50vh; padding-bottom: 40px; }
+            .hang-item { width: 120px !important; }
+            .hang-photo img { height: 95px !important; }
+            .hang-item:nth-child(1) { left: 5%; top: 5px; }
+            .hang-item:nth-child(2) { left: 52%; top: 20px; }
+            .hang-item:nth-child(3) { left: 8%; top: 160px; }
+            .hang-item:nth-child(4) { left: 54%; top: 180px; }
+            .hang-item:nth-child(5) { left: 5%; top: 320px; }
+            .hang-item:nth-child(6) { left: 50%; top: 340px; }
+            .hang-item:nth-child(7) { left: 8%; top: 480px; }
+            .hang-item:nth-child(8) { left: 53%; top: 500px; }
+        }
+
         @keyframes floatY { 0%, 100% { transform: translateY(0) rotate(var(--rot, -4deg)); } 50% { transform: translateY(-10px) rotate(var(--rot, -4deg)); } }
-        .hang-string { width: 2px; height: 30px; margin: 0 auto; background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(0,243,255,0.7)); }
+        .hang-string { width: 2px; height: 25px; margin: 0 auto; background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(0,243,255,0.7)); }
         .hang-photo { background: #fff; padding: 5px 5px 18px 5px; border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
         .hang-photo img { width: 100%; height: 85px; object-fit: cover; border-radius: 2px; display: block; }
 
         .space-actions { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; flex-direction: column; gap: 10px; width: 90%; max-width: 300px; text-align: center; }
 
-        /* SECRET FUN ZONE LOBBY MODAL - FIX FIXED POSITION */
+        /* SECRET FUN ZONE LOBBY MODAL */
         .secret-app-modal { display: none; position: fixed; inset: 0; z-index: 2500; background: rgba(4, 9, 20, 0.92); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px 15px; flex-direction: column; align-items: center; justify-content: center; overflow-y: auto; overflow-x: hidden; }
         .secret-app-modal.active { display: flex !important; animation: fadeIn 0.3s ease; }
         .sec-app-box { background: rgba(15,23,42,0.9); border: 2px solid #00f3ff; border-radius: 24px; padding: 25px 20px; width: 100%; max-width: 440px; text-align: center; box-shadow: 0 0 35px rgba(0,243,255,0.25); margin: auto; position: relative; z-index: 10; }
@@ -252,7 +276,6 @@
 </head>
 <body>
 
-    <!-- DEKORASI SIANG (Gunung + Matahari + Awan) -->
     <div class="mountains-bg"></div>
     <div class="day-decor" aria-hidden="true">
         <div class="day-sun"></div>
@@ -367,7 +390,7 @@
         </div>
     </div>
 
-    <!-- 🎮 MENU 4: FUN ZONE (LUAR) -->
+    <!-- 🎮 MENU 4: FUN ZONE -->
     <div id="sec-funzone" class="glass-card content-section">
         <div id="fun-lobby">
             <h2>Fun Zone 🎮</h2>
@@ -459,15 +482,10 @@
 
     <!-- ========== SECRET SPACE (DEEP SPACE) ========== -->
     <div id="secretSpace">
-        <div class="space-galaxy"></div>
-        <div class="planet-1"></div>
-        <div class="planet-2"></div>
-        <div class="space-stars"></div>
+        <div class="space-galaxy"></div><div class="planet-1"></div><div class="planet-2"></div><div class="space-stars"></div>
+        <div class="space-header"><h2>✦ Deep Space Base ✦</h2></div>
         
-        <div class="space-header">
-            <h2>✦ Deep Space Base ✦</h2>
-        </div>
-        
+        <!-- 8 FOTO DIPASANG PRESISI PAS 2 BARIS -->
         <div class="hanging-area">
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret1.jpeg" onerror="this.onerror=null; this.src='./secret1.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret2.jpeg" onerror="this.onerror=null; this.src='./secret2.jpg';"></div></div>
@@ -524,9 +542,7 @@
                 </div>
                 <div id="ticketResult" style="display:none;">
                     <div class="ticket-wrapper">
-                        <div class="ticket-header" style="display:flex; justify-content:space-between; align-items:center; color:#00f3ff;">
-                            <span style="font-weight:bold; letter-spacing:2px;">BOARDING PASS</span><i class="fas fa-plane"></i>
-                        </div>
+                        <div class="ticket-header" style="display:flex; justify-content:space-between; align-items:center; color:#00f3ff;"><span style="font-weight:bold; letter-spacing:2px;">BOARDING PASS</span><i class="fas fa-plane"></i></div>
                         <div class="ticket-dashed"></div>
                         <div class="ticket-body" style="text-align:left;">
                             <div style="font-size:0.75rem; color:#a5f3fc;">PASSENGER NAME</div>
@@ -537,9 +553,7 @@
                                 <div style="text-align:right;"><div style="font-size:0.75rem; color:#a5f3fc;">TO</div><div style="font-size:1.1rem; font-weight:bold; color:#ff758c;">MY HEART 💖</div></div>
                             </div>
                             <div class="ticket-flight-info">
-                                <div><span style="color:#a5f3fc; font-size:0.7rem;">FLIGHT</span><br>CL-2024</div>
-                                <div><span style="color:#a5f3fc; font-size:0.7rem;">GATE</span><br>05</div>
-                                <div><span style="color:#a5f3fc; font-size:0.7rem;">SEAT</span><br>01A</div>
+                                <div><span style="color:#a5f3fc; font-size:0.7rem;">FLIGHT</span><br>CL-2024</div><div><span style="color:#a5f3fc; font-size:0.7rem;">GATE</span><br>05</div><div><span style="color:#a5f3fc; font-size:0.7rem;">SEAT</span><br>01A</div>
                             </div>
                         </div>
                         <div class="ticket-barcode"></div>
@@ -554,7 +568,7 @@
             <div class="sec-app-box">
                 <h2 class="sec-app-title">Wish Star Jar ⭐</h2>
                 <p class="sec-app-desc">Tulis harapan lo, ubah jadi bintang.</p>
-                <div class="jar-container" id="jarContainer">🍶✨</div>
+                <div class="jar-container" id="jarContainer">🍶</div>
                 <textarea id="wishInput" class="input-custom dark-mode" placeholder="Tulis harapan / rahasia lo di sini..." style="margin-bottom:15px;"></textarea>
                 <div class="btn-flex">
                     <button class="btn-action btn-secondary" onclick="putInJar()" style="font-size:0.8rem;">✨ Simpan</button>
@@ -641,7 +655,17 @@
         function showCustomAlert(title, text) { document.getElementById('customAlertTitle').innerText = title; document.getElementById('customAlertText').innerText = text; document.getElementById('customAlertModal').style.display = 'flex'; }
         function closeCustomAlert() { document.getElementById('customAlertModal').style.display = 'none'; }
 
-        // MASKOT
+        // SCROLL LEVEL MOUSE DRAG
+        const sliders = document.querySelectorAll('.level-select');
+        sliders.forEach(slider => {
+            let isDown = false; let startX; let scrollLeft;
+            slider.addEventListener('mousedown', (e) => { isDown = true; slider.style.cursor = 'grabbing'; startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; });
+            slider.addEventListener('mouseleave', () => { isDown = false; slider.style.cursor = 'grab'; });
+            slider.addEventListener('mouseup', () => { isDown = false; slider.style.cursor = 'grab'; });
+            slider.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - slider.offsetLeft; const walk = (x - startX) * 2; slider.scrollLeft = scrollLeft - walk; });
+        });
+
+        // MASKOT KUCING
         const catMessagesOriginal = [ "Lagi sedih ya? Coba dengerin playlist gue dulu gih 🎧", "Gak usah pusing, stel lagu favorit lo terus merem sebentar ☁️", "Lagu di playlist ini enak-enak kan? Selera musik di sini gak pernah gagal 🎶", "Meow! Gue cuma kucing melayang, tapi saran gue berguna kan? 😎", "Senyum dikit dong, dari tadi mukanya kenceng banget 🤭", "Overthinking mulu, nanti pusing sendiri lho 😜", "Gak usah mikirin hal berat, lagu di web ini jauh lebih enak didengerin ✨", "Udah makan belum? Jangan ampe kelaparan terus lemes ya 🍲", "Hari ini lo udah keren kok, jangan terlalu keras sama diri sendiri ✨", "Lagi capek ya? Rehat sebentar gapapa, dunia gak bakal kabur kok 🌸", "Pelan-pelan aja, yang penting lo tetep jalan 🚀", "Kalo ada uneg-uneg, tumpahin aja di menu Cerita, aman kok 💭", "Kue keberuntungan di Fun Zone udah dicoba belum? Cobain gih 🥠", "Cobain main puzzle di Fun Zone deh, tes seberapa jago lo 🧩", "Coba ganti ke Mode Malam deh, ada bulan sama bintangnya terang banget 🌙", "Udah liat foto-foto di galeri polaroid belum? Estetik kan? 📸", "Tau gak? Di footer ada tombol pesawat rahasia lho... tapi butuh kunci ✈️" ];
         let catMessagesPool = [...catMessagesOriginal]; let catBubbleOpen = false;
         function clickCatMascot(e) { if (e) e.stopPropagation(); const bubble = document.getElementById('catBubble'); if(catMessagesPool.length === 0) catMessagesPool = [...catMessagesOriginal]; const randomIndex = Math.floor(Math.random() * catMessagesPool.length); const msg = catMessagesPool.splice(randomIndex, 1)[0]; bubble.innerText = msg; bubble.style.display = 'block'; catBubbleOpen = true; }
@@ -662,22 +686,20 @@
         function answerQuiz(i) { currentQuizIdx++; if(currentQuizIdx < quizData.length) { showQuizStep(); } else { document.getElementById('quizContainer').style.display = 'none'; document.getElementById('quizResult').style.display = 'block'; document.getElementById('flowerEmoji').innerText = "🌹"; document.getElementById('flowerTitle').innerText = "Vibe Kamu: Bunga Mawar (Rose Vibe)"; document.getElementById('flowerDesc').innerText = "Karakter lo tuh hangat, tenang, dan selalu bisa bikin suasana di sekitar lo jadi nyaman!"; tempRecom = 8; } }
         function applyFlowerSong() { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); }
 
-        // SECRET APPS CONTROL
+        // SECRET APPS LOBBY CONTROL
         function openSecretFunLobby() { document.getElementById('secretFunLobby').classList.add('active'); }
         function closeSecretFunLobby() { document.getElementById('secretFunLobby').classList.remove('active'); }
         function openSecretApp(app) { document.getElementById('secretFunLobby').classList.remove('active'); document.getElementById('secApp-' + app).classList.add('active'); if(app === 'puzzle') initPuzzleGame('secret'); if(app === 'ticket') { document.getElementById('ticketFormBox').style.display='block'; document.getElementById('ticketResult').style.display='none'; } }
         function backToSecretLobby(app) { document.getElementById('secApp-' + app).classList.remove('active'); document.getElementById('secretFunLobby').classList.add('active'); }
         
-        function generateTicket() {
-            const name = document.getElementById('ticketName').value || "Guest"; document.getElementById('tName').innerText = name.toUpperCase();
-            document.getElementById('ticketFormBox').style.display = 'none'; document.getElementById('ticketResult').style.display = 'block'; confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
-        }
-        
+        function generateTicket() { const name = document.getElementById('ticketName').value || "Guest"; document.getElementById('tName').innerText = name.toUpperCase(); document.getElementById('ticketFormBox').style.display = 'none'; document.getElementById('ticketResult').style.display = 'block'; confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } }); }
+
+        /* WISH STAR JAR ANIMASI FIX */
         function putInJar() {
             const input = document.getElementById('wishInput'); if(!input || !input.value.trim()) { showCustomAlert('Oops!', 'Tulis harapan lo dulu dong ✨'); return; }
             const jar = document.getElementById('jarContainer'); const star = document.createElement('div'); star.className = 'flying-star'; star.innerText = '✨';
             jar.appendChild(star); void star.offsetWidth; star.classList.add('animate'); input.value = '';
-            setTimeout(() => { star.remove(); showCustomAlert("Botol Bintang ⭐", "Harapan lo udah tersimpan aman di botol ini! ✨"); }, 1450);
+            setTimeout(() => { star.remove(); showCustomAlert('Botol Bintang ⭐', 'Harapan lo udah tersimpan aman di botol ini! ✨'); }, 1400);
         }
         function sendWishToTele() {
             const val = document.getElementById('wishInput').value.trim(); if(!val) { showCustomAlert('Oops!', 'Tulis harapan lo dulu dong ✨'); return; }
@@ -685,7 +707,7 @@
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`).then(r=>r.json()).then(d=>{ if(d.ok) { showCustomAlert("Terkirim! 🚀", "Pesan lo udah meluncur aman ke Telegram gue! ✨"); document.getElementById('wishInput').value=''; } });
         }
 
-        // DRINK MIXER LOGIC
+        /* DRINK MIXER LOGIC */
         let selectedFlavors = [];
         const FLAVOR_EMOJI = { strawberry: '🍓', soda: '🥤', matcha: '🍵', coffee: '☕', peach: '🍑', lemon: '🍋' };
         const SINGLE_MSGS = {
@@ -729,7 +751,7 @@
             selectedFlavors = []; document.querySelectorAll('.vend-can.selected').forEach(b => b.classList.remove('selected')); updateMixUI(); document.getElementById('mixStatus').innerText = n === 1 ? 'Udah diambil ✨' : 'Udah di-mix ✨';
         }
 
-        // PUZZLE LOGIC
+        // PUZZLE ENGINE
         let currentLvl = 1, currentType = 'fun', puzzleGrid = [], firstTile = null, puzzleSolvedThisLevel = false;
         const gombalanList = [
             "Satu level gampang berhasil lo lewati tanpa kendala. Gue cuma seneng aja ngeliat lo betah nyobain web buatan gue ini dari awal tadi. Btw, menurut lo tampilan web gue ini gimana? Tulis pendapat lo di bawah ya! ✨",
@@ -745,9 +767,9 @@
         ];
         function progressKey(type) { return type === 'secret' ? 'cello_sc_puzzle_max' : 'cello_pz_puzzle_max'; }
         function getMaxUnlocked(type) { return Math.min(10, Math.max(1, parseInt(localStorage.getItem(progressKey(type)) || '1', 10))); }
-        function setMaxUnlocked(type, lvl) { const cur = getMaxUnlocked(type); if (lvl > cur) localStorage.setItem(progressKey(type), String(Math.min(10, lvl))); }
-        function getGridSize(lvl) { if (lvl === 1) return 3; if (lvl === 2) return 4; if (lvl === 3) return 5; if (lvl === 4) return 6; if (lvl === 5) return 7; return 8; }
-        function clearHintUI() { document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(el => { el.classList.remove('hint-from', 'hint-to'); }); const ht = document.getElementById('hintText'); const hs = document.getElementById('hintTextSecret'); if (ht) ht.textContent = ''; if (hs) hs.textContent = ''; }
+        function setMaxUnlocked(type, lvl) { const cur = getMaxUnlocked(type); if(lvl > cur) localStorage.setItem(progressKey(type), String(Math.min(10, lvl))); }
+        function getGridSize(lvl) { if(lvl===1) return 3; if(lvl===2) return 4; if(lvl===3) return 5; if(lvl===4) return 6; if(lvl===5) return 7; return 8; }
+        function clearHintUI() { document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(el => el.classList.remove('hint-from', 'hint-to')); const ht = document.getElementById('hintText'); const hs = document.getElementById('hintTextSecret'); if (ht) ht.textContent = ''; if (hs) hs.textContent = ''; }
 
         function initPuzzleGame(type) {
             currentType = type; puzzleSolvedThisLevel = false; firstTile = null; clearHintUI();
@@ -763,14 +785,8 @@
             if (lockInfo) { lockInfo.textContent = maxOk >= 10 ? 'Semua level kebuka. Mantap! ✨' : `Level 1–${maxOk} kebuka. Selesaiin level sekarang buat buka level ${maxOk + 1}.`; }
             renderPuzzleBoard();
         }
-
-        function selectLvl(lvl) {
-            const maxOk = getMaxUnlocked(currentType);
-            if (lvl > maxOk) { showCustomAlert("selesai in satu satu lah", "Selesaiin level sebelumnya dulu, baru lo bisa masuk ke level ini ✨"); return; }
-            currentLvl = lvl; puzzleSolvedThisLevel = false; firstTile = null; initPuzzleGame(currentType);
-        }
-        function closeLockedModal(e) { if (e === true || (e && e.target === document.getElementById('lockedModal'))) { document.getElementById('lockedModal').style.display = 'none'; } }
-
+        function selectLvl(lvl) { if (lvl > getMaxUnlocked(currentType)) { showCustomAlert("selesai in satu satu lah", "Selesaiin level sebelumnya dulu, baru lo bisa masuk ke level ini ✨"); return; } currentLvl = lvl; puzzleSolvedThisLevel = false; firstTile = null; initPuzzleGame(currentType); }
+        
         function renderPuzzleBoard() {
             const size = getGridSize(currentLvl); const board = document.getElementById(currentType === 'fun' ? 'funBoard' : 'secBoard');
             board.style.gridTemplateColumns = `repeat(${size}, 1fr)`; board.style.gridTemplateRows = `repeat(${size}, 1fr)`; board.innerHTML = '';
@@ -795,7 +811,6 @@
             const tiles = board.querySelectorAll('.puzzle-tile'); const percent = 100 / (size - 1); clearHintUI();
             puzzleGrid.forEach((val, idx) => { tiles[idx].style.opacity = '1'; const row = Math.floor(val / size); const col = val % size; tiles[idx].style.backgroundPosition = `${col * percent}% ${row * percent}%`; });
         }
-
         function checkPuzzleWin() {
             const isWin = puzzleGrid.every((val, idx) => val === idx); if (!isWin) return;
             puzzleSolvedThisLevel = true; confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } }); setMaxUnlocked(currentType, currentLvl + 1);
@@ -807,9 +822,8 @@
             }
         }
         function closePuzzleWin(goNext) { document.getElementById('puzzleWinModal').style.display = 'none'; if (goNext && currentLvl < 10) { const maxOk = getMaxUnlocked('fun'); if (currentLvl + 1 <= maxOk) { currentLvl = currentLvl + 1; initPuzzleGame('fun'); } } }
-
         function giveHint() {
-            if (puzzleSolvedThisLevel) { showCustomAlert('Udah Kelar!', 'Level ini udah selesai ✨'); return; }
+            if (puzzleSolvedThisLevel) { showCustomAlert("Udah Kelar!","Level ini udah selesai ✨"); return; }
             const size = getGridSize(currentLvl); clearHintUI();
             let wrongPos = -1; for (let i = 0; i < puzzleGrid.length; i++) { if (puzzleGrid[i] !== i) { wrongPos = i; break; } }
             if (wrongPos === -1) return;
@@ -822,29 +836,26 @@
             const el = document.getElementById(currentType === 'fun' ? 'hintText' : 'hintTextSecret'); if (el) el.textContent = msg;
             setTimeout(() => { document.querySelectorAll('.puzzle-tile.hint-from, .puzzle-tile.hint-to').forEach(t => { t.classList.remove('hint-from', 'hint-to'); }); }, 4000);
         }
-
         function closeGombalModal() { document.getElementById('gombalModal').style.display = 'none'; }
         function kirimBalasanGombal(e) {
             e.preventDefault(); const val = document.getElementById('gombalReplyInput').value.trim();
-            if(val === "") { showCustomAlert("Makasih!", "Makasih udah mainin game ini! ✨"); closeGombalModal(); return; }
+            if(val === "") { showCustomAlert("Makasih!","Makasih udah mainin game ini! ✨"); closeGombalModal(); return; }
             const pesan = `💖 *BALASAN GOMBALAN LEVEL ${currentLvl}!*\n\n📝 Balasan:\n${val}`;
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`).then(res => res.json()).then(data => {
-                if(data.ok) { showCustomAlert("Sukses!", "Balasan sukses terkirim ke Telegram! 🚀"); document.getElementById('gombalReplyForm').reset(); closeGombalModal(); } else { showCustomAlert("Oops!", "Gagal kirim, coba cek koneksi."); }
+                if(data.ok) { showCustomAlert("Sukses!","Balasan sukses terkirim ke Telegram! 🚀"); document.getElementById('gombalReplyForm').reset(); closeGombalModal(); } else { showCustomAlert("Oops!","Gagal kirim, coba cek koneksi."); }
             });
         }
 
-        // ACCESS TERMINAL
+        // ACCESS & TELE
         function openAccess() { document.getElementById('accessModal').style.display = 'flex'; document.getElementById('accessInput').value = ''; document.getElementById('accessError').style.display = 'none'; const input = document.getElementById('accessInput'); const icon = document.getElementById('togglePwIcon'); input.type = 'password'; icon.classList.replace('fa-eye-slash','fa-eye'); setTimeout(() => document.getElementById('accessInput').focus(), 200); }
         function closeAccess(e) { if(e===true||(e&&e.target===document.getElementById('accessModal'))) document.getElementById('accessModal').style.display='none'; }
         function togglePassword() { const input = document.getElementById('accessInput'); const icon = document.getElementById('togglePwIcon'); if(input.type==='password'){ input.type='text'; icon.classList.replace('fa-eye-slash','fa-eye'); } else { input.type='password'; icon.classList.replace('fa-eye-slash','fa-eye'); } }
         function submitAccess() { const val = document.getElementById('accessInput').value.trim(); if(val === ACCESS_KEY) { document.getElementById('accessModal').style.display = 'none'; document.getElementById('secretSpace').classList.add('active'); document.body.style.overflow = 'hidden'; } else { document.getElementById('accessError').style.display = 'block'; } }
         document.getElementById('accessInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') submitAccess(); });
         function closeSecretSpace() { document.getElementById('secretSpace').classList.remove('active'); document.body.style.overflow = ''; }
-
-        // TELEGRAM FORM
         function pilihMood(nama, laguIdx, judulLagu) { moodDipilih = nama; tempRecom = laguIdx; document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected')); event.currentTarget.classList.add('selected'); document.getElementById('recomText').innerHTML = `Lagi ngerasa ${nama.split(' ')[0]} ya? Coba dengerin <b>${judulLagu}</b> deh!`; document.getElementById('recomBox').style.display = 'block'; }
         function putarLaguRecom() { if(tempRecom !== null) { songSelect.selectedIndex = tempRecom; changeSong(); if(!isPlaying) togglePlay(); } }
-        function kirimPesanKeTele(pesan, formId, isBio) { fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`).then(res => res.json()).then(data => { if(data.ok) { showCustomAlert("Terkirim!", "Pesan sukses meluncur ke Cello! 🚀"); document.getElementById(formId).reset(); if(isBio) goToSlide(1); } else { showCustomAlert("Gagal!", "Pastiin lo udah pernah klik START di bot Telegram."); } }); }
+        function kirimPesanKeTele(pesan, formId, isBio) { fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(pesan)}&parse_mode=Markdown`).then(res => res.json()).then(data => { if(data.ok) { showCustomAlert("Terkirim!","Pesan sukses meluncur ke Cello! 🚀"); document.getElementById(formId).reset(); if(isBio) goToSlide(1); } else { showCustomAlert("Gagal!","Pastiin lo udah pernah klik START di bot Telegram."); } }); }
         function kirimBio(e) { e.preventDefault(); const n = document.getElementById('vName').value || '-'; const i = document.getElementById('vIg').value || '-'; const cl = document.getElementById('vColor').value || '-'; const f = document.getElementById('vFood').value || '-'; const h = document.getElementById('vHobby').value || '-'; const d = document.getElementById('vDream').value || '-'; const b = document.getElementById('vTtl').value || '-'; const pesan = `🌟 *BIODATA BARU MASUK!*\n\n👤 Nama: ${n}\n📱 IG: ${i}\n🎨 Warna: ${cl}\n🍲 Makanan: ${f}\n🎣 Hobi: ${h}\n✈️ Cita-cita: ${d}\n🎂 TTL: ${b}`; kirimPesanKeTele(pesan, 'formBio', true); }
         function kirimCurhat(e) { e.preventDefault(); const curhat = document.getElementById('curhatText').value; const pesan = `💭 *CURHATAN BARU MASUK!*\n\n🎭 Mood: ${moodDipilih}\n📝 Cerita:\n${curhat}`; kirimPesanKeTele(pesan, 'formCurhat', false); }
     </script>
