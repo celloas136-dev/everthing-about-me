@@ -126,19 +126,36 @@
         .puzzle-tile.hint-to { outline: 3px dashed #00e676; outline-offset: -2px; box-shadow: 0 0 12px rgba(0, 230, 118, 0.7); animation: hintPulse 0.8s ease infinite alternate; }
         @keyframes hintPulse { from { opacity: 0.7; } to { opacity: 1; } }
 
-        /* SCROLL LEVEL FIX (BISA DRAG MOUSE / SWIPE JEMPOL) */
+        /* SCROLL BAR LEVEL FIX - MULTI ROW FLEX-WRAP (100% RELIABLE DI SEMUA PERANGKAT) */
         .level-select {
-            display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; overflow-y: hidden !important;
-            gap: 8px; padding: 10px 5px; margin-bottom: 10px; width: 100% !important; max-width: 100% !important;
-            -webkit-overflow-scrolling: touch !important; touch-action: pan-x !important; cursor: grab; user-select: none;
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 6px !important;
+            padding: 10px 2px !important;
+            margin-bottom: 12px !important;
+            width: 100% !important;
+            max-width: 340px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
         }
-        .level-select:active { cursor: grabbing; }
-        .level-select::-webkit-scrollbar { height: 6px; }
-        .level-select::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
-        .lvl-btn { flex: 0 0 auto !important; flex-shrink: 0 !important; padding: 8px 14px; border-radius: 12px; border: 1px solid var(--primary); background: rgba(255,255,255,0.4); font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap !important; color: var(--text-dark); transition: 0.2s; }
-        .dark-mode .lvl-btn { background: rgba(15,23,42,0.6); color: #fff; }
-        .lvl-btn.active { background: var(--primary); color: white; }
-        .lvl-btn.locked { opacity: 0.4; filter: grayscale(0.5); cursor: not-allowed; } .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
+        .lvl-btn {
+            flex: 0 0 auto !important;
+            padding: 6px 11px !important;
+            border-radius: 10px !important;
+            border: 1px solid var(--primary) !important;
+            background: rgba(255,255,255,0.4) !important;
+            font-size: 0.78rem !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            color: var(--text-dark) !important;
+            transition: all 0.2s ease !important;
+        }
+        .dark-mode .lvl-btn { background: rgba(15,23,42,0.6) !important; color: #fff !important; }
+        .lvl-btn.active { background: var(--primary) !important; color: white !important; }
+        .lvl-btn.locked { opacity: 0.4 !important; filter: grayscale(0.5) !important; cursor: not-allowed !important; }
+        .lvl-btn.locked::after { content: " 🔒"; font-size: 0.7em; }
 
         /* MASKOT KUCING */
         .cat-mascot { position: fixed; bottom: 20px; right: 20px; z-index: 99; cursor: pointer; transition: transform 0.3s ease; animation: catFloat 4s ease-in-out infinite; }
@@ -493,6 +510,7 @@
             <h2>✦ Deep Space Base ✦</h2>
         </div>
         
+        <!-- 8 FOTO DIGANTUNG -->
         <div class="hanging-area">
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret1.jpeg" onerror="this.onerror=null; this.src='./secret1.jpg';"></div></div>
             <div class="hang-item" onclick="openZoomFromSrc(this)"><div class="hang-string"></div><div class="hang-photo"><img src="./secret2.jpeg" onerror="this.onerror=null; this.src='./secret2.jpg';"></div></div>
@@ -758,7 +776,7 @@
             selectedFlavors = []; document.querySelectorAll('.vend-can.selected').forEach(b => b.classList.remove('selected')); updateMixUI(); document.getElementById('mixStatus').innerText = n === 1 ? 'Udah diambil ✨' : 'Udah di-mix ✨';
         }
 
-        // PUZZLE ENGINE
+        // PUZZLE LOGIC
         let currentLvl = 1, currentType = 'fun', puzzleGrid = [], firstTile = null, puzzleSolvedThisLevel = false;
         const gombalanList = [
             "Satu level gampang berhasil lo lewati tanpa kendala. Gue cuma seneng aja ngeliat lo betah nyobain web buatan gue ini dari awal tadi. Btw, menurut lo tampilan web gue ini gimana? Tulis pendapat lo di bawah ya! ✨",
